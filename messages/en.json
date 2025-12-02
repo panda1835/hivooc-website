@@ -1,0 +1,161 @@
+{
+  "HomePage": "Home Page",
+  "GetStarted": {
+    "title": "Let's get started!",
+    "description": "We take our environmental and social responsibilities seriously",
+    "browseDestination": "Browse Our Destination",
+    "tailorTrip": "Tailor my trip"
+  },
+  "Support": {
+    "title": "Support nature. Make a difference.",
+    "description": "We take our environmental and social responsibilities seriously",
+    "browseProgram": "Browse our conservation program"
+  },
+  "Hero": {
+    "slides": [
+      {
+        "title": "Tailor-made wildlife experiences.",
+        "description": "Tailor-made wildlife experiences that bring you closer to nature's most extraordinary moments",
+        "viewExamples": "View Example Itineraries",
+        "tailorTrip": "Tailor my trip"
+      },
+      {
+        "title": "Discover Vietnam's hidden wildlife.",
+        "description": "Expert-guided journeys to encounter rare and endangered species in their natural habitat",
+        "viewExamples": "View Example Itineraries",
+        "tailorTrip": "Tailor my trip"
+      },
+      {
+        "title": "Conservation through adventure.",
+        "description": "Your journey helps protect habitats and supports local communities",
+        "viewExamples": "View Example Itineraries",
+        "tailorTrip": "Tailor my trip"
+      }
+    ]
+  },
+  "SellingPoint": {
+    "title": "Immersive travel that is culturally respectful and environmentally sensitive.",
+    "description": "HiVOOC specializes in designing trips that integrate biodiversity and cultural diversity. Each destination offers travelers a unique natural beauty, featuring distinctive flora and fauna, as well as rich cultural elements—from cuisine, architecture, and historical sites to the local names of various species.",
+    "personalizedItineraries": {
+      "title": "Personalized Itineraries",
+      "description": "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same."
+    },
+    "expertGuides": {
+      "title": "Expert Guides",
+      "description": "Our local naturalists have decades of experience and deep knowledge of Vietnam's ecosystems and wildlife."
+    },
+    "rareEncounters": {
+      "title": "Rare Encounters",
+      "description": "Access exclusive locations and maximize your chances of spotting endangered species in their natural habitat."
+    },
+    "responsibleTourism": {
+      "title": "Responsible Tourism",
+      "description": "We practice ethical wildlife tourism that protects habitats and supports local conservation efforts."
+    }
+  },
+  "Gallery": {
+    "title": "View our captivating wildlife photography",
+    "description": "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
+    "viewMore": "View More"
+  },
+  "Reviews": {
+    "title": "Guest reviews",
+    "description": "We take our environmental and social responsibilities seriously",
+    "viewMore": "View More"
+  },
+  "TailorMadeTrips": {
+    "title": "Sample Tailor-made Itineraries",
+    "description": "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
+    "viewMore": "View More",
+    "explore": "Explore"
+  },
+  "ShortTrips": {
+    "title": "Or join our Pre-made Short Trips adventure",
+    "description": "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
+    "viewMore": "View More",
+    "explore": "Explore",
+    "bestTimeToTravel": "BEST TIME TO TRAVEL",
+    "tripLength": "TRIP LENGTH"
+  },
+  "DailyExperiences": {
+    "title": "Daily Experiences",
+    "description": "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
+    "viewMore": "View More",
+    "explore": "Explore"
+  },
+  "News": {
+    "title": "Conservation news",
+    "description": "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
+    "viewMore": "View More",
+    "explore": "Explore"
+  },
+  "Header": {
+    "wildlifeExperiences": "Wildlife Experiences",
+    "conservationPrograms": "Conservation Programs",
+    "services": "Services",
+    "archives": "Archives",
+    "aboutUs": "About Us",
+    "news": "News",
+    "tailorTour": "Tailor Tour",
+    "preMadeTour": "Pre-made Tour",
+    "shortTour": "Short Tour",
+    "dailyTours": "Daily Tours",
+    "natureEducation": "Nature Education",
+    "sonTraTours": "Son Tra Tours",
+    "primateTours": "Primate Tours",
+    "birdingTours": "Birding Tours",
+    "wildlifeTourNorth": "Wildlife Tour in the North",
+    "wildlifeTourSouth": "Wildlife Tour in the South",
+    "searchPlaceholder": "Search Destinations, Experiences, ...",
+    "tailorMyTrip": "Tailor my trip"
+  },
+  "Footer": {
+    "tagline": "Wildlife Tourism For Conservation",
+    "description": "Ecotourism for Conservation Conservation for Ecotourism.",
+    "mission": "Travel with us to create magical memories and support wildlife conservation projects together",
+    "explore": "Explore",
+    "allExperiences": "All Experiences",
+    "conservation": "Conservation",
+    "ourGuides": "Our Guides",
+    "travelTips": "Travel Tips",
+    "contact": "Contact",
+    "address": "K39/21 Thanh Vinh 1, Son Tra, Da Nang",
+    "email": "tourbooking@hivooc.com",
+    "phone": "081 394 9222",
+    "copyright": "© 2025 HIVOOC. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  },
+  "TailorForm": {
+    "title": "Planning with HiVOOC",
+    "description1": "This will only take a moment and yet the information will enable us to begin handcrafting your safari of a lifetime.",
+    "description2": "Your personal details are protected as we abide by all international data privacy regulations. We only use this information to get in touch with you.",
+    "firstName": "First Name",
+    "enterFirstName": "Enter First Name",
+    "lastName": "Last Name",
+    "enterLastName": "Enter Last Name",
+    "phoneNumber": "Phone Number",
+    "enterPhoneNumber": "Enter Phone Number",
+    "email": "Email",
+    "enterEmail": "Enter Email",
+    "visitedVietnam": "Have you been to Vietnam before?",
+    "yes": "Yes",
+    "no": "No",
+    "experienceType": "Do you know what type of experience that you want to travel?",
+    "byExperiences": "By Experiences",
+    "byDestination": "By Destination",
+    "dontKnowYet": "I don't know yet",
+    "interestedExperiences": "Which experiences are you interested in?",
+    "sonTraTours": "Son Tra Tours",
+    "primateTours": "Primate Tours",
+    "birdingTours": "Birding tours",
+    "wildlifeNorth": "Wildlife Tour in the North",
+    "wildlifeSouth": "Wildlife Tour in the South",
+    "travelDate": "Do you know when you would like to travel?",
+    "companions": "Who are you travelling with?",
+    "solo": "Solo",
+    "myFamily": "My Family",
+    "myFriends": "My Friends",
+    "myPartner": "My Partner"
+  }
+}
