@@ -22,15 +22,15 @@ export default function Footer() {
                 className="w-40 h-40 object-contain"
               />
               <div>
-                <p className="text-xs sm:text-sm italic font-dancing-script text-white/90">
+                <p className="text-xs  italic font-dancing-script text-white/90">
                   Wildlife Tourism For Conservation
                 </p>
               </div>
             </div>
-            <p className="text-sm sm:text-base mb-3 text-white/90">
+            <p className=" sm:text-base mb-3 text-white/90">
               {t("description")}
             </p>
-            <p className="text-sm text-white/80">{t("mission")}</p>
+            <p className=" text-white/80">{t("mission")}</p>
           </div>
 
           {/* Explore Links */}
@@ -40,7 +40,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/experiences"
-                  className="text-sm sm:text-base text-white/80 hover:text-white transition-colors"
+                  className=" sm:text-base text-white/80 hover:text-white transition-colors"
                 >
                   {t("allExperiences")}
                 </Link>
@@ -48,7 +48,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/conservation"
-                  className="text-sm sm:text-base font-light text-white/80 hover:text-white transition-colors"
+                  className=" sm:text-base font-light text-white/80 hover:text-white transition-colors"
                 >
                   {t("conservation")}
                 </Link>
@@ -56,7 +56,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/guides"
-                  className="text-sm sm:text-base font-light text-white/80 hover:text-white transition-colors"
+                  className=" sm:text-base font-light text-white/80 hover:text-white transition-colors"
                 >
                   {t("ourGuides")}
                 </Link>
@@ -64,7 +64,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/travel-tips"
-                  className="text-sm sm:text-base text-white/80 hover:text-white transition-colors"
+                  className=" sm:text-base text-white/80 hover:text-white transition-colors"
                 >
                   {t("travelTips")}
                 </Link>
@@ -74,13 +74,13 @@ export default function Footer() {
 
           {/* Contact Information */}
           <div className="lg:col-span-1">
-            <h4 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">
+            <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">
               {t("contact")}
-            </h4>
+            </h3>
             <ul className="space-y-3 sm:space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 mt-0.5" />
-                <span className="text-sm sm:text-base text-white/80">
+                <span className=" sm:text-base text-white/80">
                   {t("address")}
                 </span>
               </li>
@@ -88,7 +88,7 @@ export default function Footer() {
                 <Mail className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
                 <a
                   href="mailto:tourbooking@hivooc.com"
-                  className="text-sm sm:text-base text-white/80 hover:text-white transition-colors"
+                  className=" sm:text-base text-white/80 hover:text-white transition-colors"
                 >
                   {t("email")}
                 </a>
@@ -97,7 +97,7 @@ export default function Footer() {
                 <Phone className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
                 <a
                   href="tel:0813949222"
-                  className="text-sm sm:text-base text-white/80 hover:text-white transition-colors"
+                  className=" sm:text-base text-white/80 hover:text-white transition-colors"
                 >
                   {t("phone")}
                 </a>
@@ -131,19 +131,19 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-white/20">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-white/70 text-center sm:text-left">
+            <p className=" text-white/70 text-center sm:text-left">
               {t("copyright")}
             </p>
             <div className="flex gap-4 sm:gap-6">
               <Link
                 href="/privacy-policy"
-                className="text-sm text-white/70 hover:text-white transition-colors"
+                className=" text-white/70 hover:text-white transition-colors"
               >
                 {t("privacyPolicy")}
               </Link>
               <Link
                 href="/terms-of-service"
-                className="text-sm text-white/70 hover:text-white transition-colors"
+                className=" text-white/70 hover:text-white transition-colors"
               >
                 {t("termsOfService")}
               </Link>

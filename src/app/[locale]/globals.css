@@ -123,17 +123,18 @@
   }
   body {
     @apply bg-background text-foreground font-light;
+    font-size: 16px;
   }
   h1 {
-    @apply font-condensed text-6xl font-light leading-tight;
+    @apply font-condensed text-6xl font-medium leading-tight;
     font-size: 62px;
   }
   h2 {
-    @apply font-condensed text-4xl font-light leading-snug;
+    @apply font-condensed text-4xl font-medium leading-snug;
     font-size: 36px;
   }
   h3 {
-    @apply font-condensed text-2xl font-light leading-relaxed;
+    @apply font-condensed text-2xl font-medium leading-relaxed;
     font-size: 24px;
   }
 }

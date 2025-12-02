@@ -54,7 +54,7 @@ export default function Gallery() {
           {galleryImages.map((image, index) => (
             <div
               key={index}
-              className="relative aspect-square bg-branding-green/10 rounded-lg overflow-hidden group cursor-pointer"
+              className="relative aspect-square bg-branding-green/10 rounded-[4px] overflow-hidden group cursor-pointer"
             >
               {/* Placeholder for actual images */}
               <div className="absolute inset-0 bg-gradient-to-br from-branding-green/20 to-branding-green/5" />

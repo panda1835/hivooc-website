@@ -94,7 +94,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full sticky top-0 z-50 shadow-md">
+    <header className="w-full z-50 shadow-md">
       {/* Top Bar */}
       <div className="w-full bg-branding-green text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -106,11 +106,11 @@ export default function Header() {
                   unoptimized
                   src="/logo.png"
                   alt="HIVOOC Logo"
-                  width={100}
-                  height={100}
-                  className="w-20 h-20 object-contain"
+                  width={150}
+                  height={150}
+                  className="w-32 h-32 object-contain"
                 />
-                <p className="hidden md:block text-xs sm:text-sm italic font-dancing-script text-white/90">
+                <p className="hidden md:block text-xs  italic font-dancing-script text-white/90">
                   Wildlife Tourism For Conservation
                 </p>
               </Link>
@@ -122,7 +122,7 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
-                  className="flex items-center gap-2 bg-white/10 rounded-md px-3 py-2 text-xs sm:text-sm text-white hover:bg-white/20 transition-colors"
+                  className="flex items-center gap-2 bg-white/10 rounded-[4px] px-3 h-10 py-2 text-xs  text-white hover:bg-white/20 transition-colors"
                 >
                   <Globe className="w-4 h-4" />
                   <span className="hidden sm:inline">{localeNames[locale]}</span>
@@ -141,10 +141,10 @@ export default function Header() {
                       className="fixed inset-0 z-10"
                       onClick={() => setLanguageDropdownOpen(false)}
                     />
-                    <div className="absolute top-full right-0 mt-2 bg-white rounded-md shadow-lg py-1 min-w-[140px] z-20">
+                    <div className="absolute top-full right-0 mt-2 bg-white rounded-[4px] shadow-lg py-1 min-w-[140px] z-20">
                       <button
                         onClick={() => handleLocaleChange("en")}
-                        className={`w-full text-left px-4 py-2 text-sm font-sans transition-colors ${
+                        className={`w-full text-left px-4 py-2  font-sans transition-colors ${
                           locale === "en"
                             ? "bg-branding-green/10 text-branding-green font-medium"
                             : "text-gray-700 hover:bg-gray-100"
@@ -154,7 +154,7 @@ export default function Header() {
                       </button>
                       <button
                         onClick={() => handleLocaleChange("vi")}
-                        className={`w-full text-left px-4 py-2 text-sm font-sans transition-colors ${
+                        className={`w-full text-left px-4 py-2  font-sans transition-colors ${
                           locale === "vi"
                             ? "bg-branding-green/10 text-branding-green font-medium"
                             : "text-gray-700 hover:bg-gray-100"
@@ -168,14 +168,14 @@ export default function Header() {
               </div>
 
               {/* Search Bar */}
-              <div className="hidden lg:flex items-center bg-white/10 rounded-md px-3 py-2 w-64">
+              <div className="hidden lg:flex items-center bg-white/10 rounded-[4px] px-3 py-2 w-64">
                 <Search className="w-4 h-4 text-white/70 mr-2" />
                 <input
                   type="text"
                   placeholder={t("searchPlaceholder")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-transparent text-white placeholder-white/50 text-sm font-sans outline-none w-full"
+                  className="bg-transparent text-white placeholder-white/50  font-sans outline-none w-full"
                 />
               </div>
 
@@ -207,7 +207,7 @@ export default function Header() {
         style={{ backgroundColor: "#EDF2F2" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center gap-8 py-4">
+          <div className="flex items-center justify-center gap-16 py-4">
             {menuItems.map((item) => (
               <div
                 key={item.id}
@@ -215,7 +215,7 @@ export default function Header() {
                 onMouseEnter={() => setExpandedMenu(item.id)}
                 onMouseLeave={() => setExpandedMenu(null)}
               >
-                <button className="flex items-center gap-1 text-branding-green hover:text-branding-green/80 font-normal text-sm font-sans transition-colors">
+                <button className="flex items-center gap-1 text-branding-green hover:text-branding-green/80 font-normal  font-sans transition-colors">
                   {item.label}
                   {item.columns && item.columns.length > 0 && (
                     <ChevronDown
@@ -253,7 +253,7 @@ export default function Header() {
                           <li key={subIdx}>
                             <Link
                               href={subItem.href}
-                              className="block text-sm font-sans font-normal text-gray-700 hover:text-orange-500 transition-colors"
+                              className="block  font-sans font-normal text-gray-700 hover:text-orange-500 transition-colors"
                             >
                               {subItem.featured && (
                                 <span className="mr-1">—</span>
@@ -284,7 +284,7 @@ export default function Header() {
                 placeholder={t("searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent text-gray-900 placeholder-gray-500 text-sm font-sans outline-none w-full"
+                className="bg-transparent text-gray-900 placeholder-gray-500  font-sans outline-none w-full"
               />
             </div>
 
@@ -298,7 +298,7 @@ export default function Header() {
                         expandedMenu === item.id ? null : item.id
                       )
                     }
-                    className="w-full flex items-center justify-between text-branding-green font-medium text-sm font-sans py-2"
+                    className="w-full flex items-center justify-between text-branding-green font-medium  font-sans py-2"
                   >
                     {item.label}
                     {item.columns && item.columns.length > 0 && (
@@ -318,7 +318,7 @@ export default function Header() {
                           <Link
                             key={idx}
                             href={subItem.href}
-                            className={`block text-sm font-sans py-1 ${
+                            className={`block  font-sans py-1 ${
                               subItem.featured
                                 ? "text-orange-500 font-medium"
                                 : "text-gray-700"

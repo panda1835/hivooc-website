@@ -85,7 +85,7 @@ export default function ShortTrips() {
           {trips.map((trip) => (
             <div
               key={trip.id}
-              className="group flex flex-col bg-white rounded-lg overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow"
+              className="group border flex flex-col bg-white rounded-[4px] overflow-hidden border hover:shadow-lg transition-shadow"
             >
               {/* Trip Image */}
               <div className="relative aspect-[4/3] bg-branding-green/10 overflow-hidden">
@@ -115,7 +115,7 @@ export default function ShortTrips() {
                 </h3>
 
                 {/* Description */}
-                <p className="text-branding-green/70 text-sm leading-relaxed mb-6 flex-grow">
+                <p className="text-branding-green/70  leading-relaxed mb-6 flex-grow">
                   {trip.description}
                 </p>
 
@@ -136,7 +136,7 @@ export default function ShortTrips() {
                     <p className="text-xs text-branding-green/60 uppercase tracking-wider mb-1">
                       {t("bestTimeToTravel")}
                     </p>
-                    <p className="text-sm font-medium text-branding-green">
+                    <p className=" font-medium text-branding-green">
                       {trip.bestTimeToTravel}
                     </p>
                   </div>
@@ -144,7 +144,7 @@ export default function ShortTrips() {
                     <p className="text-xs text-branding-green/60 uppercase tracking-wider mb-1">
                       {t("tripLength")}
                     </p>
-                    <p className="text-sm font-medium text-branding-green">
+                    <p className=" font-medium text-branding-green">
                       {trip.tripLength}
                     </p>
                   </div>

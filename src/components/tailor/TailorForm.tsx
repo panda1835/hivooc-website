@@ -82,8 +82,8 @@ export default function TailorForm() {
           <label className="block font-medium">{t('experienceType')} <span className="text-red-500">*</span></label>
           <div className="flex flex-wrap gap-8">
             {[t('byExperiences'), t('byDestination'), t('dontKnowYet')].map((item) => (
-              <label key={item} className="flex items-center gap-3 cursor-pointer group">
-                <div className="relative flex items-center">
+              <label key={item} className="flex items-start gap-3 cursor-pointer group">
+                <div className="relative flex items-start">
                    <input type="checkbox" className="peer appearance-none w-5 h-5 border border-gray-300 rounded checked:bg-branding-green checked:border-branding-green transition-colors" />
                    <svg className="absolute inset-0 m-auto w-3.5 h-3.5 text-white scale-0 peer-checked:scale-100 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -101,7 +101,7 @@ export default function TailorForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
              {[t('sonTraTours'), t('primateTours'), t('birdingTours'), t('wildlifeNorth'), t('wildlifeSouth')].map((item) => (
               <label key={item} className="flex items-center gap-3 cursor-pointer group">
-                <div className="relative flex items-center">
+                <div className="relative flex items-start">
                    <input type="checkbox" className="peer appearance-none w-5 h-5 border border-gray-300 rounded checked:bg-branding-green checked:border-branding-green transition-colors" />
                    <svg className="absolute inset-0 m-auto w-3.5 h-3.5 text-white scale-0 peer-checked:scale-100 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -139,8 +139,8 @@ export default function TailorForm() {
           <label className="block font-medium">{t('companions')} <span className="text-red-500">*</span></label>
           <div className="flex flex-wrap gap-8">
             {[t('solo'), t('myFamily'), t('myFriends'), t('myPartner')].map((item) => (
-              <label key={item} className="flex items-center gap-3 cursor-pointer group">
-                <div className="relative flex items-center">
+              <label key={item} className="flex items-start gap-3 cursor-pointer group">
+                <div className="relative flex items-start">
                    <input type="checkbox" className="peer appearance-none w-5 h-5 border border-gray-300 rounded checked:bg-branding-green checked:border-branding-green transition-colors" />
                    <svg className="absolute inset-0 m-auto w-3.5 h-3.5 text-white scale-0 peer-checked:scale-100 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />

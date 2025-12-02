@@ -99,7 +99,7 @@ export default function Reviews() {
                 {Array.from({ length: 5 }).map((_, index) => (
                   <Star
                     key={index}
-                    className="w-5 h-5 fill-branding-green text-branding-green"
+                    className="w-5 h-5 fill-[#2D6A4F] text-[#2D6A4F]"
                   />
                 ))}
               </div>
@@ -114,7 +114,7 @@ export default function Reviews() {
                 <p className="text-branding-green font-medium">
                   {review.author}
                 </p>
-                <p className="text-branding-green/60 text-sm">
+                <p className="text-branding-green/60 ">
                   {review.location}
                 </p>
               </div>
@@ -125,48 +125,3 @@ export default function Reviews() {
     </section>
   );
 }
-
-/* 
- * HOW TO FETCH REAL GOOGLE MAPS REVIEWS:
- * 
- * Option 1: Google Places API (Recommended)
- * ------------------------------------------
- * 1. Get a Google Cloud API key with Places API enabled
- * 2. Use the Place Details API to fetch reviews
- * 3. Create a server-side API route in Next.js:
- * 
- * // app/api/reviews/route.ts
- * export async function GET() {
- *   const placeId = 'ChIJ7Z0dMjMXQjQRKcpmsVn_AaY'; // Your place ID
- *   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
- *   
- *   const response = await fetch(
- *     `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating&key=${apiKey}`
- *   );
- *   
- *   const data = await response.json();
- *   return Response.json(data.result.reviews);
- * }
- * 
- * 4. Fetch in your component:
- * useEffect(() => {
- *   fetch('/api/reviews')
- *     .then(res => res.json())
- *     .then(data => setReviews(data));
- * }, []);
- * 
- * Option 2: Third-party Services
- * -------------------------------
- * - Outscraper API (https://outscraper.com/)
- * - Apify Google Maps Scraper
- * - SerpApi Google Maps Reviews
- * 
- * Option 3: Manual Update
- * -----------------------
- * - Periodically copy reviews from Google Maps manually
- * - Store in a JSON file or CMS
- * - Update when new reviews come in
- * 
- * Note: Google's Terms of Service restrict automated scraping.
- * Always use official APIs or comply with their terms.
- */

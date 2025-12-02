@@ -113,7 +113,7 @@ export default function DailyExperiences() {
           {experiences.map((experience) => (
             <div
               key={experience.id}
-              className="group flex flex-col bg-white rounded-lg overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow"
+              className="group flex flex-col bg-white rounded-[4px] overflow-hidden border hover:shadow-lg transition-shadow"
             >
               {/* Experience Image */}
               <div className="relative aspect-[4/3] bg-branding-green/10 overflow-hidden">
@@ -148,7 +148,7 @@ export default function DailyExperiences() {
                 </p>
 
                 {/* Description */}
-                <p className="text-branding-green/70 text-sm leading-relaxed mb-6 flex-grow line-clamp-4">
+                <p className="text-branding-green/70  leading-relaxed mb-6 flex-grow line-clamp-4">
                   {experience.description}
                 </p>
 
@@ -176,7 +176,7 @@ export default function DailyExperiences() {
                       <p className="text-xs text-branding-green/60 uppercase tracking-wider mb-1">
                         {slot.label}
                       </p>
-                      <p className="text-sm font-medium text-branding-green">
+                      <p className=" font-medium text-branding-green">
                         {slot.time}
                       </p>
                     </div>

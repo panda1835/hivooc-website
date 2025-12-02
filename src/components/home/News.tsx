@@ -116,7 +116,7 @@ export default function News() {
                 </h3>
 
                 {/* Description */}
-                <p className="text-branding-green/70 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
+                <p className="text-branding-green/70 leading-relaxed mb-6 flex-grow line-clamp-3">
                   {article.description}
                 </p>
 

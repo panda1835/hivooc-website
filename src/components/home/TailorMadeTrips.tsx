@@ -86,7 +86,7 @@ export default function TailorMadeTrips() {
           {tours.map((tour) => (
             <div
               key={tour.id}
-              className="group flex flex-col bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+              className="group border flex flex-col bg-white rounded-[4px] overflow-hidden hover:shadow-lg transition-shadow"
             >
               {/* Tour Image */}
               <div className="relative aspect-[3/4] bg-branding-green/10 overflow-hidden">
@@ -116,7 +116,7 @@ export default function TailorMadeTrips() {
                 </h3>
 
                 {/* Description */}
-                <p className="text-branding-green/70 text-sm leading-relaxed mb-6 flex-grow line-clamp-4">
+                <p className="text-branding-green/70  leading-relaxed mb-6 flex-grow line-clamp-4">
                   {tour.description}
                 </p>
 

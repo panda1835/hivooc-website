@@ -68,7 +68,7 @@ export default function SellingPoint() {
                 <h3 className="text-branding-green mb-3">
                   {t(`${feature.titleKey}.title`)}
                 </h3>
-                <p className="text-branding-green/70 text-sm leading-relaxed">
+                <p className="text-branding-green/70  leading-relaxed">
                   {t(`${feature.descriptionKey}.description`)}
                 </p>
               </div>
