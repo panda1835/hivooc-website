@@ -57,11 +57,11 @@ export default function ShortTrips() {
   ];
 
   return (
-    <section className="w-full py-16 md:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="w-full pb-16 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 border-t border-gray-100">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-8 md:mb-12">
-          <div className="mb-6 md:mb-0 max-w-2xl">
+          <div className="mb-6 md:mb-0 max-w-6xl">
             <h2 className="text-branding-green leading-tight mb-4">
               {t("title")}
             </h2>
@@ -131,20 +131,20 @@ export default function ShortTrips() {
                 </Button>
 
                 {/* Trip Details */}
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+                <div className="text-[14px] font-medium grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
                   <div className="text-center">
-                    <p className="text-xs text-branding-green/60 uppercase tracking-wider mb-1">
+                    <p className="text-xs text-[#5A7363]  uppercase tracking-wider mb-1">
                       {t("bestTimeToTravel")}
                     </p>
-                    <p className=" font-medium text-branding-green">
+                    <p className="  text-[#192B28]">
                       {trip.bestTimeToTravel}
                     </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-xs text-branding-green/60 uppercase tracking-wider mb-1">
+                    <p className="text-xs text-[#5A7363]  uppercase tracking-wider mb-1">
                       {t("tripLength")}
                     </p>
-                    <p className=" font-medium text-branding-green">
+                    <p className="  text-[#192B28]">
                       {trip.tripLength}
                     </p>
                   </div>

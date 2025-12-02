@@ -62,13 +62,13 @@ export default function SellingPoint() {
                 key={index}
                 className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="w-12 h-12 rounded-lg bg-branding-green flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-branding-yellow" />
+                <div className="w-12 h-12 rounded-lg bg-[#00342B] flex items-center justify-center mb-4">
+                  <Icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-branding-green mb-3">
+                <h3 className="text-[#1A4D2E] mb-3">
                   {t(`${feature.titleKey}.title`)}
                 </h3>
-                <p className="text-branding-green/70  leading-relaxed">
+                <p className="text-[#00342B]  leading-relaxed">
                   {t(`${feature.descriptionKey}.description`)}
                 </p>
               </div>

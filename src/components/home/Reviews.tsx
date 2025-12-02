@@ -66,7 +66,7 @@ export default function Reviews() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-8 md:mb-12">
-          <div className="mb-6 md:mb-0 max-w-2xl">
+          <div className="mb-6 md:mb-0 max-w-6xl">
             <h2 className="text-branding-green leading-tight mb-4">
               {t("title")}
             </h2>

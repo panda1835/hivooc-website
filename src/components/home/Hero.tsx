@@ -57,7 +57,7 @@ export default function Hero() {
             />
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 bg-black/60" />
 
             {/* Content - Centered - Same text for all slides */}
             <div className="relative h-full flex items-center justify-center">

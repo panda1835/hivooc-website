@@ -98,7 +98,7 @@ export default function Header() {
       {/* Top Bar */}
       <div className="w-full bg-branding-green text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-3 gap-4">
+          <div className="flex items-center justify-between gap-4">
             {/* Logo and Tagline */}
             <div className="flex items-center gap-3">
               <Link href="/" className="flex items-center gap-3">
@@ -207,7 +207,7 @@ export default function Header() {
         style={{ backgroundColor: "#EDF2F2" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center gap-16 py-4">
+          <div className="flex items-center justify-center gap-16 py-6">
             {menuItems.map((item) => (
               <div
                 key={item.id}
