@@ -9,57 +9,57 @@
   "Support": {
     "title": "Hỗ trợ thiên nhiên. Tạo sự khác biệt.",
     "description": "Chúng tôi coi trọng trách nhiệm môi trường và xã hội",
-    "browseProgram": "Khám phá chương trình bảo tồn"
+    "browseProgram": "Khám phá các chương trình bảo tồn"
   },
   "Hero": {
     "slides": [
       {
-        "title": "Trải nghiệm động vật hoang dã tùy chỉnh.",
-        "description": "Trải nghiệm động vật hoang dã được thiết kế riêng đưa bạn đến gần hơn với những khoảnh khắc phi thường nhất của thiên nhiên",
-        "viewExamples": "Xem Hành Trình Mẫu",
-        "tailorTrip": "Tùy chỉnh chuyến đi"
+        "title": "Trải nghiệm động vật hoang dã theo ý muốn của bạn",
+        "description": "Trải nghiệm động vật hoang dã được cá nhân hóa, đưa bạn chạm gần hơn với những khoảnh khắc kỳ diệu và hiếm có nhất của thiên nhiên",
+        "viewExamples": "Tham Khảo Hành Trình Mẫu",
+        "tailorTrip": "Tùy chỉnh hành trình"
       }
     ]
   },
   "SellingPoint": {
-    "title": "Du lịch đắm chìm tôn trọng văn hóa và nhạy cảm với môi trường.",
-    "description": "HiVOOC chuyên thiết kế các chuyến đi tích hợp đa dạng sinh học và đa dạng văn hóa. Mỗi điểm đến mang đến cho du khách vẻ đẹp thiên nhiên độc đáo, với hệ động thực vật đặc trưng, cũng như các yếu tố văn hóa phong phú—từ ẩm thực, kiến trúc, di tích lịch sử đến tên địa phương của các loài sinh vật.",
+    "title": "Hành trình du lịch đắm chìm, tôn trọng giá trị văn hoá và thân thiện với môi trường.",
+    "description": "HiVOOC chuyên thiết kế những hành trình kết hợp giữa đa dạng sinh học và đa dạng văn hoá. Mỗi điểm đến mở ra cho du khách một bức tranh thiên nhiên độc đáo với hệ động thực vật đặc trưng, đồng thời tôn vinh các giá trị văn hoá bản địa—từ ẩm thực, kiến trúc, di sản lịch sử cho đến tên địa phương của từng loài sinh vật.",
     "personalizedItineraries": {
-      "title": "Hành Trình Cá Nhân Hóa",
-      "description": "Mỗi chuyến đi được thiết kế phù hợp với sở thích, nhịp độ và ước mơ về động vật hoang dã của bạn. Không có hai trải nghiệm nào giống nhau."
+      "title": "Hành Trình Của Riêng Bạn",
+      "description": "Mỗi chuyến đi là một hành trình riêng, phù hợp với nhịp sống, sở thích và ước mơ về động vật hoang dã của bạn. Mỗi trải nghiệm đều là duy nhất, chỉ dành cho bạn."
     },
     "expertGuides": {
-      "title": "Hướng Dẫn Viên Chuyên Gia",
-      "description": "Các nhà tự nhiên học địa phương của chúng tôi có nhiều thập kỷ kinh nghiệm và kiến thức sâu rộng về hệ sinh thái và động vật hoang dã Việt Nam."
+      "title": "Các Chuyên Gia Đồng Hành",
+      "description": "Được dẫn dắt bởi những chuyên gia bảo tồn địa phương với nhiều năm kinh nghiệm, bạn sẽ khám phá trọn vẹn hệ sinh thái và đời sống động vật hoang dã Việt Nam."
     },
     "rareEncounters": {
-      "title": "Gặp Gỡ Hiếm Có",
-      "description": "Tiếp cận các địa điểm độc quyền và tối đa hóa cơ hội nhìn thấy các loài nguy cấp trong môi trường sống tự nhiên."
+      "title": "Những Cuộc Gặp Gỡ Hiếm Có",
+      "description": "Tiếp cận những địa điểm độc đáo và tối đa hóa cơ hội quan sát các loài nguy cấp trong môi trường sống tự nhiên của chúng."
     },
     "responsibleTourism": {
-      "title": "Du Lịch Có Trách Nhiệm",
-      "description": "Chúng tôi thực hành du lịch động vật hoang dã có đạo đức, bảo vệ môi trường sống và hỗ trợ các nỗ lực bảo tồn địa phương."
+      "title": "Du Lịch Có Trách Nhiệm Với Thiên Nhiên",
+      "description": "Chúng tôi hướng tới du lịch động vật hoang dã có trách nhiệm, nơi mỗi hành trình vừa bảo vệ môi trường sống vừa góp phần vào các nỗ lực bảo tồn của cộng đồng địa phương."
     }
   },
   "Gallery": {
-    "title": "Xem bộ sưu tập ảnh động vật hoang dã hấp dẫn",
-    "description": "Mỗi chuyến đi được thiết kế phù hợp với sở thích, nhịp độ và ước mơ về động vật hoang dã của bạn. Không có hai trải nghiệm nào giống nhau.",
+    "title": "Cùng thưởng thức bộ sưu tập ảnh đầy mê hoặc từ thiên nhiên hoang dã",
+    "description": "Mỗi hành trình được tạo nên từ chính sở thích, nhịp sống và tình yêu với động vật hoang dã của bạn. Không có trải nghiệm nào lặp lại, bởi mỗi chuyến đi thuộc về riêng bạn.",
     "viewMore": "Xem Thêm"
   },
   "Reviews": {
-    "title": "Đánh giá của khách",
-    "description": "Chúng tôi coi trọng trách nhiệm môi trường và xã hội",
+    "title": "Cảm Nhận Của Khách Hàng",
+    "description": "Chúng tôi luôn đặt trách nhiệm môi trường và xã hội lên hàng đầu",
     "viewMore": "Xem Thêm"
   },
   "TailorMadeTrips": {
-    "title": "Hành Trình Tùy Chỉnh Mẫu",
-    "description": "Mỗi chuyến đi được thiết kế phù hợp với sở thích, nhịp độ và ước mơ về động vật hoang dã của bạn. Không có hai trải nghiệm nào giống nhau.",
+    "title": "Hành Trình Mẫu Dành Riêng Cho Bạn",
+    "description": "Mỗi hành trình được tạo nên từ chính sở thích, nhịp sống và tình yêu với động vật hoang dã của bạn. Không có trải nghiệm nào lặp lại, bởi mỗi chuyến đi thuộc về riêng bạn.",
     "viewMore": "Xem Thêm",
     "explore": "Khám Phá"
   },
   "ShortTrips": {
     "title": "Hoặc tham gia chuyến phiêu lưu ngắn ngày có sẵn",
-    "description": "Mỗi chuyến đi được thiết kế phù hợp với sở thích, nhịp độ và ước mơ về động vật hoang dã của bạn. Không có hai trải nghiệm nào giống nhau.",
+    "description": "Mỗi hành trình được tạo nên từ chính sở thích, nhịp sống và tình yêu với động vật hoang dã của bạn. Không có trải nghiệm nào lặp lại, bởi mỗi chuyến đi thuộc về riêng bạn.",
     "viewMore": "Xem Thêm",
     "explore": "Khám Phá",
     "bestTimeToTravel": "THỜI GIAN TỐT NHẤT",
@@ -67,19 +67,19 @@
   },
   "DailyExperiences": {
     "title": "Trải Nghiệm Hàng Ngày",
-    "description": "Mỗi chuyến đi được thiết kế phù hợp với sở thích, nhịp độ và ước mơ về động vật hoang dã của bạn. Không có hai trải nghiệm nào giống nhau.",
+    "description": "Mỗi hành trình được tạo nên từ chính sở thích, nhịp sống và tình yêu với động vật hoang dã của bạn. Không có trải nghiệm nào lặp lại, bởi mỗi chuyến đi thuộc về riêng bạn.",
     "viewMore": "Xem Thêm",
     "explore": "Khám Phá"
   },
   "News": {
-    "title": "Tin tức bảo tồn",
-    "description": "Mỗi chuyến đi được thiết kế phù hợp với sở thích, nhịp độ và ước mơ về động vật hoang dã của bạn. Không có hai trải nghiệm nào giống nhau.",
+    "title": "Tin tức về bảo tồn",
+    "description": "Mỗi hành trình được tạo nên từ chính sở thích, nhịp sống và tình yêu với động vật hoang dã của bạn. Không có trải nghiệm nào lặp lại, bởi mỗi chuyến đi thuộc về riêng bạn. ",
     "viewMore": "Xem Thêm",
     "explore": "Khám Phá"
   },
   "Header": {
-    "wildlifeExperiences": "Trải Nghiệm Động Vật Hoang Dã",
-    "conservationPrograms": "Chương Trình Bảo Tồn",
+    "wildlifeExperiences": "Trải Nghiệm Thiên Nhiên Hoang Dã",
+    "conservationPrograms": "Những Chương Trình Bảo Tồn",
     "services": "Dịch Vụ",
     "archives": "Lưu Trữ",
     "aboutUs": "Về Chúng Tôi",
@@ -88,7 +88,7 @@
     "preMadeTour": "Tour Có Sẵn",
     "shortTour": "Tour Ngắn Ngày",
     "dailyTours": "Tour Hàng Ngày",
-    "natureEducation": "Giáo Dục Thiên Nhiên",
+    "natureEducation": "Chương Trình Giáo Dục Thiên Nhiên",
     "sonTraTours": "Tour Sơn Trà",
     "primateTours": "Tour Linh Trưởng",
     "birdingTours": "Tour Quan Sát Chim",
@@ -110,13 +110,13 @@
     "address": "K39/21 Thanh Vinh 1, Sơn Trà, Đà Nẵng",
     "email": "tourbooking@hivooc.com",
     "phone": "081 394 9222",
-    "copyright": "© 2025 HIVOOC. Bảo lưu mọi quyền.",
+    "copyright": "© 2025 HIVOOC. Mọi quyền được bảo lưu.",
     "privacyPolicy": "Chính Sách Bảo Mật",
     "termsOfService": "Điều Khoản Dịch Vụ"
   },
   "TailorForm": {
     "title": "Lên kế hoạch cùng HiVOOC",
-    "description1": "Việc này chỉ mất một chút thời gian nhưng thông tin sẽ giúp chúng tôi bắt đầu thiết kế chuyến đi để đời cho bạn.",
+    "description1": "Điều này chỉ mất một chút thời gian, nhưng thông tin bạn cung cấp sẽ giúp chúng tôi bắt đầu thiết kế nên hành trình safari để đời dành riêng cho bạn.",
     "description2": "Thông tin cá nhân của bạn được bảo vệ vì chúng tôi tuân thủ tất cả các quy định về quyền riêng tư dữ liệu quốc tế. Chúng tôi chỉ sử dụng thông tin này để liên hệ với bạn.",
     "firstName": "Tên",
     "enterFirstName": "Nhập tên",
@@ -147,3 +147,4 @@
     "myPartner": "Bạn đời"
   }
 }
+
