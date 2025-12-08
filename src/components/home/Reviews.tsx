@@ -62,7 +62,7 @@ export default function Reviews() {
   ];
 
   return (
-    <section className="w-full py-16 md:py-20 bg-branding-yellow">
+    <section className="w-full py-16 md:py-10 bg-branding-yellow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-8 md:mb-12">

@@ -59,6 +59,7 @@
   },
   "ShortTrips": {
     "title": "Or join our Pre-made Short Trips adventure",
+    "relatedShortTrip": "Related Trips",
     "description": "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
     "viewMore": "View More",
     "explore": "Explore",
@@ -113,6 +114,14 @@
     "copyright": "© 2025 HIVOOC. All rights reserved.",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service"
+  },
+  "TripInfo": {
+    "ages": "Ages",
+    "duration": "Duration",
+    "toursPerDay": "Tours per day",
+    "guide": "Live Wildlife Expert Guide",
+    "photographicLocation": "Photogenic Location",
+    "imageAlt": "Trip photo"
   },
   "TailorForm": {
     "title": "Planning with HiVOOC",

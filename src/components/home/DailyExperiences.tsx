@@ -133,22 +133,22 @@ export default function DailyExperiences() {
               {/* Experience Info */}
               <div className="flex flex-col flex-grow p-6">
                 {/* Tour Type Tag */}
-                <p className="text-xs font-medium text-branding-green/60 uppercase tracking-wider mb-3">
+                <p className="text-xs font-medium text-[#5A7363] uppercase tracking-wider mb-3">
                   {experience.tourType}
                 </p>
 
                 {/* Title */}
-                <h3 className="text-branding-green mb-3 line-clamp-2">
+                <h3 className="text-[#1A4D2E] mb-3 line-clamp-2">
                   {experience.title}
                 </h3>
 
                 {/* Availability Notice */}
-                <p className="text-xs font-bold text-branding-orange uppercase tracking-wider mb-3">
+                <p className="text-sm font-bold text-branding-orange uppercase tracking-wider mb-3">
                   {experience.availabilityNotice}
                 </p>
 
                 {/* Description */}
-                <p className="text-branding-green/70  leading-relaxed mb-6 flex-grow line-clamp-4">
+                <p className="text-[#00342B]  leading-relaxed mb-6 flex-grow line-clamp-4">
                   {experience.description}
                 </p>
 
@@ -173,7 +173,7 @@ export default function DailyExperiences() {
                 >
                   {experience.timeSlots.map((slot, index) => (
                     <div key={index} className="text-center">
-                      <p className="text-xs text-branding-green/60 uppercase tracking-wider mb-1">
+                      <p className="text-xs text-[#5A7363] uppercase tracking-wider mb-1">
                         {slot.label}
                       </p>
                       <p className=" font-medium text-branding-green">

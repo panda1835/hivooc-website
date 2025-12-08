@@ -59,6 +59,7 @@
   },
   "ShortTrips": {
     "title": "Hoặc tham gia chuyến phiêu lưu ngắn ngày có sẵn",
+    "relatedShortTrip": "Chuyến đi liên quan",
     "description": "Mỗi hành trình được tạo nên từ chính sở thích, nhịp sống và tình yêu với động vật hoang dã của bạn. Không có trải nghiệm nào lặp lại, bởi mỗi chuyến đi thuộc về riêng bạn.",
     "viewMore": "Xem Thêm",
     "explore": "Khám Phá",
@@ -113,6 +114,14 @@
     "copyright": "© 2025 HIVOOC. Mọi quyền được bảo lưu.",
     "privacyPolicy": "Chính Sách Bảo Mật",
     "termsOfService": "Điều Khoản Dịch Vụ"
+  },
+  "TripInfo": {
+    "ages": "Độ tuổi",
+    "duration": "Thời lượng",
+    "toursPerDay": "Số tour mỗi ngày",
+    "guide": "Hướng dẫn viên chuyên gia động vật hoang dã",
+    "photographicLocation": "Địa điểm chụp ảnh",
+    "imageAlt": "Ảnh chuyến đi"
   },
   "TailorForm": {
     "title": "Lên kế hoạch cùng HiVOOC",

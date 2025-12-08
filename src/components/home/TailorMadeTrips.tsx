@@ -106,17 +106,17 @@ export default function TailorMadeTrips() {
               {/* Tour Info */}
               <div className="flex flex-col flex-grow p-6">
                 {/* Category Tag */}
-                <p className="text-xs font-medium text-branding-green/60 uppercase tracking-wider mb-3">
+                <p className="text-xs text-[#5A7363] font-medium uppercase tracking-wider mb-3">
                   {tour.category}
                 </p>
 
                 {/* Title */}
-                <h3 className="text-branding-green mb-3 line-clamp-2">
+                <h3 className="text-[#1A4D2E] mb-3 line-clamp-2">
                   {tour.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-branding-green/70  leading-relaxed mb-6 flex-grow line-clamp-4">
+                <p className="text-[#00342B]  leading-relaxed mb-6 flex-grow line-clamp-4">
                   {tour.description}
                 </p>
 

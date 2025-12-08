@@ -9,13 +9,57 @@ import News from "@/components/home/News";
 import Partners from "@/components/home/Partners";
 import Support from "@/components/home/Support";
 import Gallery from "@/components/home/Gallery";
-export default function Home() {
+
+import type { ShortTrip } from "@/components/home/ShortTrips";
+
+import { getTranslations } from "next-intl/server";
+export default async function Home() {
+  const t = await getTranslations();
+  const customTripsArray: ShortTrip[] = [
+    {
+      id: 1,
+      category: "PRE-MADE TRIP",
+      title: "Vietnam Primate Photography",
+      description:
+        "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
+      image: "/short-trip/image1.jpg",
+      link: "/trips/vietnam-primate-photography",
+      bestTimeToTravel: "APR - JUN",
+      tripLength: "16 DAYS",
+    },
+    {
+      id: 2,
+      category: "PRE-MADE TRIP",
+      title: "Vietnam Primate Photography",
+      description:
+        "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
+      image: "/short-trip/image2.JPG",
+      link: "/trips/vietnam-primate-photography-2",
+      bestTimeToTravel: "APR - JUN",
+      tripLength: "16 DAYS",
+    },
+    {
+      id: 3,
+      category: "PRE-MADE TRIP",
+      title: "Vietnam Primate Photography",
+      description:
+        "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
+      image: "/short-trip/image3.jpg",
+      link: "/trips/vietnam-primate-photography-3",
+      bestTimeToTravel: "APR - JUN",
+      tripLength: "16 DAYS",
+    },
+  ];
   return (
     <main className="flex flex-col w-full">
       <Hero />
       <SellingPoint />
       <TailorMadeTrips />
-      <ShortTrips />
+      <ShortTrips 
+        title={t("ShortTrips.title")}
+        description={t("ShortTrips.description")}
+        trips={customTripsArray}
+      />
       <DailyExperiences />
       <GetStarted />
       <Reviews />

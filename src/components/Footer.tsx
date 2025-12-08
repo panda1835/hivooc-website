@@ -8,7 +8,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-branding-green text-white font-light">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 ">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Logo and Description */}
           <div className="lg:col-span-1">
@@ -35,7 +35,7 @@ export default function Footer() {
 
           {/* Explore Links */}
           <div className="lg:col-span-1">
-            <h3 className="text-lg sm:text-xl mb-4 sm:mb-6">{t("explore")}</h3>
+            <h3 className="text-lg font-light sm:text-xl mb-4 sm:mb-6">{t("explore")}</h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
                 <Link
@@ -74,7 +74,7 @@ export default function Footer() {
 
           {/* Contact Information */}
           <div className="lg:col-span-1">
-            <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">
+            <h3 className="text-lg sm:text-xl font-light mb-4 sm:mb-6">
               {t("contact")}
             </h3>
             <ul className="space-y-3 sm:space-y-4">
