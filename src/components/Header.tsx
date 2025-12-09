@@ -41,17 +41,41 @@ export default function Header() {
           items: [
             { label: t("shortTour"), href: "/short-tour", featured: true },
             { label: t("dailyTours"), href: "/daily-tours", featured: false },
-            { label: t("natureEducation"), href: "/nature-education", featured: false },
+            {
+              label: t("natureEducation"),
+              href: "/nature-education",
+              featured: false,
+            },
           ],
         },
         {
           title: "",
           items: [
-            { label: t("sonTraTours"), href: "/son-tra-tours", featured: false },
-            { label: t("primateTours"), href: "/primate-tours", featured: true },
-            { label: t("birdingTours"), href: "/birding-tours", featured: false },
-            { label: t("wildlifeTourNorth"), href: "/wildlife-tour-north", featured: false },
-            { label: t("wildlifeTourSouth"), href: "/wildlife-tour-south", featured: false },
+            {
+              label: t("sonTraTours"),
+              href: "/son-tra-tours",
+              featured: false,
+            },
+            {
+              label: t("primateTours"),
+              href: "/primate-tours",
+              featured: true,
+            },
+            {
+              label: t("birdingTours"),
+              href: "/birding-tours",
+              featured: false,
+            },
+            {
+              label: t("wildlifeTourNorth"),
+              href: "/wildlife-tour-north",
+              featured: false,
+            },
+            {
+              label: t("wildlifeTourSouth"),
+              href: "/wildlife-tour-south",
+              featured: false,
+            },
           ],
         },
       ],
@@ -122,10 +146,12 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
-                  className="flex items-center gap-2 bg-white/10 rounded-[4px] px-3 h-10 py-2 text-xs  text-white hover:bg-white/20 transition-colors"
+                  className="flex cursor-pointer items-center gap-2 bg-white/10 rounded-[4px] px-3 h-10 py-2 text-xs  text-white hover:bg-white/20 transition-colors"
                 >
                   <Globe className="w-4 h-4" />
-                  <span className="hidden sm:inline">{localeNames[locale]}</span>
+                  <span className="hidden sm:inline">
+                    {localeNames[locale]}
+                  </span>
                   <span className="sm:hidden">{locale.toUpperCase()}</span>
                   <ChevronDown
                     className={`w-4 h-4 transition-transform ${
@@ -144,7 +170,7 @@ export default function Header() {
                     <div className="absolute top-full right-0 mt-2 bg-white rounded-[4px] shadow-lg py-1 min-w-[140px] z-20">
                       <button
                         onClick={() => handleLocaleChange("en")}
-                        className={`w-full text-left px-4 py-2  font-sans transition-colors ${
+                        className={`w-full text-left px-4 py-2 cursor-pointer font-sans transition-colors ${
                           locale === "en"
                             ? "bg-branding-green/10 text-branding-green font-medium"
                             : "text-gray-700 hover:bg-gray-100"
@@ -154,7 +180,7 @@ export default function Header() {
                       </button>
                       <button
                         onClick={() => handleLocaleChange("vi")}
-                        className={`w-full text-left px-4 py-2  font-sans transition-colors ${
+                        className={`w-full text-left px-4 py-2 cursor-pointer font-sans transition-colors ${
                           locale === "vi"
                             ? "bg-branding-green/10 text-branding-green font-medium"
                             : "text-gray-700 hover:bg-gray-100"
@@ -231,45 +257,48 @@ export default function Header() {
         </div>
 
         {/* Full-width dropdown - outside container */}
-        {menuItems.map((item) => (
-          item.columns && item.columns.length > 0 && expandedMenu === item.id && (
-            <div
-              key={`dropdown-${item.id}`}
-              className="absolute left-0 right-0 top-full bg-white shadow-lg z-50"
-              onMouseEnter={() => setExpandedMenu(item.id)}
-              onMouseLeave={() => setExpandedMenu(null)}
-            >
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="grid grid-cols-3 gap-8">
-                  {item.columns.map((column, idx) => (
-                    <div key={idx}>
-                      {column.title && (
-                        <h3 className="font-normal text-branding-green mb-3 font-condensed">
-                          {column.title}
-                        </h3>
-                      )}
-                      <ul className="space-y-2">
-                        {column.items.map((subItem, subIdx) => (
-                          <li key={subIdx}>
-                            <Link
-                              href={subItem.href}
-                              className="block  font-sans font-normal text-gray-700 hover:text-orange-500 transition-colors"
-                            >
-                              {subItem.featured && (
-                                <span className="mr-1">—</span>
-                              )}
-                              {subItem.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+        {menuItems.map(
+          (item) =>
+            item.columns &&
+            item.columns.length > 0 &&
+            expandedMenu === item.id && (
+              <div
+                key={`dropdown-${item.id}`}
+                className="absolute left-0 right-0 top-full bg-white shadow-lg z-50"
+                onMouseEnter={() => setExpandedMenu(item.id)}
+                onMouseLeave={() => setExpandedMenu(null)}
+              >
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                  <div className="grid grid-cols-3 gap-8">
+                    {item.columns.map((column, idx) => (
+                      <div key={idx}>
+                        {column.title && (
+                          <h3 className="font-normal text-branding-green mb-3 font-condensed">
+                            {column.title}
+                          </h3>
+                        )}
+                        <ul className="space-y-2">
+                          {column.items.map((subItem, subIdx) => (
+                            <li key={subIdx}>
+                              <Link
+                                href={subItem.href}
+                                className="block  font-sans font-normal text-gray-700 hover:text-orange-500 transition-colors"
+                              >
+                                {subItem.featured && (
+                                  <span className="mr-1">—</span>
+                                )}
+                                {subItem.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        ))}
+            )
+        )}
       </nav>
 
       {/* Mobile Menu */}
@@ -294,9 +323,7 @@ export default function Header() {
                 <div key={item.id}>
                   <button
                     onClick={() =>
-                      setExpandedMenu(
-                        expandedMenu === item.id ? null : item.id
-                      )
+                      setExpandedMenu(expandedMenu === item.id ? null : item.id)
                     }
                     className="w-full flex items-center justify-between text-branding-green font-medium  font-sans py-2"
                   >
@@ -311,36 +338,36 @@ export default function Header() {
                   </button>
 
                   {/* Mobile Submenu */}
-                  {item.columns && item.columns.length > 0 && expandedMenu === item.id && (
-                    <div className="pl-4 space-y-2 pb-2">
-                      {item.columns.flatMap((column) =>
-                        column.items.map((subItem, idx) => (
-                          <Link
-                            key={idx}
-                            href={subItem.href}
-                            className={`block  font-sans py-1 ${
-                              subItem.featured
-                                ? "text-orange-500 font-medium"
-                                : "text-gray-700"
-                            }`}
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            {subItem.featured && "— "}
-                            {subItem.label}
-                          </Link>
-                        ))
-                      )}
-                    </div>
-                  )}
+                  {item.columns &&
+                    item.columns.length > 0 &&
+                    expandedMenu === item.id && (
+                      <div className="pl-4 space-y-2 pb-2">
+                        {item.columns.flatMap((column) =>
+                          column.items.map((subItem, idx) => (
+                            <Link
+                              key={idx}
+                              href={subItem.href}
+                              className={`block  font-sans py-1 ${
+                                subItem.featured
+                                  ? "text-orange-500 font-medium"
+                                  : "text-gray-700"
+                              }`}
+                              onClick={() => setMobileMenuOpen(false)}
+                            >
+                              {subItem.featured && "— "}
+                              {subItem.label}
+                            </Link>
+                          ))
+                        )}
+                      </div>
+                    )}
                 </div>
               ))}
             </div>
 
             {/* Mobile CTA Button */}
             <div className="block sm:hidden mt-4">
-              <TailorMyTripButton
-                onClick={() => setMobileMenuOpen(false)}
-              />
+              <TailorMyTripButton onClick={() => setMobileMenuOpen(false)} />
             </div>
           </div>
         </div>

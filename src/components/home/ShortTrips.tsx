@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import TripCard from "@/components/short-trip/TripCard";
-
+import { Link } from "@/i18n/navigation";
 export interface ShortTrip {
   id: number;
   category: string;
@@ -21,17 +21,17 @@ interface ShortTripsProps {
   trips: ShortTrip[];
 }
 
-export default function ShortTrips({ 
-  title, 
-  description, 
-  trips 
+export default function ShortTrips({
+  title,
+  description,
+  trips,
 }: ShortTripsProps) {
   const t = useTranslations("ShortTrips");
 
   // Use provided props or fall back to translations and default data
   const displayTitle = title || t("title");
   const displayDescription = description || t("description");
-  
+
   return (
     <section className="w-full pb-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 border-t border-gray-100">
@@ -47,13 +47,13 @@ export default function ShortTrips({
           </div>
 
           {/* View More Link */}
-          <a
+          <Link
             href="/short-trips"
             className="inline-flex items-center gap-2 text-branding-green hover:text-branding-green/80 transition-colors group"
           >
             <span className="font-medium">{t("viewMore")}</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </a>
+          </Link>
         </div>
 
         {/* Trips Grid */}

@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-
+import { Link } from "@/i18n/navigation";
 interface TripCardProps {
   id: number;
   category: string;
@@ -51,9 +51,7 @@ export default function TripCard({
         </p>
 
         {/* Title */}
-        <h3 className="text-[#1A4D2E] mb-3">
-          {title}
-        </h3>
+        <h3 className="text-[#1A4D2E] mb-3">{title}</h3>
 
         {/* Description */}
         <p className="text-[#00342B] leading-relaxed mb-6 flex-grow">
@@ -61,14 +59,8 @@ export default function TripCard({
         </p>
 
         {/* Explore Button */}
-        <Button
-          variant="outline"
-          className="w-full mb-4"
-          asChild
-        >
-          <a href={link}>
-            {t("explore")}
-          </a>
+        <Button variant="outline" className="w-full mb-4" asChild>
+          <Link href={link}>{t("explore")}</Link>
         </Button>
 
         {/* Trip Details */}
@@ -77,17 +69,13 @@ export default function TripCard({
             <p className="text-xs text-[#5A7363]  uppercase tracking-wider mb-1">
               {t("bestTimeToTravel")}
             </p>
-            <p className="">
-              {bestTimeToTravel}
-            </p>
+            <p className="">{bestTimeToTravel}</p>
           </div>
           <div className="text-center">
             <p className="text-xs text-[#5A7363]  uppercase tracking-wider mb-1">
               {t("tripLength")}
             </p>
-            <p className="">
-              {tripLength}
-            </p>
+            <p className="">{tripLength}</p>
           </div>
         </div>
       </div>

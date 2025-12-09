@@ -23,7 +23,7 @@ export default async function Home() {
       description:
         "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
       image: "/short-trip/image1.jpg",
-      link: "/trips/vietnam-primate-photography",
+      link: "/short-trip/vietnam-primate-photography",
       bestTimeToTravel: "APR - JUN",
       tripLength: "16 DAYS",
     },
@@ -34,7 +34,7 @@ export default async function Home() {
       description:
         "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
       image: "/short-trip/image2.JPG",
-      link: "/trips/vietnam-primate-photography-2",
+      link: "/short-trip/vietnam-primate-photography-2",
       bestTimeToTravel: "APR - JUN",
       tripLength: "16 DAYS",
     },
@@ -45,7 +45,7 @@ export default async function Home() {
       description:
         "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
       image: "/short-trip/image3.jpg",
-      link: "/trips/vietnam-primate-photography-3",
+      link: "/short-trip/vietnam-primate-photography-3",
       bestTimeToTravel: "APR - JUN",
       tripLength: "16 DAYS",
     },
@@ -55,7 +55,7 @@ export default async function Home() {
       <Hero />
       <SellingPoint />
       <TailorMadeTrips />
-      <ShortTrips 
+      <ShortTrips
         title={t("ShortTrips.title")}
         description={t("ShortTrips.description")}
         trips={customTripsArray}
