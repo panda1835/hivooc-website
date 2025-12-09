@@ -3,23 +3,32 @@
 import type React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function PrimateTourPage() {
+  /* ---------------------------- COPY PROTECTION ---------------------------- */
   const handleCopy = (e: React.ClipboardEvent) => e.preventDefault();
   const handleContextMenu = (e: React.MouseEvent) => e.preventDefault();
+  const handleDragStart = (e: React.DragEvent) => e.preventDefault();
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     const isMac =
       typeof navigator !== "undefined" &&
       navigator.platform.toLowerCase().includes("mac");
-    const copyCombo =
+
+    const isCopyCombo =
       (isMac && event.metaKey && event.key.toLowerCase() === "c") ||
       (!isMac && event.ctrlKey && event.key.toLowerCase() === "c");
-    if (copyCombo) event.preventDefault();
+
+    if (isCopyCombo) event.preventDefault();
   };
 
   return (
     <main
+      tabIndex={0}
+      onCopy={handleCopy}
+      onContextMenu={handleContextMenu}
+      onKeyDown={handleKeyDown}
       className="min-h-screen bg-white text-slate-900 flex items-center justify-center p-6"
       style={{
         userSelect: "none",
@@ -27,13 +36,31 @@ export default function PrimateTourPage() {
         MozUserSelect: "none",
         msUserSelect: "none",
       }}
-      onCopy={handleCopy}
-      onContextMenu={handleContextMenu}
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
     >
       <Card className="max-w-3xl w-full border border-slate-200 shadow-sm bg-white">
         <CardContent className="p-8 space-y-8">
+          {/* --------------------------- NON-DOWNLOADABLE IMAGE --------------------------- */}
+          <div className="relative w-full h-64 overflow-hidden rounded-lg border border-slate-200">
+            <Image
+              src="/hero/image3.jpg"
+              alt="Red-Shanked Douc Langur"
+              fill
+              draggable={false}
+              onDragStart={handleDragStart}
+              onContextMenu={(e) => e.preventDefault()}
+              className="object-cover w-full h-full pointer-events-none select-none"
+              style={{
+                WebkitTouchCallout: "none", // disable image save on mobile
+              }}
+            />
+
+            {/* Transparent overlay to block right-click + long press */}
+            <div
+              className="absolute inset-0 pointer-events-auto"
+              onContextMenu={(e) => e.preventDefault()}
+            />
+          </div>
+
           {/* Header */}
           <section className="space-y-2">
             <p className="text-xs uppercase tracking-widest text-emerald-600/80">
@@ -46,9 +73,9 @@ export default function PrimateTourPage() {
 
             <p className="text-sm text-slate-600">
               Explore the lush Sơn Trà Nature Reserve and observe the rare
-              Red-Shanked Douc Langur— one of the world’s most beautiful
-              primates—while learning about ongoing conservation efforts in
-              Central Vietnam.
+              Red-Shanked Douc Langur— one of the world’s most striking
+              primates—while learning about conservation efforts in Central
+              Vietnam.
             </p>
           </section>
 
@@ -69,7 +96,7 @@ export default function PrimateTourPage() {
                 Duration
               </p>
               <p className="font-medium">Half-day · 05:30 – 10:00</p>
-              <p className="text-xs text-slate-500">Best time for sightings</p>
+              <p className="text-xs text-slate-500">Ideal time for sightings</p>
             </div>
 
             <div className="rounded-md border border-slate-200 bg-white p-4 space-y-1">
@@ -81,29 +108,22 @@ export default function PrimateTourPage() {
             </div>
           </section>
 
-          {/* Highlights & itinerary */}
+          {/* Highlights */}
           <section className="grid gap-8 md:grid-cols-[1.2fr,1fr] text-sm">
             <div className="space-y-3">
               <h2 className="text-base font-semibold">Tour Highlights</h2>
               <ul className="list-disc list-inside space-y-1 text-slate-700">
                 <li>
-                  View Red-Shanked Douc Langurs in their natural forest canopy.
+                  Observe Red-Shanked Douc Langurs in their natural canopy
+                  habitat.
                 </li>
+                <li>Guided forest walk with trained wildlife spotters.</li>
                 <li>
-                  Learn about the ecology and behaviors of Vietnam’s primate
-                  species.
+                  Learn about primate ecology, behavior, and conservation
+                  challenges.
                 </li>
-                <li>
-                  Walk through ancient evergreen forests with experienced
-                  guides.
-                </li>
-                <li>
-                  Understand threats such as habitat loss and illegal wildlife
-                  trade.
-                </li>
-                <li>
-                  Support community-driven conservation programs in Đà Nẵng.
-                </li>
+                <li>Explore Sơn Trà’s unique evergreen forest ecosystem.</li>
+                <li>Support community-led biodiversity protection efforts.</li>
               </ul>
             </div>
 
@@ -111,24 +131,22 @@ export default function PrimateTourPage() {
               <h2 className="text-base font-semibold">Sample Itinerary</h2>
               <ol className="space-y-1 text-slate-700">
                 <li>
-                  <span className="font-medium">05:30</span> · Meet at Sơn Trà
-                  ranger station
+                  <span className="font-medium">05:30</span> · Meet at ranger
+                  station
                 </li>
                 <li>
-                  <span className="font-medium">06:00</span> · Begin slow-drive
-                  wildlife spotting along the ridge
+                  <span className="font-medium">06:00</span> · Slow-drive
+                  wildlife spotting
                 </li>
                 <li>
                   <span className="font-medium">07:30</span> · Guided forest
-                  walk to hidden observation points
+                  walk
                 </li>
                 <li>
                   <span className="font-medium">09:00</span> · Conservation talk
-                  with local experts
                 </li>
                 <li>
-                  <span className="font-medium">10:00</span> · Finish & return
-                  to meeting point
+                  <span className="font-medium">10:00</span> · End of program
                 </li>
               </ol>
             </div>
@@ -139,10 +157,9 @@ export default function PrimateTourPage() {
             <div className="space-y-2">
               <h2 className="text-base font-semibold">What’s Included</h2>
               <ul className="list-disc list-inside space-y-1 text-slate-700">
-                <li>Guided tour with trained wildlife spotters</li>
-                <li>High-quality binoculars provided</li>
+                <li>Wildlife guide & binoculars</li>
+                <li>Bottled water & snacks</li>
                 <li>Environmental education session</li>
-                <li>Bottled water & light snacks</li>
                 <li>Conservation support fee</li>
               </ul>
             </div>
@@ -150,9 +167,9 @@ export default function PrimateTourPage() {
             <div className="space-y-2">
               <h2 className="text-base font-semibold">Not Included</h2>
               <ul className="list-disc list-inside space-y-1 text-slate-700">
-                <li>Transportation to Sơn Trà</li>
+                <li>Transport to/from Sơn Trà</li>
                 <li>Meals beyond snacks</li>
-                <li>Personal travel insurance</li>
+                <li>Travel insurance</li>
               </ul>
             </div>
           </section>
@@ -162,19 +179,23 @@ export default function PrimateTourPage() {
             <h2 className="text-sm font-semibold">Important Notes</h2>
             <ul className="list-disc list-inside space-y-1">
               <li>
-                Primates are wild animals—sightings depend on weather, noise,
-                and natural behavior.
+                Primate sightings vary with weather and forest conditions.
               </li>
               <li>
-                Participants must remain quiet and follow biodiversity
-                protection guidelines.
+                Participants must remain quiet and follow ranger guidance.
               </li>
-              <li>
-                Feeding, approaching, or calling wildlife is strictly
-                prohibited.
-              </li>
-              <li>Tours may be adjusted during sensitive breeding seasons.</li>
+              <li>Do not feed, approach, or touch wildlife.</li>
+              <li>Tours may be modified during sensitive breeding seasons.</li>
             </ul>
+          </section>
+
+          {/* CTA */}
+          <section className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between pt-4">
+            <p className="text-xs text-slate-500">
+              Your participation contributes directly to primate conservation in
+              Đà Nẵng.
+            </p>
+            <Button>Request Availability</Button>
           </section>
         </CardContent>
       </Card>
