@@ -1,11 +1,10 @@
 import Hero from "@/components/short-trip/Hero";
 import Pricing from "@/components/short-trip/Pricing";
 import Support from "@/components/home/Support";
-import GetStarted from "@/components/home/GetStarted";
+import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
 import ShortTrips from "@/components/home/ShortTrips";
 import { getTranslations } from "next-intl/server";
 import { type ShortTrip } from "@/components/home/ShortTrips";
-import TripInfo from "@/components/short-trip/TripInfo";
 import TripDetails from "@/components/short-trip/TripDetails";
 
 export default async function ShortTripPage() {
@@ -18,7 +17,7 @@ export default async function ShortTripPage() {
       description:
         "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
       image: "/short-trip/image1.jpg",
-      link: "/trips/vietnam-primate-photography",
+      link: "/short-trip/vietnam-primate-photography",
       bestTimeToTravel: "APR - JUN",
       tripLength: "16 DAYS",
     },
@@ -29,7 +28,7 @@ export default async function ShortTripPage() {
       description:
         "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
       image: "/short-trip/image2.JPG",
-      link: "/trips/vietnam-primate-photography-2",
+      link: "/short-trip/vietnam-primate-photography-2",
       bestTimeToTravel: "APR - JUN",
       tripLength: "16 DAYS",
     },
@@ -40,7 +39,7 @@ export default async function ShortTripPage() {
       description:
         "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
       image: "/short-trip/image3.jpg",
-      link: "/trips/vietnam-primate-photography-3",
+      link: "/short-trip/vietnam-primate-photography-3",
       bestTimeToTravel: "APR - JUN",
       tripLength: "16 DAYS",
     },
@@ -64,28 +63,9 @@ export default async function ShortTripPage() {
           { pax: "4 pax", price: 114 },
         ]}
       />
-      <TripInfo
-        ages="> 6yrs old"
-        duration="3 hours"
-        toursPerDay="2 tours per day"
-        tourTimes="Morning/Afternoon"
-        guide="Live Wildlife Expert Guide"
-        guideLanguages={["1 speaking English", "1 speaking Vietnamese"]}
-        photographicLocation="Photogenic Location"
-        locationDetails="Of wildlife & endemic plant"
-        images={[
-          "/short-trip/image1.jpg",
-          "/short-trip/image2.JPG",
-          "/short-trip/image3.jpg",
-          "/short-trip/image1.jpg",
-          "/short-trip/image2.JPG",
-          "/short-trip/image3.jpg",
-          "/short-trip/image1.jpg",
-          "/short-trip/image2.JPG",
-        ]}
-      />
+
       <TripDetails />
-      <GetStarted />
+      <ContributeToConservation />
       <ShortTrips
         title={t("ShortTrips.relatedShortTrip")}
         description={t("ShortTrips.description")}

@@ -6,6 +6,11 @@
     "browseDestination": "Khám Phá Điểm Đến",
     "tailorTrip": "Tùy chỉnh chuyến đi"
   },
+  "ContributeToConservation": {
+    "title": "Chúng tôi có đóng góp cho bảo tồn không?",
+    "description": "Tất nhiên, khi bạn đồng ý chọn dịch vụ tour của HIVOOC, điều đó có nghĩa là bạn đã đồng ý cùng HIVOOC đóng góp một khoản 100.000 VND/người/chuyến cho các dự án bảo tồn. Khoản đóng góp này do HIVOOC quyết định và được phân bổ để thực hiện các dự án/hoạt động bảo tồn khác nhau tại bán đảo Sơn Trà nhằm giúp bảo vệ rừng và động vật hoang dã nơi đây.",
+    "learnMore": "Tìm hiểu thêm"
+  },
   "Support": {
     "title": "Hỗ trợ thiên nhiên. Tạo sự khác biệt.",
     "description": "Chúng tôi coi trọng trách nhiệm môi trường và xã hội",
@@ -64,7 +69,9 @@
     "viewMore": "Xem Thêm",
     "explore": "Khám Phá",
     "bestTimeToTravel": "THỜI GIAN TỐT NHẤT",
-    "tripLength": "THỜI LƯỢNG"
+    "tripLength": "THỜI LƯỢNG",
+    "bookThisTrip": "Đặt chuyến đi này",
+    "tailorThisTrip": "Tùy chỉnh chuyến đi này"
   },
   "DailyExperiences": {
     "title": "Trải Nghiệm Hàng Ngày",
@@ -156,4 +163,3 @@
     "myPartner": "Bạn đời"
   }
 }
-
