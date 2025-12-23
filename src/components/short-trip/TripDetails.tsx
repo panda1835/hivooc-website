@@ -198,7 +198,7 @@ export default function TripDetails() {
           <div className="flex gap-8">
             <button
               onClick={() => setActiveTab("overview")}
-              className={`pb-4 px-2 cursor-pointer font-medium transition-colors relative ${
+              className={`pb-4 px-2 font-medium transition-colors relative ${
                 activeTab === "overview"
                   ? "text-[#1A4D2E]"
                   : "text-gray-500 hover:text-gray-700"
@@ -233,7 +233,7 @@ export default function TripDetails() {
             </button>
             <button
               onClick={() => setActiveTab("photos")}
-              className={`pb-4 px-2 cursor-pointer font-medium transition-colors relative ${
+              className={`pb-4 px-2 font-medium transition-colors relative ${
                 activeTab === "photos"
                   ? "text-[#1A4D2E]"
                   : "text-gray-500 hover:text-gray-700"
@@ -303,11 +303,7 @@ export default function TripDetails() {
                 <Button variant="outline" size="lg" className="bg-transparent">
                   {t("bookThisTrip")}
                 </Button>
-                <Button
-                  variant="orange"
-                  size="lg"
-                  className="group font-sans cursor-pointer"
-                >
+                <Button variant="orange" size="lg" className="group font-sans">
                   {t("tailorThisTrip")}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
@@ -321,11 +317,7 @@ export default function TripDetails() {
                 <Button variant="outline" size="lg" className="bg-transparent">
                   {t("bookThisTrip")}
                 </Button>
-                <Button
-                  variant="orange"
-                  size="lg"
-                  className="group font-sans cursor-pointer"
-                >
+                <Button variant="orange" size="lg" className="group font-sans">
                   {t("tailorThisTrip")}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>

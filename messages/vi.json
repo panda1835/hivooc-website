@@ -130,6 +130,26 @@
     "photographicLocation": "Địa điểm chụp ảnh",
     "imageAlt": "Ảnh chuyến đi"
   },
+  "SpeciesPage": {
+    "heroTitle": "Khám phá những loài sinh vật kỳ thú.",
+    "heroSubtitle": "Những trải nghiệm thiên nhiên được thiết kế riêng đưa bạn đến gần hơn với những khoảnh khắc kỳ diệu của tự nhiên.",
+    "introTitle": "Khám phá thế giới hoang dã Việt Nam",
+    "introDescription": "Từ tán rừng đến vùng đất ngập nước, Việt Nam sở hữu nhiều loài linh trưởng, chim, bò sát, lưỡng cư và vô số côn trùng độc đáo. Xem thư viện loài của chúng tôi và lọc theo nhóm bạn quan tâm.",
+    "filterTitle": "Lọc theo",
+    "filterSubtitle": "Loài",
+    "emptyState": "Không có loài nào khớp với bộ lọc đã chọn.",
+    "categories": {
+      "primates": "Linh trưởng",
+      "birds": "Chim",
+      "lizards": "Thằn lằn",
+      "frogs": "Ếch nhái",
+      "snakes": "Rắn",
+      "butterflies": "Bướm",
+      "dragonflies": "Chuồn chuồn",
+      "otherInsects": "Côn trùng khác",
+      "fungus": "Nấm"
+    }
+  },
   "TailorForm": {
     "title": "Lên kế hoạch cùng HiVOOC",
     "description1": "Điều này chỉ mất một chút thời gian, nhưng thông tin bạn cung cấp sẽ giúp chúng tôi bắt đầu thiết kế nên hành trình safari để đời dành riêng cho bạn.",

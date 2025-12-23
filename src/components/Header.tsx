@@ -146,7 +146,7 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
-                  className="flex cursor-pointer items-center gap-2 bg-white/10 rounded-[4px] px-3 h-10 py-2 text-xs  text-white hover:bg-white/20 transition-colors"
+                  className="flex items-center gap-2 bg-white/10 rounded-[4px] px-3 h-10 py-2 text-xs  text-white hover:bg-white/20 transition-colors"
                 >
                   <Globe className="w-4 h-4" />
                   <span className="hidden sm:inline">
@@ -170,7 +170,7 @@ export default function Header() {
                     <div className="absolute top-full right-0 mt-2 bg-white rounded-[4px] shadow-lg py-1 min-w-[140px] z-20">
                       <button
                         onClick={() => handleLocaleChange("en")}
-                        className={`w-full text-left px-4 py-2 cursor-pointer font-sans transition-colors ${
+                        className={`w-full text-left px-4 py-2 font-sans transition-colors ${
                           locale === "en"
                             ? "bg-branding-green/10 text-branding-green font-medium"
                             : "text-gray-700 hover:bg-gray-100"
@@ -180,7 +180,7 @@ export default function Header() {
                       </button>
                       <button
                         onClick={() => handleLocaleChange("vi")}
-                        className={`w-full text-left px-4 py-2 cursor-pointer font-sans transition-colors ${
+                        className={`w-full text-left px-4 py-2 font-sans transition-colors ${
                           locale === "vi"
                             ? "bg-branding-green/10 text-branding-green font-medium"
                             : "text-gray-700 hover:bg-gray-100"

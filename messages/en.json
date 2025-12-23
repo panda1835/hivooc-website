@@ -130,6 +130,26 @@
     "photographicLocation": "Photogenic Location",
     "imageAlt": "Trip photo"
   },
+  "SpeciesPage": {
+    "heroTitle": "Explore the magnificent species.",
+    "heroSubtitle": "Tailor-made wildlife experiences that bring you closer to nature's most extraordinary moments",
+    "introTitle": "Discover Vietnam's remarkable wildlife",
+    "introDescription": "From forest canopies to hidden wetlands, Vietnam shelters extraordinary primates, birds, reptiles, amphibians, and countless insects. Browse our growing library of species and filter by group to plan the encounters you care about most.",
+    "filterTitle": "Filter by",
+    "filterSubtitle": "Species",
+    "emptyState": "No species match the selected filters.",
+    "categories": {
+      "primates": "Primates",
+      "birds": "Birds",
+      "lizards": "Lizards",
+      "frogs": "Frogs",
+      "snakes": "Snakes",
+      "butterflies": "Butterflies",
+      "dragonflies": "Dragonflies",
+      "otherInsects": "Other Insects",
+      "fungus": "Fungus"
+    }
+  },
   "TailorForm": {
     "title": "Planning with HiVOOC",
     "description1": "This will only take a moment and yet the information will enable us to begin handcrafting your safari of a lifetime.",

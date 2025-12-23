@@ -69,13 +69,11 @@ export default function Hero({ title, timeSlots }: HeroProps) {
             {/* Content - Centered - Same text for all slides */}
             <div className="relative h-full flex items-center justify-center">
               <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 className="text-white mb-6 animate-fade-in-up">
-                  {title}
-                </h1>
-                
+                <h1 className="text-white mb-6 animate-fade-in-up">{title}</h1>
+
                 {/* Time Slots */}
                 {timeSlots && timeSlots.length > 0 && (
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-200">
+                  <div className="flex mb-8 flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-200">
                     {timeSlots.map((slot, index) => (
                       <div
                         key={index}
@@ -84,9 +82,7 @@ export default function Hero({ title, timeSlots }: HeroProps) {
                         <div className="text-white font-semibold text-lg mb-1">
                           {slot.label}
                         </div>
-                        <div className="text-white/90 text-sm">
-                          {slot.time}
-                        </div>
+                        <div className="text-white/90 text-sm">{slot.time}</div>
                       </div>
                     ))}
                   </div>

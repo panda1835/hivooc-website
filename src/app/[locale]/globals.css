@@ -137,6 +137,10 @@
     @apply font-condensed text-2xl font-medium leading-relaxed;
     font-size: 24px;
   }
+
+  button {
+    @apply cursor-pointer;
+  }
 }
 
 /* Hide scrollbar for horizontal scroll */
