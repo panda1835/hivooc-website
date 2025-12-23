@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import { useState } from "react";
-import GalleryImage from "@/components/GalleryImage";
 
 interface TripHighlightProps {
   highlights: string[];

@@ -1,8 +1,7 @@
 "use client";
 
-import type React from "react";
 import { useState } from "react";
-import { ChevronDown, Clock } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 
 interface ItineraryItem {
@@ -56,16 +55,13 @@ export default function TripItinerary({ note, items }: TripItineraryProps) {
       </div>
 
       {/* Itinerary Items */}
-      <div className="space-y-3">
+      <div className="">
         {items.map((item, index) => (
-          <div
-            key={index}
-            className="border border-gray-200 rounded-lg overflow-hidden"
-          >
+          <div key={index} className="border  border-gray-200 overflow-hidden">
             {/* Header */}
             <button
               onClick={() => toggleItem(index)}
-              className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors text-left"
+              className="w-full cursor-pointer flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors text-left"
             >
               <div className="flex-1">
                 <h3 className="text-base md:text-lg font-semibold text-[#192B28]">

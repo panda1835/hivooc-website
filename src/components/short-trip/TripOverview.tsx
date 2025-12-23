@@ -1,5 +1,3 @@
-import type React from "react";
-
 interface TripOverviewProps {
   location: string;
   locationSubtitle: string;
