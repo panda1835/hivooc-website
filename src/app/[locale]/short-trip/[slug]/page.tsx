@@ -47,7 +47,7 @@ export default async function ShortTripPage() {
   return (
     <main className="flex flex-col w-full">
       <Hero
-        title="Nature Adventure by Jeep in Son Tra Peninsula"
+        title="Wildlife Adventure by Jeep in Son Tra Peninsula"
         timeSlots={[
           { label: "MORNING", time: "5AM - 11 AM" },
           { label: "AFTERNOON", time: "1:30 PM - 7:30 PM" },
