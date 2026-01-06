@@ -56,11 +56,11 @@ export default function TripPolicies({
                 <li className=" text-[#192B28] font-[Inter]">
                   Please reserve your booking by{" "}
                   <a href="#" className="text-blue-600 hover:underline">
-                    following page
+                    following the page
                   </a>
                 </li>
                 <li className=" text-[#192B28] font-[Inter]">
-                  Fill up required information to complete your booking
+                  Fill in the required information to complete your booking
                 </li>
                 <li className=" text-[#192B28] font-[Inter]">{reserveNote}</li>
               </ol>
