@@ -181,5 +181,75 @@
     "myFamily": "Gia đình",
     "myFriends": "Bạn bè",
     "myPartner": "Bạn đời"
+  },
+  "Tailor": {
+    "Hero": {
+      "title": "Trải nghiệm động vật hoang dã được thiết kế riêng cho bạn.",
+      "description": "Trải nghiệm động vật hoang dã được thiết kế riêng, đưa bạn đến gần hơn với những khoảnh khắc phi thường nhất của thiên nhiên",
+      "viewExamples": "Xem Hành Trình Mẫu",
+      "tailorTrip": "Tùy chỉnh chuyến đi"
+    },
+    "Introduction": {
+      "title": "Ngày của bạn. Điểm đến của bạn. Kế hoạch và Chuyên môn của chúng tôi.",
+      "description": "HIVOOC chuyên thiết kế những hành trình kết hợp giữa đa dạng sinh học và đa dạng văn hóa. Mỗi điểm đến mở ra cho du khách một vẻ đẹp thiên nhiên độc đáo với hệ động thực vật đặc trưng, cùng với các yếu tố văn hóa phong phú—từ ẩm thực, kiến trúc, di tích lịch sử đến tên địa phương của các loài sinh vật."
+    },
+    "Unique": {
+      "title": "Điều gì khiến chúng tôi độc đáo.",
+      "description": "HiVOOC chuyên thiết kế những hành trình kết hợp giữa đa dạng sinh học và đa dạng văn hóa. Mỗi điểm đến mở ra cho du khách một vẻ đẹp thiên nhiên độc đáo với hệ động thực vật đặc trưng, cùng với các yếu tố văn hóa phong phú—từ ẩm thực, kiến trúc, di tích lịch sử đến tên địa phương của các loài sinh vật.",
+      "feature1": {
+        "title": "NHỮNG CUỘC GẶP GỠ ĐỘNG VẬT HOANG DÃ KHÓ QUÊN",
+        "description": "Hành trình vào vùng hoang dã cùng chúng tôi và khám phá những loài sinh vật quý hiếm mà hầu hết mọi người không bao giờ được thấy. Cuộc phiêu lưu vào miền chưa được khám phá của bạn bắt đầu từ đây."
+      },
+      "feature2": {
+        "title": "CHUYÊN GIA THỰC ĐỊA",
+        "description": "Tham gia tour động vật hoang dã cùng các chuyên gia trong lĩnh vực du lịch sinh thái, sinh học và bảo tồn, những người sẽ giúp bạn hiểu sâu hơn về đa dạng sinh học vô song của Việt Nam và những nỗ lực của chúng tôi để gìn giữ những kỳ quan thiên nhiên tuyệt vời này."
+      },
+      "feature3": {
+        "title": "DU LỊCH CÓ TRÁCH NHIỆM VÀ BỀN VỮNG",
+        "description": "Chúng tôi tập trung vào các hoạt động tour du lịch có ý thức về môi trường, đảm bảo mỗi hành trình hòa hợp hoàn hảo với thiên nhiên và cam kết phát triển bền vững lâu dài."
+      },
+      "feature4": {
+        "title": "ĐÓNG GÓP CHO CỘNG ĐỒNG ĐỊA PHƯƠNG",
+        "description": "Một phần doanh thu từ tour của chúng tôi sẽ được dùng để hỗ trợ các cộng đồng bảo tồn địa phương, những người đã không ngừng nỗ lực để bảo vệ cảnh quan thanh bình và động vật hoang dã tuyệt đẹp."
+      }
+    },
+    "WhatToExpect": {
+      "title": "Những gì bạn có thể mong đợi",
+      "description": "Mỗi hành trình được thiết kế để phù hợp với sở thích, nhịp độ và ước mơ về động vật hoang dã của bạn. Không có hai trải nghiệm nào giống nhau.",
+      "expect1": {
+        "title": "HÀNH TRÌNH BỀN VỮNG",
+        "description": "Đắm chìm trong những chuyến đi động vật hoang dã hướng đến bảo tồn và phát triển bền vững thiên nhiên và cộng đồng địa phương."
+      },
+      "expect2": {
+        "title": "HƯỚNG DẪN VIÊN ĐỊA PHƯƠNG TẬN TÂM",
+        "description": "Làm quen và gắn bó với những hướng dẫn viên địa phương đầy nhiệt huyết của chúng tôi, những người có mối liên kết sâu sắc với vùng hoang dã mà bạn sẽ khám phá."
+      },
+      "expect3": {
+        "title": "KỶ NIỆM KỲ DIỆU CỦA RIÊNG BẠN",
+        "description": "Hãy kinh ngạc trước những quan sát động vật hoang dã độc đáo, phong cảnh thiên nhiên hùng vĩ và di sản văn hóa cùng nhau tạo nên những câu chuyện khó quên của riêng bạn."
+      }
+    },
+    "Testimonials": {
+      "text": "Trải nghiệm động vật hoang dã vượt quá mọi mong đợi. Kiến thức của hướng dẫn viên thật đáng kinh ngạc, và chúng tôi đã nhìn thấy những loài mà tôi chưa bao giờ mơ tưởng có thể gặp trong tự nhiên",
+      "author": "Sarah Mitchell, Nhiếp ảnh gia Động vật hoang dã"
+    }
+  },
+  "OurStory": {
+    "Hero": {
+      "title": "Câu Chuyện Của Chúng Tôi",
+      "description": "Trải nghiệm động vật hoang dã được thiết kế riêng, đưa bạn đến gần hơn với những khoảnh khắc phi thường nhất của thiên nhiên"
+    },
+    "Story": {
+      "title": "Câu Chuyện HiVOOC",
+      "description": "HiVOOC chuyên thiết kế những hành trình kết hợp giữa đa dạng sinh học và đa dạng văn hóa. Mỗi điểm đến mở ra cho du khách một vẻ đẹp thiên nhiên độc đáo với hệ động thực vật đặc trưng, cùng với các yếu tố văn hóa phong phú—từ ẩm thực, kiến trúc, di tích lịch sử đến tên địa phương của các loài sinh vật."
+    },
+    "Founder": {
+      "title": "Gặp Gỡ Người Sáng Lập",
+      "paragraph1": "Được thành lập bởi một nhà bảo tồn động vật hoang dã đầy nhiệt huyết và là người điều hành tour du lịch giàu kinh nghiệm, HiVOOC đại diện cho nhiều năm cống hiến để bảo vệ di sản động vật hoang dã quý giá của Việt Nam.",
+      "paragraph2": "Với nền tảng về khoa học môi trường và du lịch bền vững, người sáng lập của chúng tôi nhận ra nhu cầu cấp thiết trong việc tạo ra những trải nghiệm du lịch mang lại lợi ích cho cả động vật hoang dã và cộng đồng địa phương. Tầm nhìn này đã dẫn đến việc thành lập HiVOOC như một người dẫn đầu trong du lịch động vật hoang dã có trách nhiệm.",
+      "quote": "Tôi tin rằng mỗi du khách có thể trở thành một nhà vô địch bảo tồn. Thông qua những cuộc gặp gỡ động vật hoang dã có ý nghĩa và những trải nghiệm văn hóa chân thực, chúng ta có thể truyền cảm hứng cho một phong trào toàn cầu để bảo vệ đa dạng sinh học của hành tinh chúng ta.",
+      "founderName": "Tuấn",
+      "founderTitle": "Người Sáng Lập & CEO, HiVOOC"
+    }
   }
 }

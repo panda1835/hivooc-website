@@ -181,5 +181,75 @@
     "myFamily": "My Family",
     "myFriends": "My Friends",
     "myPartner": "My Partner"
+  },
+  "Tailor": {
+    "Hero": {
+      "title": "Tailor-made wildlife experiences.",
+      "description": "Tailor-made wildlife experiences that bring you closer to nature's most extraordinary moments",
+      "viewExamples": "View Example Itineraries",
+      "tailorTrip": "Tailor my trip"
+    },
+    "Introduction": {
+      "title": "Your date. Your destination. Our planning and Expertise.",
+      "description": "HIVOOC specializes in designing trips that integrate biodiversity and cultural diversity. Each destination offers travelers a unique natural beauty, featuring distinctive flora and fauna, as well as rich cultural elements—from cuisine, architecture, and historical sites to the local names of various species."
+    },
+    "Unique": {
+      "title": "What make us unique.",
+      "description": "HiVOOC specializes in designing trips that integrate biodiversity and cultural diversity. Each destination offers travelers a unique natural beauty, featuring distinctive flora and fauna, as well as rich cultural elements—from cuisine, architecture, and historical sites to the local names of various species.",
+      "feature1": {
+        "title": "UNFORGETTABLE WILDLIFE ENCOUNTERS",
+        "description": "Journey into the wild with us and discover rare species that most people never get to see. Your adventure into the unknown starts here."
+      },
+      "feature2": {
+        "title": "FIELD EXPERTS",
+        "description": "Embark on the wildlife tour with professionals in the field of ecotourism, biology, and conservation who will help you deepen insights into Vietnam's unmatched biodiversity and our efforts to maintain such ethereal wonders."
+      },
+      "feature3": {
+        "title": "RESPONSIBLE AND SUSTAINABLE TOURISM",
+        "description": "We focus on eco-conscious tour operations ensuring every journey is in perfect harmony with nature and committed to long-term sustainability."
+      },
+      "feature4": {
+        "title": "CONTRIBUTIONS TO LOCAL COMMUNITIES",
+        "description": "A portion of our tour's revenue will be brought to support the local conservation communities whose reckless efforts were of importance to preserve the serene scenery and magnificent wildlife."
+      }
+    },
+    "WhatToExpect": {
+      "title": "What you can expected",
+      "description": "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
+      "expect1": {
+        "title": "SUSTAINBLE JOURNEYS",
+        "description": "Immerse yourself in wildlife trips destined for conservation and sustainability of nature and the local community."
+      },
+      "expect2": {
+        "title": "DEDICATED LOCAL GUIDES",
+        "description": "Get to know and stick with our passionate local guides who have deep connections with the wilderness you will explore."
+      },
+      "expect3": {
+        "title": "YOUR OWN MAGICAL MEMORIES",
+        "description": "Be astonished by exclusive wildlife observation, epic natural landscapes, and cultural heritage that together constitute unforgettable stories of your own."
+      }
+    },
+    "Testimonials": {
+      "text": "The wildlife experience exceeded all expectations. Our guide's knowledge was incredible, and we saw species I never dreamed I'd encounter in the wild",
+      "author": "Sarah Mitchell, Wildlife Photographer"
+    }
+  },
+  "OurStory": {
+    "Hero": {
+      "title": "Our Story",
+      "description": "Tailor-made wildlife experiences that bring you closer to nature's most extraordinary moments"
+    },
+    "Story": {
+      "title": "HiVOOC Story",
+      "description": "HiVOOC specializes in designing trips that integrate biodiversity and cultural diversity. Each destination offers travelers a unique natural beauty, featuring distinctive flora and fauna, as well as rich cultural elements—from cuisine, architecture, and historical sites to the local names of various species."
+    },
+    "Founder": {
+      "title": "Meet Our Founder",
+      "paragraph1": "Founded by a passionate wildlife conservationist and experienced tour operator, HiVOOC represents years of dedication to protecting Vietnam's precious wildlife heritage.",
+      "paragraph2": "With a background in environmental science and sustainable tourism, our founder recognized the urgent need to create travel experiences that benefit both wildlife and local communities. This vision led to the establishment of HiVOOC as a leader in responsible wildlife tourism.",
+      "quote": "I believe that every traveler can become a conservation champion. Through meaningful wildlife encounters and authentic cultural experiences, we can inspire a global movement to protect our planet's biodiversity.",
+      "founderName": "Tuan",
+      "founderTitle": "Founder & CEO, HiVOOC"
+    }
   }
 }

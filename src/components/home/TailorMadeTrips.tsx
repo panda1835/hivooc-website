@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 interface TourCard {
   id: number;
@@ -72,13 +73,13 @@ export default function TailorMadeTrips() {
           </div>
 
           {/* View More Link */}
-          <a
-            href="/tours"
+          <Link
+            href="/tailor-trip"
             className="inline-flex items-center gap-2 text-branding-green hover:text-branding-green/80 transition-colors group"
           >
             <span className="font-medium">{t("viewMore")}</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </a>
+          </Link>
         </div>
 
         {/* Tours Grid */}
