@@ -25,13 +25,13 @@ export default function Testimonials() {
 
   const handlePrev = () => {
     setCurrentIndex((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
+      prev === 0 ? testimonials.length - 1 : prev - 1,
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prev) =>
-      prev === testimonials.length - 1 ? 0 : prev + 1
+      prev === testimonials.length - 1 ? 0 : prev + 1,
     );
   };
 
@@ -53,11 +53,11 @@ export default function Testimonials() {
 
           {/* Testimonial Content */}
           <div className="flex-1 text-center">
-            <p className="text-2xl md:text-3xl italic text-[#00342B] leading-relaxed mb-6 font-['Instrument Serif']">
+            <p className="text-[36px] italic  text-[#192B28] leading-[100%] tracking-normal mb-6 font-instrument-serif">
               &quot;{t(current.textKey)}&quot;
             </p>
             <div>
-              <p className="font-semibold text-[#00342B] text-lg mb-1 font-['Instrument Serif']">
+              <p className="font-semibold text-[#00342B] text-lg mb-1 font-instrument-serif">
                 {t(current.authorKey)}
               </p>
             </div>

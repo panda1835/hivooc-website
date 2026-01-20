@@ -2,46 +2,19 @@
 
 import type React from "react";
 import { useState } from "react";
-import TripOverview from "./TripOverview";
-import TripHighlight from "./TripHighlight";
-import TripMap from "./TripMap";
-import IncludedExcluded from "./IncludedExcluded";
-import TripItinerary from "./TripItinerary";
-import AdditionalInfo from "./AdditionalInfo";
-import Policies, { type PolicySection } from "./Policies";
-import TripPhotos from "./TripPhotos";
+import TripOverview from "@/components/short-trip/TripOverview";
+import TripHighlight from "@/components/short-trip/TripHighlight";
+import TripMap from "@/components/short-trip/TripMap";
+import IncludedExcluded from "@/components/short-trip/IncludedExcluded";
+import TripItinerary from "@/components/short-trip/TripItinerary";
+import AdditionalInfo from "@/components/tailor-trip/AdditionalInfo";
+import Policies from "@/components/short-trip/Policies";
+import TripPhotos from "@/components/short-trip/TripPhotos";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type { ItineraryItem } from "./TripItinerary";
+import type { TripDetailsData } from "@/components/short-trip/TripDetails";
 type TabType = "overview" | "photos";
-
-export interface TripDetailsData {
-  overview: {
-    items: {
-      title: string;
-      info: string;
-      subtitle: string;
-    }[];
-    description: string;
-  };
-  highlights: {
-    description: string;
-    items: string[];
-    highlightImages: string[];
-  };
-  mapLocations: { name: string; lat: number; lng: number }[];
-  included: string[];
-  excluded: string[];
-  itineraryNote: string;
-  itineraryItems: ItineraryItem[];
-  additionalInfo:
-    | string[]
-    | { icon?: string; title: string; content: string }[];
-  reserveNote?: string;
-  policies: PolicySection[];
-  photos: string[];
-}
 
 interface TripDetailsProps {
   tripData: TripDetailsData;
@@ -157,26 +130,52 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
             <>
               {/* Overview Section */}
               <TripOverview items={tripData.overview.items} />
+
               {/* Description */}
               <div className="flex gap-2 mt-10">
                 <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
+                  width="22"
+                  height="19"
+                  viewBox="0 0 22 19"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-full w-12"
                 >
-                  <path
-                    d="M4 4H7L9 2H15L17 4H20C20.5304 4 21.0391 4.21071 21.4142 4.58579C21.7893 4.96086 22 5.46957 22 6V18C22 18.5304 21.7893 19.0391 21.4142 19.4142C21.0391 19.7893 20.5304 20 20 20H4C3.46957 20 2.96086 19.7893 2.58579 19.4142C2.21071 19.0391 2 18.5304 2 18V6C2 5.46957 2.21071 4.96086 2.58579 4.58579C2.96086 4.21071 3.46957 4 4 4ZM12 7C10.6739 7 9.40215 7.52678 8.46447 8.46447C7.52678 9.40215 7 10.6739 7 12C7 13.3261 7.52678 14.5979 8.46447 15.5355C9.40215 16.4732 10.6739 17 12 17C13.3261 17 14.5979 16.4732 15.5355 15.5355C16.4732 14.5979 17 13.3261 17 12C17 10.6739 16.4732 9.40215 15.5355 8.46447C14.5979 7.52678 13.3261 7 12 7ZM12 9C12.7956 9 13.5587 9.31607 14.1213 9.87868C14.6839 10.4413 15 11.2044 15 12C15 12.7956 14.6839 13.5587 14.1213 14.1213C13.5587 14.6839 12.7956 15 12 15C11.2044 15 10.4413 14.6839 9.87868 14.1213C9.31607 13.5587 9 12.7956 9 12C9 11.2044 9.31607 10.4413 9.87868 9.87868C10.4413 9.31607 11.2044 9 12 9Z"
-                    fill="#30403E"
-                  />
+                  <mask
+                    id="mask0_333_6038"
+                    style={{ maskType: "luminance" }}
+                    maskUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="22"
+                    height="19"
+                  >
+                    <path
+                      d="M4 17.9768L4 6.97681L1 6.97681L1 17.9768L4 17.9768Z"
+                      fill="#555555"
+                      stroke="white"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M4 6.97683C7.56133 3.71716 9.62533 1.84683 10.192 1.36583C11.042 0.644332 12.002 0.947332 12.002 2.75333C12.002 4.55933 9.3595 5.60083 9.3595 6.97683C9.3575 6.98516 12.737 6.98567 19.498 6.97833C19.6951 6.97807 19.8903 7.01664 20.0724 7.09184C20.2546 7.16704 20.4201 7.2774 20.5596 7.41661C20.6991 7.55582 20.8098 7.72115 20.8853 7.90315C20.9609 8.08516 20.9999 8.28026 21 8.47733L21 8.47883C21.0001 8.67612 20.9613 8.87149 20.8858 9.05378C20.8104 9.23607 20.6997 9.4017 20.5603 9.54123C20.4208 9.68076 20.2552 9.79144 20.0729 9.86695C19.8906 9.94247 19.6953 9.98133 19.498 9.98133L15.493 9.98133C14.889 13.9673 14.5557 16.1345 14.493 16.4828C14.399 17.0053 13.9 17.9768 12.466 17.9768L4 17.9768L4 6.97683Z"
+                      stroke="white"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                  </mask>
+                  <g mask="url(#mask0_333_6038)">
+                    <path
+                      d="M23 -2.52319L23 21.4768L-1 21.4768L-1 -2.52319L23 -2.52319Z"
+                      fill="#BA0000"
+                    />
+                  </g>
                 </svg>
 
-                <p className="md:text-base text-black font-[Inter] font-medium leading-relaxed">
+                <p className="md:text-base text-[#BA0000] font-[Inter] font-medium leading-relaxed">
                   {tripData.overview.description}
                 </p>
               </div>
+
               {/* Highlight Section */}
               <TripHighlight highlights={tripData.highlights} />
 
@@ -202,11 +201,8 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
               <Policies sections={tripData.policies} />
 
               <div className="flex justify-center gap-2 mt-6 md:mt-10 mb-5">
-                <Button variant="outline" size="lg" className="bg-transparent">
-                  {t("bookThisTrip")}
-                </Button>
                 <Button variant="orange" size="lg" className="group font-sans">
-                  {t("tailorThisTrip")}
+                  {t("tailorMyTrip")}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </div>
@@ -216,11 +212,8 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
               {/* Photos Section */}
               <TripPhotos images={tripData.photos} />
               <div className="flex justify-center gap-2 mt-6 md:mt-10 mb-5">
-                <Button variant="outline" size="lg" className="bg-transparent">
-                  {t("bookThisTrip")}
-                </Button>
                 <Button variant="orange" size="lg" className="group font-sans">
-                  {t("tailorThisTrip")}
+                  {t("tailorMyTrip")}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </div>

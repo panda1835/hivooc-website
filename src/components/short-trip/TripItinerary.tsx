@@ -4,10 +4,10 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 
-interface ItineraryItem {
-  time: string;
+export interface ItineraryItem {
   title: string;
-  description?: string;
+  description: string;
+  detail?: string;
   subItems?: string[];
   images?: string[];
 }
@@ -57,18 +57,21 @@ export default function TripItinerary({ note, items }: TripItineraryProps) {
       {/* Itinerary Items */}
       <div className="">
         {items.map((item, index) => (
-          <div key={index} className="border  border-gray-200 overflow-hidden">
+          <div
+            key={index}
+            className={`border ${index == 0 ? "rounded-t-lg" : ""} ${index == items.length - 1 ? "rounded-b-lg" : ""} overflow-hidden`}
+          >
             {/* Header */}
             <button
               onClick={() => toggleItem(index)}
-              className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors text-left"
+              className={`  w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors text-left`}
             >
               <div className="flex-1">
                 <h3 className="text-base md:text-lg font-semibold text-[#192B28]">
-                  {item.time}
+                  {item.title}
                 </h3>
                 <p className="text-sm text-[#192B28] font-[Inter] mt-1">
-                  {item.title}
+                  {item.description}
                 </p>
               </div>
               <ChevronDown
@@ -83,8 +86,8 @@ export default function TripItinerary({ note, items }: TripItineraryProps) {
               <div className="px-4 pb-4 bg-white border-t border-gray-100">
                 <div className="pt-4 space-y-4">
                   {/* Description */}
-                  {item.description && (
-                    <p className="text-sm text-gray-700">{item.description}</p>
+                  {item.detail && (
+                    <p className="text-sm text-gray-700">{item.detail}</p>
                   )}
 
                   {/* Sub Items */}

@@ -4,6 +4,7 @@ import {
   IBM_Plex_Sans_Condensed,
   Dancing_Script,
   Inter,
+  Instrument_Serif,
 } from "next/font/google";
 import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
@@ -33,6 +34,13 @@ const dancingScript = Dancing_Script({
   subsets: ["latin"],
 });
 
+const instrumentSerif = Instrument_Serif({
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "HiVOOC",
   description: "",
@@ -50,7 +58,7 @@ export default async function RootLayout({ children, params }: Props) {
   return (
     <html lang={locale}>
       <body
-        className={`${inter.variable} ${geistMono.variable} ${ibmPlexSansCondensed.variable} ${dancingScript.variable}`}
+        className={`${inter.variable} ${geistMono.variable} ${ibmPlexSansCondensed.variable} ${dancingScript.variable} ${instrumentSerif.variable}`}
       >
         <NextIntlClientProvider messages={messages}>
           <Header />

@@ -5,17 +5,17 @@ import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import { useState } from "react";
 
 interface TripHighlightProps {
-  highlights: string[];
-  images?: string[];
+  highlights: {
+    description: string;
+    items: string[];
+    highlightImages: string[];
+  };
 }
 
-export default function TripHighlight({
-  highlights,
-  images = [],
-}: TripHighlightProps) {
+export default function TripHighlight({ highlights }: TripHighlightProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
-
+  const images = highlights.highlightImages;
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
   };
@@ -35,7 +35,10 @@ export default function TripHighlight({
       <div className="grid md:grid-cols-2 gap-6">
         {/* Highlights List */}
         <div className="space-y-3">
-          {highlights.map((highlight, index) => (
+          <p className="md:text-base text-black font-[Inter] leading-relaxed">
+            {highlights.description}
+          </p>
+          {highlights.items.map((highlight, index) => (
             <div key={index} className="flex items-start gap-3">
               <svg
                 width="20"

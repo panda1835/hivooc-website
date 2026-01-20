@@ -27,7 +27,7 @@ export default function TailorMadeTrips() {
       description:
         "Encounter rare and endemic species such as the Red-shanked douc, pygmy loris, Hatinh langur, and more.",
       image: "/tailor-made-trip/image1.jpg",
-      link: "/tours/15-days-vietnam-primate-photography",
+      link: "/tailor-trip/15-days-vietnam-primate-photography",
     },
     {
       id: 2,
@@ -36,7 +36,7 @@ export default function TailorMadeTrips() {
       description:
         "In this tour, 99% you will be able to capture beautiful pictures of the Red- Shanked Douc Langur, Grey- Shanked Douc Langur, and Ha Tinh Langur.",
       image: "/tailor-made-trip/image2.png",
-      link: "/tours/6-days-vietnam-primate-photography",
+      link: "/tailor-trip/6-days-vietnam-primate-photography",
     },
     {
       id: 3,
@@ -45,7 +45,7 @@ export default function TailorMadeTrips() {
       description:
         "In this tour, 99% you will be able to capture beautiful pictures of the Indochinese Silver Langur",
       image: "/tailor-made-trip/image3.png",
-      link: "/tours/3-days-vietnam-primate-photography",
+      link: "/tailor-trip/3-days-vietnam-primate-photography",
     },
     {
       id: 4,
@@ -54,7 +54,7 @@ export default function TailorMadeTrips() {
       description:
         "For photographers and nature lovers, Cat Tien offers the rare chance to observe endangered primates in the wild. Early mornings echo with the calls of gibbons swinging through the canopy.",
       image: "/tailor-made-trip/image4.JPG",
-      link: "/tours/2-days-birding-cat-tien",
+      link: "/tailor-trip/2-days-birding-cat-tien",
     },
   ];
 
@@ -122,14 +122,8 @@ export default function TailorMadeTrips() {
                 </p>
 
                 {/* Explore Button */}
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  asChild
-                >
-                  <a href={tour.link}>
-                    {t("explore")}
-                  </a>
+                <Button variant="outline" className="w-full" asChild>
+                  <a href={tour.link}>{t("explore")}</a>
                 </Button>
               </div>
             </div>

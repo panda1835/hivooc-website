@@ -71,7 +71,8 @@
     "bestTimeToTravel": "BEST TIME TO TRAVEL",
     "tripLength": "TRIP LENGTH",
     "bookThisTrip": "Book this trip",
-    "tailorThisTrip": "Tailor this trip"
+    "tailorThisTrip": "Tailor this trip",
+    "tailorMyTrip": "Tailor my trip"
   },
   "DailyExperiences": {
     "title": "Daily Experiences",
@@ -194,7 +195,7 @@
       "description": "HIVOOC specializes in designing trips that integrate biodiversity and cultural diversity. Each destination offers travelers a unique natural beauty, featuring distinctive flora and fauna, as well as rich cultural elements—from cuisine, architecture, and historical sites to the local names of various species."
     },
     "Unique": {
-      "title": "What make us unique.",
+      "title": "What make us unique",
       "description": "HiVOOC specializes in designing trips that integrate biodiversity and cultural diversity. Each destination offers travelers a unique natural beauty, featuring distinctive flora and fauna, as well as rich cultural elements—from cuisine, architecture, and historical sites to the local names of various species.",
       "feature1": {
         "title": "UNFORGETTABLE WILDLIFE ENCOUNTERS",

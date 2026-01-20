@@ -106,7 +106,7 @@ export default function Reviews() {
 
               {/* Review Text */}
               <p className="text-branding-green/80 italic leading-relaxed mb-6">
-                "{review.text}"
+                &quot;{review.text}&quot;
               </p>
 
               {/* Author Info */}
@@ -114,9 +114,7 @@ export default function Reviews() {
                 <p className="text-branding-green font-medium">
                   {review.author}
                 </p>
-                <p className="text-branding-green/60 ">
-                  {review.location}
-                </p>
+                <p className="text-branding-green/60 ">{review.location}</p>
               </div>
             </div>
           ))}

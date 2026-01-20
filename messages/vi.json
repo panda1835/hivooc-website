@@ -71,7 +71,8 @@
     "bestTimeToTravel": "THỜI GIAN TỐT NHẤT",
     "tripLength": "THỜI LƯỢNG",
     "bookThisTrip": "Đặt chuyến đi này",
-    "tailorThisTrip": "Tùy chỉnh chuyến đi này"
+    "tailorThisTrip": "Tùy chỉnh chuyến đi này",
+    "tailorMyTrip": "Tùy chỉnh chuyến đi của tôi"
   },
   "DailyExperiences": {
     "title": "Trải Nghiệm Hàng Ngày",
@@ -194,7 +195,7 @@
       "description": "HIVOOC chuyên thiết kế những hành trình kết hợp giữa đa dạng sinh học và đa dạng văn hóa. Mỗi điểm đến mở ra cho du khách một vẻ đẹp thiên nhiên độc đáo với hệ động thực vật đặc trưng, cùng với các yếu tố văn hóa phong phú—từ ẩm thực, kiến trúc, di tích lịch sử đến tên địa phương của các loài sinh vật."
     },
     "Unique": {
-      "title": "Điều gì khiến chúng tôi độc đáo.",
+      "title": "Điều gì khiến chúng tôi độc đáo",
       "description": "HiVOOC chuyên thiết kế những hành trình kết hợp giữa đa dạng sinh học và đa dạng văn hóa. Mỗi điểm đến mở ra cho du khách một vẻ đẹp thiên nhiên độc đáo với hệ động thực vật đặc trưng, cùng với các yếu tố văn hóa phong phú—từ ẩm thực, kiến trúc, di tích lịch sử đến tên địa phương của các loài sinh vật.",
       "feature1": {
         "title": "NHỮNG CUỘC GẶP GỠ ĐỘNG VẬT HOANG DÃ KHÓ QUÊN",

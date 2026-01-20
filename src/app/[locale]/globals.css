@@ -12,6 +12,7 @@
   --font-sans: var(--font-inter);
   --font-condensed: "IBM Plex Sans Condensed", sans-serif;
   --font-dancing-script: var(--font-dancing-script);
+  --font-instrument-serif: var(--font-instrument-serif);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
