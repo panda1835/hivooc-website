@@ -83,11 +83,11 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
   }
 
   return (
-    <main className="w-full">
+    <main className="w-full flex flex-col justify-center items-center">
       {/* Hero Section */}
       <section className="max-w-5xl mx-auto px-6 pt-8">
         {/* Title and Metadata */}
-        <div className="mb-6">
+        <div className="w-full mb-6">
           <h1 className="text-3xl md:text-[41px] font-medium text-[#192B28] leading-tight mb-4">
             {article.title}
           </h1>
@@ -122,7 +122,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
       </section>
 
       {/* Article Content */}
-      <section className="max-w-5xl px-6 py-16">
+      <section className=" max-w-5xl px-6 py-16">
         <div className="prose prose-lg prose-gray max-w-none">
           {/* Article Description */}
           <div className="text-xl text-gray-600 leading-relaxed mb-8 font-light">
@@ -138,7 +138,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
       </section>
 
       {/* Related Articles Section */}
-      <section className="bg-gray-50 py-16">
+      <section className=" py-16">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">
             Related Articles

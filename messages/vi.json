@@ -81,6 +81,10 @@
     "explore": "Khám Phá"
   },
   "News": {
+    "Hero": {
+      "title": "Tin Tức HiVOOC",
+      "description": "Những trải nghiệm thiên nhiên được thiết kế riêng đưa bạn đến gần hơn với những khoảnh khắc kỳ diệu của tự nhiên."
+    },
     "title": "Tin tức về bảo tồn",
     "description": "Mỗi hành trình được tạo nên từ chính sở thích, nhịp sống và tình yêu với động vật hoang dã của bạn. Không có trải nghiệm nào lặp lại, bởi mỗi chuyến đi thuộc về riêng bạn. ",
     "viewMore": "Xem Thêm",

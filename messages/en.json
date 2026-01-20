@@ -81,6 +81,10 @@
     "explore": "Explore"
   },
   "News": {
+    "Hero": {
+      "title": "HiVOOC news",
+      "description": "Tailor-made wildlife experiences that bring you closer to nature's most extraordinary moments"
+    },
     "title": "Conservation news",
     "description": "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
     "viewMore": "View More",
@@ -233,12 +237,6 @@
     "Testimonials": {
       "text": "The wildlife experience exceeded all expectations. Our guide's knowledge was incredible, and we saw species I never dreamed I'd encounter in the wild",
       "author": "Sarah Mitchell, Wildlife Photographer"
-    }
-  },
-  "News": {
-    "Hero": {
-      "title": "HiVOOC news",
-      "description": "Tailor-made wildlife experiences that bring you closer to nature's most extraordinary moments"
     }
   },
   "TripReport": {
