@@ -235,6 +235,18 @@
       "author": "Sarah Mitchell, Wildlife Photographer"
     }
   },
+  "News": {
+    "Hero": {
+      "title": "HiVOOC news",
+      "description": "Tailor-made wildlife experiences that bring you closer to nature's most extraordinary moments"
+    }
+  },
+  "TripReport": {
+    "Hero": {
+      "title": "Trip Reports",
+      "description": "Tailor-made wildlife experiences that bring you closer to nature's most extraordinary moments"
+    }
+  },
   "OurStory": {
     "Hero": {
       "title": "Our Story",

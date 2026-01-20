@@ -1,4 +1,4 @@
-import SpeciesDetailHero from "@/components/species/SpeciesDetailHero";
+import DetailHero from "@/components/ui/DetailHero";
 import SpeciesFacts from "@/components/species/SpeciesFacts";
 import SpeciesGallery from "@/components/species/SpeciesGallery";
 import SpeciesInfoCard from "@/components/species/SpeciesInfoCard";
@@ -151,9 +151,9 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
 
   return (
     <main className="flex flex-col w-full bg-white">
-      <SpeciesDetailHero
+      <DetailHero
         category={species.category}
-        name={species.name}
+        title={species.name}
         image={species.heroImage}
       />
 

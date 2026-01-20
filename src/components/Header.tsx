@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
 import { Link, useRouter, usePathname } from "@/i18n/navigation";
@@ -17,10 +17,25 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleLocaleChange = (newLocale: string) => {
     router.replace(pathname, { locale: newLocale });
     setLanguageDropdownOpen(false);
+  };
+
+  const handleMenuEnter = (menuId: string) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setExpandedMenu(menuId);
+  };
+
+  const handleMenuLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setExpandedMenu(null);
+    }, 150);
   };
 
   const menuItems = [
@@ -32,14 +47,14 @@ export default function Header() {
         {
           title: "",
           items: [
-            { label: t("tailorTour"), href: "/tailor-tour", featured: false },
-            { label: t("preMadeTour"), href: "/pre-made-tour", featured: true },
+            { label: t("tailorTour"), href: "/tailor-trip", featured: false },
+            { label: t("preMadeTour"), href: "/short-trip", featured: true },
           ],
         },
         {
           title: "",
           items: [
-            { label: t("shortTour"), href: "/short-tour", featured: true },
+            { label: t("shortTour"), href: "/short-trip", featured: true },
             { label: t("dailyTours"), href: "/daily-tours", featured: false },
             {
               label: t("natureEducation"),
@@ -83,30 +98,35 @@ export default function Header() {
     {
       id: "conservation-programs",
       label: t("conservationPrograms"),
+      href: "/conservation-programs",
       items: [],
       columns: [],
     },
     {
       id: "services",
       label: t("services"),
+      href: "/services",
       items: [],
       columns: [],
     },
     {
       id: "archives",
       label: t("archives"),
+      href: "/archives",
       items: [],
       columns: [],
     },
     {
       id: "about-us",
       label: t("aboutUs"),
+      href: "/our-story",
       items: [],
       columns: [],
     },
     {
       id: "news",
       label: t("news"),
+      href: "/news",
       items: [],
       columns: [],
     },
@@ -238,19 +258,28 @@ export default function Header() {
               <div
                 key={item.id}
                 className="relative"
-                onMouseEnter={() => setExpandedMenu(item.id)}
-                onMouseLeave={() => setExpandedMenu(null)}
+                onMouseEnter={() => handleMenuEnter(item.id)}
+                onMouseLeave={handleMenuLeave}
               >
-                <button className="flex items-center gap-1 text-branding-green hover:text-branding-green/80 font-normal  font-sans transition-colors">
-                  {item.label}
-                  {item.columns && item.columns.length > 0 && (
-                    <ChevronDown
-                      className={`w-4 h-4 transition-transform ${
-                        expandedMenu === item.id ? "rotate-180" : ""
-                      }`}
-                    />
-                  )}
-                </button>
+                {item.columns && item.columns.length > 0 ? (
+                  <button className="flex items-center gap-1 text-branding-green hover:text-branding-green/80 font-normal  font-sans transition-colors">
+                    {item.label}
+                    {item.columns && item.columns.length > 0 && (
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform ${
+                          expandedMenu === item.id ? "rotate-180" : ""
+                        }`}
+                      />
+                    )}
+                  </button>
+                ) : (
+                  <Link
+                    href={item.href || "/"}
+                    className="flex items-center gap-1 text-branding-green hover:text-branding-green/80 font-normal  font-sans transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -264,9 +293,10 @@ export default function Header() {
             expandedMenu === item.id && (
               <div
                 key={`dropdown-${item.id}`}
-                className="absolute left-0 right-0 top-full bg-white shadow-lg z-50"
-                onMouseEnter={() => setExpandedMenu(item.id)}
-                onMouseLeave={() => setExpandedMenu(null)}
+                className="absolute left-0 right-0 top-full bg-white shadow-lg z-50 pt-0"
+                style={{ marginTop: "-1px" }}
+                onMouseEnter={() => handleMenuEnter(item.id)}
+                onMouseLeave={handleMenuLeave}
               >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                   <div className="grid grid-cols-3 gap-8">
@@ -284,9 +314,9 @@ export default function Header() {
                                 href={subItem.href}
                                 className="block  font-sans font-normal text-gray-700 hover:text-orange-500 transition-colors"
                               >
-                                {subItem.featured && (
+                                {/* {subItem.featured && (
                                   <span className="mr-1">—</span>
-                                )}
+                                )} */}
                                 {subItem.label}
                               </Link>
                             </li>
@@ -297,7 +327,7 @@ export default function Header() {
                   </div>
                 </div>
               </div>
-            )
+            ),
         )}
       </nav>
 
@@ -357,7 +387,7 @@ export default function Header() {
                               {subItem.featured && "— "}
                               {subItem.label}
                             </Link>
-                          ))
+                          )),
                         )}
                       </div>
                     )}
