@@ -260,7 +260,68 @@
       "paragraph2": "With a background in environmental science and sustainable tourism, our founder recognized the urgent need to create travel experiences that benefit both wildlife and local communities. This vision led to the establishment of HiVOOC as a leader in responsible wildlife tourism.",
       "quote": "I believe that every traveler can become a conservation champion. Through meaningful wildlife encounters and authentic cultural experiences, we can inspire a global movement to protect our planet's biodiversity.",
       "founderName": "Tuan",
-      "founderTitle": "Founder & CEO, HiVOOC"
+      "founderTitle": "Founder & CEO, HiVOOC",
+      "members": [
+        {
+          "name": "Bùi Văn Tuấn (Tuấn Ba Gấu)",
+          "title": "CO-FOUNDER - CEO",
+          "description": "Mr. Bùi Văn Tuấn, commonly known as “Tuấn Vọc,” “Tuấn Ba Gấu” is a primate conservation expert. Born in 1986, he has dedicated over 15 years to researching and safeguarding rare primate species, particularly the brown-cheeked and gray-cheeked langurs in Central Vietnam. Even as a university student, his passion for langurs inspired him to embark on daring field trips—from sleeping in the forest to meticulously studying their behavior and natural habitat.",
+          "image": "/our-story/founder.jpg"
+        },
+        {
+          "name": "Lê Trang",
+          "title": "CO-FOUNDER - CONSERVATION EDUCATOR",
+          "description": "Mr. Bùi Văn Tuấn, commonly known as “Tuấn Vọc,” “Tuấn Ba Gấu” is a primate conservation expert. Born in 1986, he has dedicated over 15 years to researching and safeguarding rare primate species, particularly the brown-cheeked and gray-cheeked langurs in Central Vietnam. Even as a university student, his passion for langurs inspired him to embark on daring field trips—from sleeping in the forest to meticulously studying their behavior and natural habitat.",
+          "image": "/our-story/team.jpg"
+        },
+        {
+          "name": "Thùy Vân",
+          "title": "CO-FOUNDER",
+          "description": "Finance Manager, who ensures the financial matters of HiVOOC. Transparency, dedication and ensuring the financial safety of HiVOOC and all customers.",
+          "image": "/our-story/founder.jpg"
+        }
+      ]
+    },
+    "Advisors": {
+      "title": "HiVOOC Advisors",
+      "members": [
+        {
+          "name": "Dr. Tilo Nadler",
+          "image": "/our-story/team.jpg",
+          "imageAlt": "Dr. Tilo Nadler",
+          "paragraphs": [
+            "Dr. Tilo Nadler stands as a pivotal figure in conservation within Vietnam, widely known and respected for his unwavering dedication to primates and forest ecosystems.",
+            "His remarkable life has become a source of inspiration for anyone fortunate enough to encounter him. His devotion to the old-growth forests of Vietnam has earned him the esteemed title of 'knight of the old forests of Vietnam,' a testament to his extensive conservation efforts that extend beyond the realm of primate research and protection.",
+            "The affectionate moniker bestowed upon him by the Vietnamese people, 'Primate Lord,' carries profound significance, reflecting his central role in the preservation of the country's rare primate species. This title, translating to 'lord of the primates' or 'king of the primates', is not merely a name but a recognition of his vast knowledge, leadership in primate conservation endeavors, and likely the significant successes he has achieved in safeguarding these vulnerable animals. The use of this honorific highlights the deep admiration and respect held by the conservation community and the Vietnamese people for his contributions.",
+            "Tilo Nadler's extensive experience and knowledge have made him a valuable advisor to government agencies and businesses on conservation issues. His advice has been instrumental in shaping our mission: Ecotourism for Conservation and Conservation for Ecotourism."
+          ]
+        }
+      ]
+    },
+    "SellingPoints": {
+      "title": "Ecotourism For Conservation & Conservation For Ecotourism",
+      "intro": "At HiVOOC, the motto 'Ecotourism for Conservation and Conservation for Ecotourism' isn't just something we say - it's the foundation of everything we do. With every wildlife tour, we actively implement practical conservation projects, ensuring that your trip is not only a memorable experience but also contributes to the protection of nature.",
+      "cta": "How can we put it to action?",
+      "cards": {
+        "investment": {
+          "title": "Direct Investment in Conservation",
+          "description": "A portion of proceeds from each tour will be dedicated to conservation projects, from supporting primate protection patrols, training for local trackers..."
+        },
+        "experiential": {
+          "title": "Experiential Ecotourism",
+          "description": "We carefully design our experiential ecotours to minimize negative impacts on the environment. We adhere to responsible wildlife viewing guidelines and encourage guests to participate in small conservation activities, such as litter picking or tree planting."
+        },
+        "community": {
+          "title": "Community Partnerships",
+          "description": "We believe that conservation is only successful with the involvement of local communities. We create employment opportunities, support sustainable economic development, and raise awareness about the value of nature. We work with communities to develop community-based tourism models, ensuring that they directly benefit from conservation."
+        },
+        "education": {
+          "title": "Conservation Education",
+          "description": "We integrate conservation education into every tour, helping visitors better understand the importance of ecosystems, animals and the challenges they face. Through talks, interactive activities and live guidance from experts, we empower visitors to become conservation ambassadors. We also organize free experiential education programs for families and children every month, to spread the love of nature and the spirit of conservation."
+        }
+      },
+      "viewMore": "View More",
+      "quote": "We believe that by actively and responsibly combining ecotourism with conservation, we can protect the untamed beauty of nature for future generations."
     }
   }
 }

@@ -254,7 +254,68 @@
       "paragraph2": "Với nền tảng về khoa học môi trường và du lịch bền vững, người sáng lập của chúng tôi nhận ra nhu cầu cấp thiết trong việc tạo ra những trải nghiệm du lịch mang lại lợi ích cho cả động vật hoang dã và cộng đồng địa phương. Tầm nhìn này đã dẫn đến việc thành lập HiVOOC như một người dẫn đầu trong du lịch động vật hoang dã có trách nhiệm.",
       "quote": "Tôi tin rằng mỗi du khách có thể trở thành một nhà vô địch bảo tồn. Thông qua những cuộc gặp gỡ động vật hoang dã có ý nghĩa và những trải nghiệm văn hóa chân thực, chúng ta có thể truyền cảm hứng cho một phong trào toàn cầu để bảo vệ đa dạng sinh học của hành tinh chúng ta.",
       "founderName": "Tuấn",
-      "founderTitle": "Người Sáng Lập & CEO, HiVOOC"
+      "founderTitle": "Người Sáng Lập & CEO, HiVOOC",
+      "members": [
+        {
+          "name": "Bùi Văn Tuấn (Tuấn Ba Gấu)",
+          "title": "ĐỒNG SÁNG LẬP - CEO",
+          "description": "Anh Bùi Văn Tuấn, thường được biết đến là “Tuấn Vọc”, “Tuấn Ba Gấu”, là chuyên gia bảo tồn linh trưởng. Sinh năm 1986, anh đã dành hơn 15 năm nghiên cứu và bảo vệ các loài linh trưởng quý hiếm, đặc biệt là voọc má nâu và voọc má xám ở miền Trung Việt Nam. Ngay từ khi còn là sinh viên, niềm đam mê với voọc đã thôi thúc anh thực hiện những chuyến đi thực địa táo bạo—từ việc ngủ trong rừng đến việc tỉ mỉ nghiên cứu tập tính và môi trường sống tự nhiên của chúng.",
+          "image": "/our-story/founder.jpg"
+        },
+        {
+          "name": "Lê Trang",
+          "title": "ĐỒNG SÁNG LẬP - GIÁO DỤC BẢO TỒN",
+          "description": "Anh Bùi Văn Tuấn, thường được biết đến là “Tuấn Vọc”, “Tuấn Ba Gấu”, là chuyên gia bảo tồn linh trưởng. Sinh năm 1986, anh đã dành hơn 15 năm nghiên cứu và bảo vệ các loài linh trưởng quý hiếm, đặc biệt là voọc má nâu và voọc má xám ở miền Trung Việt Nam. Ngay từ khi còn là sinh viên, niềm đam mê với voọc đã thôi thúc anh thực hiện những chuyến đi thực địa táo bạo—từ việc ngủ trong rừng đến việc tỉ mỉ nghiên cứu tập tính và môi trường sống tự nhiên của chúng.",
+          "image": "/our-story/team.jpg"
+        },
+        {
+          "name": "Thùy Vân",
+          "title": "ĐỒNG SÁNG LẬP",
+          "description": "Quản lý tài chính, phụ trách các vấn đề tài chính của HiVOOC. Minh bạch, tận tâm và đảm bảo an toàn tài chính cho HiVOOC và mọi khách hàng.",
+          "image": "/our-story/founder.jpg"
+        }
+      ]
+    },
+    "Advisors": {
+      "title": "HiVOOC Advisors",
+      "members": [
+        {
+          "name": "Tiến sĩ Tilo Nadler",
+          "image": "/our-story/team.jpg",
+          "imageAlt": "Tiến sĩ Tilo Nadler",
+          "paragraphs": [
+            "Tiến sĩ Tilo Nadler là gương mặt then chốt trong lĩnh vực bảo tồn tại Việt Nam, được biết đến và kính trọng bởi sự tận tâm không ngừng dành cho các loài linh trưởng và hệ sinh thái rừng.",
+            "Cuộc đời đáng nể của ông trở thành nguồn cảm hứng cho bất kỳ ai may mắn gặp gỡ. Sự gắn bó với những cánh rừng già Việt Nam đã giúp ông được trao danh hiệu 'hiệp sĩ của những cánh rừng già Việt Nam', minh chứng cho những nỗ lực bảo tồn rộng lớn vượt ra ngoài phạm vi nghiên cứu và bảo vệ linh trưởng.",
+            "Biệt danh trìu mến mà người Việt dành tặng ông, 'Chúa tể linh trưởng', mang ý nghĩa sâu sắc, phản ánh vai trò trung tâm của ông trong việc bảo vệ các loài linh trưởng quý hiếm của đất nước. Danh xưng này, với ý nghĩa 'chúa tể' hoặc 'vua của loài linh trưởng', không chỉ là tên gọi mà còn là sự ghi nhận kiến thức sâu rộng, khả năng dẫn dắt các hoạt động bảo tồn linh trưởng và những thành tựu đáng kể ông đạt được trong việc bảo vệ các loài động vật dễ tổn thương này. Việc sử dụng tôn xưng này thể hiện sự ngưỡng mộ và tôn trọng sâu sắc của cộng đồng bảo tồn và người dân Việt Nam dành cho những đóng góp của ông.",
+            "Kinh nghiệm và hiểu biết sâu rộng của Tilo Nadler khiến ông trở thành cố vấn quý báu cho các cơ quan nhà nước và doanh nghiệp về các vấn đề bảo tồn. Những lời khuyên của ông đã góp phần định hình sứ mệnh của chúng tôi: Du lịch sinh thái vì bảo tồn và bảo tồn vì du lịch sinh thái."
+          ]
+        }
+      ]
+    },
+    "SellingPoints": {
+      "title": "Du lịch sinh thái vì bảo tồn & Bảo tồn vì du lịch sinh thái",
+      "intro": "Tại HiVOOC, phương châm 'Du lịch sinh thái vì bảo tồn và Bảo tồn vì du lịch sinh thái' không chỉ là lời nói - đó là nền tảng cho mọi hoạt động của chúng tôi. Với mỗi chuyến tour, chúng tôi triển khai các dự án bảo tồn thực tiễn, giúp hành trình của bạn vừa đáng nhớ vừa đóng góp cho việc bảo vệ thiên nhiên.",
+      "cta": "Chúng tôi hành động như thế nào?",
+      "cards": {
+        "investment": {
+          "title": "Đầu tư trực tiếp cho bảo tồn",
+          "description": "Một phần doanh thu từ mỗi tour sẽ được dành cho các dự án bảo tồn, từ hỗ trợ tuần tra bảo vệ linh trưởng, đào tạo người dẫn đường địa phương..."
+        },
+        "experiential": {
+          "title": "Du lịch sinh thái trải nghiệm",
+          "description": "Chúng tôi thiết kế cẩn trọng các chuyến ecotour để giảm thiểu tác động tiêu cực đến môi trường. Tuân thủ hướng dẫn quan sát động vật có trách nhiệm và khuyến khích du khách tham gia các hoạt động bảo tồn nhỏ như nhặt rác hoặc trồng cây."
+        },
+        "community": {
+          "title": "Hợp tác cộng đồng",
+          "description": "Chúng tôi tin rằng bảo tồn chỉ thành công khi có sự tham gia của cộng đồng địa phương. Tạo cơ hội việc làm, hỗ trợ phát triển kinh tế bền vững và nâng cao nhận thức về giá trị của thiên nhiên. Chúng tôi hợp tác xây dựng các mô hình du lịch dựa vào cộng đồng để lợi ích bảo tồn đến trực tiếp với người dân."
+        },
+        "education": {
+          "title": "Giáo dục bảo tồn",
+          "description": "Chúng tôi lồng ghép giáo dục bảo tồn vào mọi chuyến đi, giúp du khách hiểu hơn về hệ sinh thái, các loài và thách thức chúng đối mặt. Thông qua chia sẻ, hoạt động tương tác và hướng dẫn từ chuyên gia, du khách được truyền cảm hứng trở thành đại sứ bảo tồn. Hàng tháng, chúng tôi còn tổ chức các chương trình giáo dục trải nghiệm miễn phí cho gia đình và trẻ em để lan tỏa tình yêu thiên nhiên."
+        }
+      },
+      "viewMore": "Xem thêm",
+      "quote": "Chúng tôi tin rằng bằng việc chủ động và có trách nhiệm kết hợp du lịch sinh thái với bảo tồn, chúng ta có thể giữ gìn vẻ đẹp hoang sơ của thiên nhiên cho các thế hệ tương lai."
     }
   }
 }

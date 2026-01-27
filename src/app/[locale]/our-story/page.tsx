@@ -3,7 +3,10 @@
 import Hero from "@/components/our-story/Hero";
 import HiVOOCStory from "@/components/our-story/HiVOOCStory";
 import Founder from "@/components/our-story/Founder";
-import Testimonials from "@/components/tailor/Testimonials";
+import SellingPoint from "@/components/our-story/SellingPoints";
+import Advisors from "@/components/our-story/Advisors";
+import Tracker from "@/components/our-story/Tracker";
+import Specialist from "@/components/our-story/Specialist";
 import GetStarted from "@/components/home/GetStarted";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { useTranslations } from "next-intl";
@@ -16,7 +19,10 @@ export default function TailorTripPage() {
       <Hero title={t("title")} subtitle={t("description")} />
       <HiVOOCStory />
       <Founder />
-      <Testimonials />
+      <SellingPoint />
+      <Advisors />
+      <Tracker />
+      <Specialist />
       <GetStarted />
       <TailorMadeTrips />
     </main>
