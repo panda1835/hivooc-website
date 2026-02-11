@@ -18,7 +18,7 @@ interface WordPressFeaturedMedia {
   source_url?: string;
 }
 
-interface WordPressSpeciesResponse {
+interface WordPressDestinationResponse {
   id: number;
   slug: string;
   link: string;
@@ -75,13 +75,15 @@ function toSlug(value: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-function getSpeciesTerm(article: WordPressSpeciesResponse): WordPressTerm | undefined {
+function getRegionTerm(
+  article: WordPressDestinationResponse,
+): WordPressTerm | undefined {
   const terms = article._embedded?.["wp:term"]?.flat() ?? [];
-  return terms.find((term) => term.taxonomy === "species") ?? terms[0];
+  return terms.find((term) => term.taxonomy === "region") ?? terms[0];
 }
 
-async function getSpeciesData(): Promise<{
-  speciesList: SpeciesCardData[];
+async function getDestinationData(): Promise<{
+  destinationList: SpeciesCardData[];
   filterOptions: { value: string; label: string }[];
 }> {
   const locale = await getLocale();
@@ -93,17 +95,17 @@ async function getSpeciesData(): Promise<{
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
     const res = await fetch(
-      `${baseUrl}/wp-json/wp/v2/key-species?per_page=100&_embed`,
+      `${baseUrl}/wp-json/wp/v2/destination?per_page=100&_embed`,
       {
         // next: { revalidate: 3600 },
       },
     );
 
     if (!res.ok) {
-      throw new Error("Failed to fetch species");
+      throw new Error("Failed to fetch destinations");
     }
 
-    const data: WordPressSpeciesResponse[] = await res.json();
+    const data: WordPressDestinationResponse[] = await res.json();
 
     const filtered = data.filter((article) =>
       locale === "vi"
@@ -111,17 +113,17 @@ async function getSpeciesData(): Promise<{
         : article.link.indexOf("/vi/") === -1,
     );
 
-    const speciesList: SpeciesCardData[] = filtered.map((article) => {
-      const speciesTerm = getSpeciesTerm(article);
-      const categoryValue = speciesTerm?.slug || toSlug(speciesTerm?.name || "other");
-      const categoryLabel = speciesTerm?.name || "Other";
+    const destinationList: SpeciesCardData[] = filtered.map((article) => {
+      const regionTerm = getRegionTerm(article);
+      const categoryValue = regionTerm?.slug || toSlug(regionTerm?.name || "other");
+      const categoryLabel = regionTerm?.name || "Other";
 
       return {
         id: article.id,
         name: article.title.rendered,
         category: categoryValue,
         categoryLabel,
-        link: `/species/${article.slug}`,
+        link: `/destination/${article.slug}`,
         image:
           article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
           "/short-trip/image1.jpg",
@@ -130,19 +132,22 @@ async function getSpeciesData(): Promise<{
 
     const filterOptions = Array.from(
       new Map(
-        speciesList.map((item) => [item.category, { value: item.category, label: item.categoryLabel }]),
+        destinationList.map((item) => [
+          item.category,
+          { value: item.category, label: item.categoryLabel },
+        ]),
       ).values(),
     );
 
-    return { speciesList, filterOptions };
+    return { destinationList, filterOptions };
   } catch (error) {
-    console.error("Error fetching species:", error);
-    return { speciesList: [], filterOptions: [] };
+    console.error("Error fetching destinations:", error);
+    return { destinationList: [], filterOptions: [] };
   }
 }
 
-export default async function SpeciesPage() {
-  const t = await getTranslations("SpeciesPage");
+export default async function DestinationPage() {
+  const t = await getTranslations("DestinationPage");
   const shortTripT = await getTranslations("ShortTrips");
   const collageImages = [
     "/gallery/image1.jpg",
@@ -153,7 +158,7 @@ export default async function SpeciesPage() {
     "/gallery/image8.jpg",
   ];
 
-  const { speciesList, filterOptions } = await getSpeciesData();
+  const { destinationList, filterOptions } = await getDestinationData();
 
   return (
     <main className="flex flex-col w-full bg-white">
@@ -169,7 +174,7 @@ export default async function SpeciesPage() {
       />
 
       <SpeciesContent
-        species={speciesList}
+        species={destinationList}
         filterOptions={filterOptions}
         filterTitle={t("filterTitle")}
         filterSubtitle={t("filterSubtitle")}

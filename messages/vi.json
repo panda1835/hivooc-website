@@ -97,6 +97,9 @@
     "archives": "Lưu Trữ",
     "aboutUs": "Về Chúng Tôi",
     "news": "Tin Tức",
+    "tripReports": "Báo Cáo Chuyến Đi",
+    "species": "Loài",
+    "destination": "Điểm Đến",
     "tailorTour": "Tour Tùy Chỉnh",
     "preMadeTour": "Tour Có Sẵn",
     "shortTour": "Tour Ngắn Ngày",
@@ -154,6 +157,15 @@
       "otherInsects": "Côn trùng khác",
       "fungus": "Nấm"
     }
+  },
+  "DestinationPage": {
+    "heroTitle": "Khám phá những điểm đến thiên nhiên đặc sắc của Việt Nam.",
+    "heroSubtitle": "Từ bán đảo ven biển đến dãy núi rừng nhiệt đới, mỗi điểm đến là nơi giao thoa giữa đa dạng sinh học, văn hóa bản địa và trải nghiệm ý nghĩa.",
+    "introTitle": "Khám phá điểm đến theo khu vực",
+    "introDescription": "Mỗi điểm đến tại Việt Nam mang một câu chuyện thiên nhiên và hệ sinh thái riêng. Duyệt thư viện điểm đến của chúng tôi và lọc theo khu vực để tìm nơi phù hợp với hành trình của bạn.",
+    "filterTitle": "Lọc theo",
+    "filterSubtitle": "Khu vực",
+    "emptyState": "Không có điểm đến nào khớp với bộ lọc đã chọn."
   },
   "TailorForm": {
     "title": "Lên kế hoạch cùng HiVOOC",

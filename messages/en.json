@@ -97,6 +97,9 @@
     "archives": "Archives",
     "aboutUs": "About Us",
     "news": "News",
+    "tripReports": "Trip Reports",
+    "species": "Species",
+    "destination": "Destination",
     "tailorTour": "Tailor Tour",
     "preMadeTour": "Pre-made Tour",
     "shortTour": "Short Tour",
@@ -154,6 +157,15 @@
       "otherInsects": "Other Insects",
       "fungus": "Fungus"
     }
+  },
+  "DestinationPage": {
+    "heroTitle": "Explore Vietnam's extraordinary destinations.",
+    "heroSubtitle": "From coastal peninsulas to rainforest mountain ranges, discover destinations where biodiversity, local culture, and meaningful travel come together.",
+    "introTitle": "Discover destinations by region",
+    "introDescription": "Each destination in Vietnam offers a unique wildlife story and ecosystem. Browse our destination library and filter by region to find the places that match your travel goals.",
+    "filterTitle": "Filter by",
+    "filterSubtitle": "Region",
+    "emptyState": "No destinations match the selected filters."
   },
   "TailorForm": {
     "title": "Planning with HiVOOC",

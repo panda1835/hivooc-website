@@ -5,7 +5,6 @@ import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
 import { Link, useRouter, usePathname } from "@/i18n/navigation";
 import { Search, ChevronDown, Menu, X, Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import TailorMyTripButton from "@/components/TailorMyTripButton";
 
 export default function Header() {
@@ -75,9 +74,16 @@ export default function Header() {
     {
       id: "archives",
       label: t("archives"),
-      href: "/archives",
       items: [],
-      columns: [],
+      columns: [
+        {
+          title: "",
+          items: [
+            { label: t("species"), href: "/species", featured: false },
+            { label: t("destination"), href: "/destination", featured: false },
+          ],
+        },
+      ],
     },
     {
       id: "about-us",
@@ -89,9 +95,16 @@ export default function Header() {
     {
       id: "news",
       label: t("news"),
-      href: "/news",
       items: [],
-      columns: [],
+      columns: [
+        {
+          title: "",
+          items: [
+            { label: t("news"), href: "/news", featured: false },
+            { label: t("tripReports"), href: "/trip-report", featured: false },
+          ],
+        },
+      ],
     },
   ];
 
