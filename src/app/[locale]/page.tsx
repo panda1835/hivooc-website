@@ -13,8 +13,24 @@ import Gallery from "@/components/home/Gallery";
 import type { ShortTrip } from "@/components/home/ShortTrips";
 
 import { getTranslations } from "next-intl/server";
+import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
+
+const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
+
+async function getHomeHeroImages(): Promise<string[]> {
+  if (!WORDPRESS_BASE_URL) {
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+  }
+
+  const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
+  return fetchWpImagesFromApiRoute(
+    `${baseUrl}/wp-json/wp/v2/hero-image?slug=home&_embed`,
+  );
+}
+
 export default async function Home() {
   const t = await getTranslations();
+  const homeHeroImages = await getHomeHeroImages();
   const customTripsArray: ShortTrip[] = [
     {
       id: 1,
@@ -52,7 +68,7 @@ export default async function Home() {
   ];
   return (
     <main className="flex flex-col w-full">
-      <Hero />
+      <Hero slideImages={homeHeroImages} />
       <SellingPoint />
       <TailorMadeTrips />
       <ShortTrips

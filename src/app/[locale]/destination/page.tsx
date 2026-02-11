@@ -7,6 +7,8 @@ import ContributeToConservation from "@/components/short-trip/ContributeToConser
 import Support from "@/components/home/Support";
 import ShortTrips from "@/components/home/ShortTrips";
 import { type ShortTrip } from "@/components/home/ShortTrips";
+import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 interface WordPressTerm {
   name: string;
@@ -67,19 +69,11 @@ const customTripsArray: ShortTrip[] = [
   },
 ];
 
-function toSlug(value: string): string {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 function getRegionTerm(
   article: WordPressDestinationResponse,
 ): WordPressTerm | undefined {
   const terms = article._embedded?.["wp:term"]?.flat() ?? [];
-  return terms.find((term) => term.taxonomy === "region") ?? terms[0];
+  return terms.find((term) => term.taxonomy === "region");
 }
 
 async function getDestinationData(): Promise<{
@@ -95,7 +89,7 @@ async function getDestinationData(): Promise<{
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
     const res = await fetch(
-      `${baseUrl}/wp-json/wp/v2/destination?per_page=100&_embed`,
+      `${baseUrl}/wp-json/wp/v2/destinations?per_page=100&_embed`,
       {
         // next: { revalidate: 3600 },
       },
@@ -115,14 +109,12 @@ async function getDestinationData(): Promise<{
 
     const destinationList: SpeciesCardData[] = filtered.map((article) => {
       const regionTerm = getRegionTerm(article);
-      const categoryValue = regionTerm?.slug || toSlug(regionTerm?.name || "other");
-      const categoryLabel = regionTerm?.name || "Other";
 
       return {
         id: article.id,
-        name: article.title.rendered,
-        category: categoryValue,
-        categoryLabel,
+        name: decodeHtmlEntities(article.title.rendered),
+        category: regionTerm?.slug || `unassigned-${article.id}`,
+        categoryLabel: regionTerm?.name || "Other",
         link: `/destination/${article.slug}`,
         image:
           article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
@@ -132,10 +124,12 @@ async function getDestinationData(): Promise<{
 
     const filterOptions = Array.from(
       new Map(
-        destinationList.map((item) => [
-          item.category,
-          { value: item.category, label: item.categoryLabel },
-        ]),
+        destinationList
+          .filter((item) => !item.category.startsWith("unassigned-"))
+          .map((item) => [
+            item.category,
+            { value: item.category, label: item.categoryLabel },
+          ]),
       ).values(),
     );
 
@@ -146,26 +140,31 @@ async function getDestinationData(): Promise<{
   }
 }
 
+async function getDestinationHeroImages(): Promise<string[]> {
+  if (!WORDPRESS_BASE_URL) {
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+  }
+
+  const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
+  return fetchWpImagesFromApiRoute(
+    `${baseUrl}/wp-json/wp/v2/hero-image?slug=destinations&_embed`,
+  );
+}
+
 export default async function DestinationPage() {
   const t = await getTranslations("DestinationPage");
   const shortTripT = await getTranslations("ShortTrips");
-  const collageImages = [
-    "/gallery/image1.jpg",
-    "/gallery/image3.jpg",
-    "/gallery/image4.jpg",
-    "/gallery/image6.jpg",
-    "/gallery/image7.JPG",
-    "/gallery/image8.jpg",
-  ];
-
-  const { destinationList, filterOptions } = await getDestinationData();
+  const [{ destinationList, filterOptions }, heroImages] = await Promise.all([
+    getDestinationData(),
+    getDestinationHeroImages(),
+  ]);
 
   return (
     <main className="flex flex-col w-full bg-white">
       <SpeciesHero
         title={t("heroTitle")}
         subtitle={t("heroSubtitle")}
-        collageImages={collageImages}
+        backgroundImages={heroImages}
       />
 
       <SpeciesIntro
@@ -179,6 +178,7 @@ export default async function DestinationPage() {
         filterTitle={t("filterTitle")}
         filterSubtitle={t("filterSubtitle")}
         emptyStateText={t("emptyState")}
+        stickyFilter={false}
       />
 
       <ContributeToConservation />

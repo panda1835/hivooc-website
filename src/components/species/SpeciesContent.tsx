@@ -16,6 +16,7 @@ interface SpeciesContentProps {
   filterTitle: string;
   filterSubtitle: string;
   emptyStateText: string;
+  stickyFilter?: boolean;
 }
 
 const PAGE_SIZE = 9;
@@ -26,6 +27,7 @@ export default function SpeciesContent({
   filterTitle,
   filterSubtitle,
   emptyStateText,
+  stickyFilter = true,
 }: SpeciesContentProps) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,7 +66,7 @@ export default function SpeciesContent({
     <section className="bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
-          <div className="lg:sticky lg:top-28 self-start">
+          <div className={stickyFilter ? "lg:sticky lg:top-28 self-start" : "self-start"}>
             <SpeciesFilters
               title={filterTitle}
               subtitle={filterSubtitle}

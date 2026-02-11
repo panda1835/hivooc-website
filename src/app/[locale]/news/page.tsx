@@ -1,6 +1,7 @@
 import Hero from "@/components/our-story/Hero";
 import NewsListing from "@/components/news/NewsListing";
 import { getTranslations, getLocale } from "next-intl/server";
+import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 
 interface WordPressTerm {
   name: string;
@@ -101,16 +102,30 @@ async function getNewsArticles(): Promise<NewsArticle[]> {
   }
 }
 
+async function getNewsHeroImages(): Promise<string[]> {
+  if (!WORDPRESS_BASE_URL) {
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+  }
+
+  const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
+  return fetchWpImagesFromApiRoute(
+    `${baseUrl}/wp-json/wp/v2/hero-image?slug=news-2&_embed`,
+  );
+}
+
 export default async function NewsPage() {
   const t = await getTranslations("News.Hero");
-  const newsArticles = await getNewsArticles();
+  const [newsArticles, heroImages] = await Promise.all([
+    getNewsArticles(),
+    getNewsHeroImages(),
+  ]);
 
   return (
     <main className="w-full">
       <Hero
         title={t("title")}
         subtitle={t("description")}
-        backgroundImage="/hero/image2.jpg"
+        backgroundImages={heroImages}
         backgroundAlt="HiVOOC News Background"
       />
       <NewsListing articles={newsArticles} />

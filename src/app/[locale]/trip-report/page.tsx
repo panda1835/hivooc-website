@@ -4,6 +4,7 @@ import { getTranslations, getLocale } from "next-intl/server";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
 import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
+import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 
 interface TripReportACF {
   title: string;
@@ -91,16 +92,30 @@ async function getTripReports(): Promise<TripReport[]> {
   }
 }
 
+async function getTripReportsHeroImages(): Promise<string[]> {
+  if (!WORDPRESS_BASE_URL) {
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+  }
+
+  const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
+  return fetchWpImagesFromApiRoute(
+    `${baseUrl}/wp-json/wp/v2/hero-image?slug=trip-reports&_embed`,
+  );
+}
+
 export default async function TripReportPage() {
   const t = await getTranslations("TripReport.Hero");
-  const tripReports = await getTripReports();
+  const [tripReports, heroImages] = await Promise.all([
+    getTripReports(),
+    getTripReportsHeroImages(),
+  ]);
 
   return (
     <main className="w-full">
       <Hero
         title={t("title")}
         subtitle={t("description")}
-        backgroundImage="/hero/image1.jpg"
+        backgroundImages={heroImages}
         backgroundAlt="Trip Reports Background"
       />
       <TripReportListing reports={tripReports} />

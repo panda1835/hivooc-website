@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { extractWpImageCaption, extractWpImageUrl } from "@/lib/wordpress-media";
 
 interface WordPressTerm {
   name: string;
@@ -8,11 +9,6 @@ interface WordPressTerm {
 
 interface WordPressFeaturedMedia {
   source_url?: string;
-}
-
-interface WordPressSchemaNode {
-  "@type"?: string | string[];
-  caption?: string;
 }
 
 interface WordPressNewsResponse {
@@ -25,7 +21,12 @@ interface WordPressNewsResponse {
   content: { rendered: string };
   yoast_head_json?: {
     schema?: {
-      "@graph"?: WordPressSchemaNode[];
+      "@graph"?: Array<{
+        "@type"?: string | string[];
+        caption?: string;
+        url?: string;
+        contentUrl?: string;
+      }>;
     };
   };
   _embedded?: {
@@ -55,27 +56,6 @@ function stripHtml(html: string): string {
     .trim();
 }
 
-function getCaptionFromSchema(
-  article: WordPressNewsResponse,
-): string | undefined {
-  const graph = article.yoast_head_json?.schema?.["@graph"];
-  if (!graph || graph.length === 0) {
-    return undefined;
-  }
-
-  const imageObjectNode = graph.find((node) => {
-    if (!node["@type"]) {
-      return false;
-    }
-
-    return Array.isArray(node["@type"])
-      ? node["@type"].includes("ImageObject")
-      : node["@type"] === "ImageObject";
-  });
-
-  return imageObjectNode?.caption;
-}
-
 function mapNewsArticle(
   article: WordPressNewsResponse,
   locale: string,
@@ -98,9 +78,7 @@ function mapNewsArticle(
   );
 
   const category = article._embedded?.["wp:term"]?.[0]?.[0]?.name || "News";
-  const image =
-    article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-    "/news/image1.jpg";
+  const image = extractWpImageUrl(article) || "/news/image1.jpg";
 
   return {
     id: article.id.toString(),
@@ -110,7 +88,7 @@ function mapNewsArticle(
     date: formattedDate,
     category,
     image,
-    imageCaption: getCaptionFromSchema(article),
+    imageCaption: extractWpImageCaption(article),
     slug: article.slug,
   };
 }

@@ -5,6 +5,7 @@ import Support from "@/components/home/Support";
 import ShortTrips from "@/components/home/ShortTrips";
 import { getTranslations } from "next-intl/server";
 import { type ShortTrip } from "@/components/home/ShortTrips";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 interface WordPressTerm {
   name: string;
@@ -74,7 +75,7 @@ const customTripsArray: ShortTrip[] = [
 
 function getRegionClass(article: WordPressDestinationResponse): string {
   const terms = article._embedded?.["wp:term"]?.flat() ?? [];
-  const regionTerm = terms.find((term) => term.taxonomy === "region") ?? terms[0];
+  const regionTerm = terms.find((term) => term.taxonomy === "region");
   return (regionTerm?.name || "Destination").toUpperCase();
 }
 
@@ -89,7 +90,7 @@ async function getDestinationDetail(
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
     const res = await fetch(
-      `${baseUrl}/wp-json/wp/v2/destination?slug=${encodeURIComponent(slug)}&_embed`,
+      `${baseUrl}/wp-json/wp/v2/destinations?slug=${encodeURIComponent(slug)}&_embed`,
       {
         // next: { revalidate: 3600 },
       },
@@ -112,7 +113,7 @@ async function getDestinationDetail(
     }
 
     return {
-      name: article.title.rendered,
+      name: decodeHtmlEntities(article.title.rendered),
       category: getRegionClass(article),
       heroImage:
         article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||

@@ -7,6 +7,7 @@ import ContributeToConservation from "@/components/short-trip/ContributeToConser
 import Support from "@/components/home/Support";
 import ShortTrips from "@/components/home/ShortTrips";
 import { type ShortTrip } from "@/components/home/ShortTrips";
+import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 
 interface WordPressTerm {
   name: string;
@@ -141,26 +142,31 @@ async function getSpeciesData(): Promise<{
   }
 }
 
+async function getSpeciesHeroImages(): Promise<string[]> {
+  if (!WORDPRESS_BASE_URL) {
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+  }
+
+  const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
+  return fetchWpImagesFromApiRoute(
+    `${baseUrl}/wp-json/wp/v2/hero-image?slug=species&_embed`,
+  );
+}
+
 export default async function SpeciesPage() {
   const t = await getTranslations("SpeciesPage");
   const shortTripT = await getTranslations("ShortTrips");
-  const collageImages = [
-    "/gallery/image1.jpg",
-    "/gallery/image3.jpg",
-    "/gallery/image4.jpg",
-    "/gallery/image6.jpg",
-    "/gallery/image7.JPG",
-    "/gallery/image8.jpg",
-  ];
-
-  const { speciesList, filterOptions } = await getSpeciesData();
+  const [{ speciesList, filterOptions }, heroImages] = await Promise.all([
+    getSpeciesData(),
+    getSpeciesHeroImages(),
+  ]);
 
   return (
     <main className="flex flex-col w-full bg-white">
       <SpeciesHero
         title={t("heroTitle")}
         subtitle={t("heroSubtitle")}
-        collageImages={collageImages}
+        backgroundImages={heroImages}
       />
 
       <SpeciesIntro
