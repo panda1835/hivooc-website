@@ -22,11 +22,15 @@ export default function DetailHero({
         priority
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/25 to-transparent" />
-      <div className=" absolute bottom-8 left-4 sm:left-8">
-        <p className="text-white/80 uppercase tracking-[0.2em] text-xs font-semibold">
-          {category}
-        </p>
-        <h1 className="text-white mt-2 leading-tight">{title}</h1>
+      <div className="absolute inset-x-0 bottom-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-white/80 uppercase tracking-[0.2em] text-[20px] font-semibold">
+            {category}
+          </p>
+          <h1 className="text-white font-[IBM Plex Sans] text-[46px] font-bold mt-2 leading-tight">
+            {title}
+          </h1>
+        </div>
       </div>
     </section>
   );

@@ -126,6 +126,13 @@
     @apply bg-background text-foreground font-light;
     font-size: 16px;
   }
+
+  /* Ensure bold and strong tags maintain proper weight */
+  strong,
+  b {
+    font-weight: 700;
+  }
+
   h1 {
     @apply font-condensed text-6xl font-medium leading-tight;
     font-size: 62px;

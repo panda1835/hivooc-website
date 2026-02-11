@@ -2,11 +2,34 @@ import SpeciesContent from "@/components/species/SpeciesContent";
 import SpeciesHero from "@/components/species/SpeciesHero";
 import SpeciesIntro from "@/components/species/SpeciesIntro";
 import { type SpeciesCardData } from "@/components/species/SpeciesCard";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
 import Support from "@/components/home/Support";
 import ShortTrips from "@/components/home/ShortTrips";
 import { type ShortTrip } from "@/components/home/ShortTrips";
+
+interface WordPressTerm {
+  name: string;
+  slug: string;
+  taxonomy?: string;
+}
+
+interface WordPressFeaturedMedia {
+  source_url?: string;
+}
+
+interface WordPressSpeciesResponse {
+  id: number;
+  slug: string;
+  link: string;
+  title: { rendered: string };
+  _embedded?: {
+    "wp:featuredmedia"?: WordPressFeaturedMedia[];
+    "wp:term"?: WordPressTerm[][];
+  };
+}
+
+const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
 const customTripsArray: ShortTrip[] = [
   {
@@ -44,6 +67,79 @@ const customTripsArray: ShortTrip[] = [
   },
 ];
 
+function toSlug(value: string): string {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function getSpeciesTerm(article: WordPressSpeciesResponse): WordPressTerm | undefined {
+  const terms = article._embedded?.["wp:term"]?.flat() ?? [];
+  return terms.find((term) => term.taxonomy === "species") ?? terms[0];
+}
+
+async function getSpeciesData(): Promise<{
+  speciesList: SpeciesCardData[];
+  filterOptions: { value: string; label: string }[];
+}> {
+  const locale = await getLocale();
+
+  try {
+    if (!WORDPRESS_BASE_URL) {
+      throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+    }
+
+    const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
+    const res = await fetch(
+      `${baseUrl}/wp-json/wp/v2/key-species?per_page=100&_embed`,
+      {
+        // next: { revalidate: 3600 },
+      },
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch species");
+    }
+
+    const data: WordPressSpeciesResponse[] = await res.json();
+
+    const filtered = data.filter((article) =>
+      locale === "vi"
+        ? article.link.indexOf("/vi/") !== -1
+        : article.link.indexOf("/vi/") === -1,
+    );
+
+    const speciesList: SpeciesCardData[] = filtered.map((article) => {
+      const speciesTerm = getSpeciesTerm(article);
+      const categoryValue = speciesTerm?.slug || toSlug(speciesTerm?.name || "other");
+      const categoryLabel = speciesTerm?.name || "Other";
+
+      return {
+        id: article.id,
+        name: article.title.rendered,
+        category: categoryValue,
+        categoryLabel,
+        image:
+          article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+          "/short-trip/image1.jpg",
+      };
+    });
+
+    const filterOptions = Array.from(
+      new Map(
+        speciesList.map((item) => [item.category, { value: item.category, label: item.categoryLabel }]),
+      ).values(),
+    );
+
+    return { speciesList, filterOptions };
+  } catch (error) {
+    console.error("Error fetching species:", error);
+    return { speciesList: [], filterOptions: [] };
+  }
+}
+
 export default async function SpeciesPage() {
   const t = await getTranslations("SpeciesPage");
   const shortTripT = await getTranslations("ShortTrips");
@@ -56,108 +152,7 @@ export default async function SpeciesPage() {
     "/gallery/image8.jpg",
   ];
 
-  const filterOptions = [
-    { value: "primates", label: t("categories.primates") },
-    { value: "birds", label: t("categories.birds") },
-    { value: "lizards", label: t("categories.lizards") },
-    { value: "frogs", label: t("categories.frogs") },
-    { value: "snakes", label: t("categories.snakes") },
-    { value: "butterflies", label: t("categories.butterflies") },
-    { value: "dragonflies", label: t("categories.dragonflies") },
-    { value: "otherInsects", label: t("categories.otherInsects") },
-    { value: "fungus", label: t("categories.fungus") },
-  ];
-
-  const categoryLabelByKey = Object.fromEntries(
-    filterOptions.map((option) => [option.value, option.label])
-  ) as Record<string, string>;
-
-  const speciesList: SpeciesCardData[] = [
-    {
-      id: 1,
-      name: "Red-shanked douc langur",
-      category: "primates",
-      categoryLabel: categoryLabelByKey.primates,
-      image: "/short-trip/image1.jpg",
-    },
-    {
-      id: 2,
-      name: "Grey-shanked douc langur",
-      category: "primates",
-      categoryLabel: categoryLabelByKey.primates,
-      image: "/short-trip/image3.jpg",
-    },
-    {
-      id: 3,
-      name: "Mekong wagtail",
-      category: "birds",
-      categoryLabel: categoryLabelByKey.birds,
-      image: "/gallery/image2.png",
-    },
-    {
-      id: 4,
-      name: "Great hornbill",
-      category: "birds",
-      categoryLabel: categoryLabelByKey.birds,
-      image: "/gallery/image4.jpg",
-    },
-    {
-      id: 5,
-      name: "Forest dragon",
-      category: "lizards",
-      categoryLabel: categoryLabelByKey.lizards,
-      image: "/gallery/image6.jpg",
-    },
-    {
-      id: 6,
-      name: "Mossy frog",
-      category: "frogs",
-      categoryLabel: categoryLabelByKey.frogs,
-      image: "/gallery/image5.JPG",
-    },
-    {
-      id: 7,
-      name: "Bamboo pit viper",
-      category: "snakes",
-      categoryLabel: categoryLabelByKey.snakes,
-      image: "/gallery/image7.JPG",
-    },
-    {
-      id: 8,
-      name: "Glasswing butterfly",
-      category: "butterflies",
-      categoryLabel: categoryLabelByKey.butterflies,
-      image: "/gallery/image8.jpg",
-    },
-    {
-      id: 9,
-      name: "Scarlet skimmer",
-      category: "dragonflies",
-      categoryLabel: categoryLabelByKey.dragonflies,
-      image: "/gallery/image9.JPG",
-    },
-    {
-      id: 10,
-      name: "Jungle longhorn beetle",
-      category: "otherInsects",
-      categoryLabel: categoryLabelByKey.otherInsects,
-      image: "/gallery/image10.png",
-    },
-    {
-      id: 11,
-      name: "Bracket fungus",
-      category: "fungus",
-      categoryLabel: categoryLabelByKey.fungus,
-      image: "/gallery/image11.png",
-    },
-    {
-      id: 12,
-      name: "Crested gibbon",
-      category: "primates",
-      categoryLabel: categoryLabelByKey.primates,
-      image: "/gallery/image12.png",
-    },
-  ];
+  const { speciesList, filterOptions } = await getSpeciesData();
 
   return (
     <main className="flex flex-col w-full bg-white">

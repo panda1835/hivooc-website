@@ -48,47 +48,10 @@ export default function Header() {
           title: "",
           items: [
             { label: t("tailorTour"), href: "/tailor-trip", featured: false },
-            { label: t("preMadeTour"), href: "/short-trip", featured: true },
-          ],
-        },
-        {
-          title: "",
-          items: [
-            { label: t("shortTour"), href: "/short-trip", featured: true },
             { label: t("dailyTours"), href: "/daily-tours", featured: false },
             {
               label: t("natureEducation"),
               href: "/nature-education",
-              featured: false,
-            },
-          ],
-        },
-        {
-          title: "",
-          items: [
-            {
-              label: t("sonTraTours"),
-              href: "/son-tra-tours",
-              featured: false,
-            },
-            {
-              label: t("primateTours"),
-              href: "/primate-tours",
-              featured: true,
-            },
-            {
-              label: t("birdingTours"),
-              href: "/birding-tours",
-              featured: false,
-            },
-            {
-              label: t("wildlifeTourNorth"),
-              href: "/wildlife-tour-north",
-              featured: false,
-            },
-            {
-              label: t("wildlifeTourSouth"),
-              href: "/wildlife-tour-south",
               featured: false,
             },
           ],
@@ -280,55 +243,35 @@ export default function Header() {
                     {item.label}
                   </Link>
                 )}
+
+                {item.columns &&
+                  item.columns.length > 0 &&
+                  expandedMenu === item.id && (
+                    <div
+                      className="absolute left-0 top-full mt-4 bg-white shadow-lg z-50 py-6 px-6 min-w-[300px]"
+                      onMouseEnter={() => handleMenuEnter(item.id)}
+                      onMouseLeave={handleMenuLeave}
+                    >
+                      <ul className="space-y-5">
+                        {item.columns.flatMap((column) =>
+                          column.items.map((subItem, subIdx) => (
+                            <li key={subIdx}>
+                              <Link
+                                href={subItem.href}
+                                className="block font-sans font-normal text-gray-700 hover:text-orange-500 transition-colors"
+                              >
+                                {subItem.label}
+                              </Link>
+                            </li>
+                          )),
+                        )}
+                      </ul>
+                    </div>
+                  )}
               </div>
             ))}
           </div>
         </div>
-
-        {/* Full-width dropdown - outside container */}
-        {menuItems.map(
-          (item) =>
-            item.columns &&
-            item.columns.length > 0 &&
-            expandedMenu === item.id && (
-              <div
-                key={`dropdown-${item.id}`}
-                className="absolute left-0 right-0 top-full bg-white shadow-lg z-50 pt-0"
-                style={{ marginTop: "-1px" }}
-                onMouseEnter={() => handleMenuEnter(item.id)}
-                onMouseLeave={handleMenuLeave}
-              >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                  <div className="grid grid-cols-3 gap-8">
-                    {item.columns.map((column, idx) => (
-                      <div key={idx}>
-                        {column.title && (
-                          <h3 className="font-normal text-branding-green mb-3 font-condensed">
-                            {column.title}
-                          </h3>
-                        )}
-                        <ul className="space-y-2">
-                          {column.items.map((subItem, subIdx) => (
-                            <li key={subIdx}>
-                              <Link
-                                href={subItem.href}
-                                className="block  font-sans font-normal text-gray-700 hover:text-orange-500 transition-colors"
-                              >
-                                {/* {subItem.featured && (
-                                  <span className="mr-1">—</span>
-                                )} */}
-                                {subItem.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ),
-        )}
       </nav>
 
       {/* Mobile Menu */}

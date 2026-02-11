@@ -21,7 +21,7 @@ export default function TripReportListing({ reports }: TripReportListingProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
           <h2 className="text-[36px] font-medium text-gray-900 mb-4">Latest</h2>
-          <p className="text-[#192B28] max-w-3xl">
+          <p className="text-[#192B28] max-w-7xl">
             Praesent vitae sem eu neque suscipit sollicitudin. Ut et ligula eget
             risus scelerisque hendrerit. Sed venenatis auctor placerat. Donec
             volutpat, velit et pretium porttitor, augue risus consectetur

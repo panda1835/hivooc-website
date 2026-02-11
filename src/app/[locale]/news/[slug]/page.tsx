@@ -1,91 +1,213 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { useTranslations } from "next-intl";
 
-// Mock data for news articles - replace with actual data from your CMS/API
-const mockNewsArticles = [
-  {
-    id: "1",
-    title:
-      "Major Reforestation Project Launched to Restore Native Forest Habitats",
-    description:
-      "Encounter rare and endemic species such as the Red-shanked douc, pygmy loris, Hatien langur, and more.",
-    content: `
-      <p>In a groundbreaking initiative to combat deforestation and protect biodiversity, a comprehensive reforestation project has been launched to restore native forest habitats across critical conservation areas in Vietnam.</p>
-      
-      <p>The captivating landscapes attract photographers to come and capture the beauty of nature and its inhabitants. This ambitious project aims to restore over 10,000 hectares of degraded forest land, providing crucial habitat for endangered species and supporting local communities.</p>
-      
-      <h2>Project Objectives</h2>
-      <p>The reforestation initiative focuses on planting native tree species that are essential for the survival of endemic wildlife. These include dipterocarp trees, which form the canopy of tropical rainforests and provide food and shelter for countless species.</p>
-      
-      <h2>Conservation Impact</h2>
-      <p>This project will directly benefit numerous endangered species, including the Red-shanked douc langur, pygmy loris, and Hatien langur. By restoring their natural habitat, we aim to increase population numbers and ensure long-term survival of these remarkable primates.</p>
-      
-      <p>The project also incorporates community engagement programs, providing sustainable livelihood opportunities for local residents through eco-friendly employment and environmental education initiatives.</p>
-      
-      <h2>Monitoring and Success</h2>
-      <p>Advanced monitoring systems, including camera traps and biodiversity surveys, will track the project's progress and measure its impact on wildlife populations. Early indicators show promising signs of ecosystem recovery in pilot areas.</p>
-      
-      <p>This reforestation project represents a significant step forward in Vietnam's conservation efforts and demonstrates the commitment to protecting our natural heritage for future generations.</p>
-    `,
-    date: "3 hrs ago",
-    category: "Conservation",
-    image: "/news/image1.jpg",
-    imageCaption: "The captivating landscapes attract photographers to come.",
-    slug: "major-reforestation-project-launched",
-    author: "Dr. Emily Chen",
-    readTime: "5 min read",
-  },
-  {
-    id: "2",
-    title: "Red-shanked douc langur Conservation Success",
-    description:
-      "A remarkable conservation story showcasing the recovery of one of Vietnam's most endangered primates.",
-    content: `
-      <p>The Red-shanked douc langur (Pygathrix nemaeus) has become a symbol of conservation success in Vietnam, with populations showing encouraging recovery signs thanks to dedicated protection efforts.</p>
-      
-      <p>These magnificent primates, known for their striking red legs and distinctive facial features, were once on the brink of extinction due to habitat loss and hunting pressure. Today, conservation programs are making a real difference.</p>
-      
-      <h2>Habitat Protection</h2>
-      <p>Protected areas have been expanded to cover critical douc langur habitats, ensuring these arboreal primates have sufficient forest canopy for feeding and breeding. The species requires large territories of undisturbed primary forest to thrive.</p>
-      
-      <p>Community-based conservation programs have been instrumental in changing local attitudes toward wildlife protection, with former hunters now serving as forest guardians and wildlife guides.</p>
-    `,
-    date: "1 day ago",
-    category: "Species Conservation",
-    image: "/news/image2.jpg",
-    imageCaption: "Red-shanked douc langur in its natural habitat.",
-    slug: "red-shanked-douc-langur",
-    author: "Dr. Minh Nguyen",
-    readTime: "4 min read",
-  },
-];
+interface WordPressTerm {
+  name: string;
+}
 
-interface NewsDetailPageProps {
-  params: {
-    locale: string;
-    slug: string;
+interface WordPressFeaturedMedia {
+  source_url?: string;
+}
+
+interface WordPressSchemaNode {
+  "@type"?: string | string[];
+  caption?: string;
+}
+
+interface WordPressNewsResponse {
+  id: number;
+  slug: string;
+  link: string;
+  date: string;
+  title: { rendered: string };
+  excerpt?: { rendered: string };
+  content: { rendered: string };
+  yoast_head_json?: {
+    schema?: {
+      "@graph"?: WordPressSchemaNode[];
+    };
+  };
+  _embedded?: {
+    "wp:featuredmedia"?: WordPressFeaturedMedia[];
+    "wp:term"?: WordPressTerm[][];
   };
 }
 
-export default function NewsDetailPage({ params }: NewsDetailPageProps) {
-  const { slug } = useParams();
+interface NewsArticle {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  date: string;
+  category: string;
+  image: string;
+  imageCaption?: string;
+  slug: string;
+}
 
-  // Find the article by slug
-  const article = mockNewsArticles.find((article) => article.slug === slug);
+const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
+
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getCaptionFromSchema(
+  article: WordPressNewsResponse,
+): string | undefined {
+  const graph = article.yoast_head_json?.schema?.["@graph"];
+  if (!graph || graph.length === 0) {
+    return undefined;
+  }
+
+  const imageObjectNode = graph.find((node) => {
+    if (!node["@type"]) {
+      return false;
+    }
+
+    return Array.isArray(node["@type"])
+      ? node["@type"].includes("ImageObject")
+      : node["@type"] === "ImageObject";
+  });
+
+  return imageObjectNode?.caption;
+}
+
+function mapNewsArticle(
+  article: WordPressNewsResponse,
+  locale: string,
+): NewsArticle {
+  const descriptionFromExcerpt = stripHtml(article.excerpt?.rendered || "");
+  const descriptionFromContent = stripHtml(article.content.rendered);
+  const description =
+    descriptionFromExcerpt ||
+    (descriptionFromContent.length > 200
+      ? `${descriptionFromContent.substring(0, 200)}...`
+      : descriptionFromContent);
+
+  const formattedDate = new Date(article.date).toLocaleDateString(
+    locale === "vi" ? "vi-VN" : "en-US",
+    {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    },
+  );
+
+  const category = article._embedded?.["wp:term"]?.[0]?.[0]?.name || "News";
+  const image =
+    article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+    "/news/image1.jpg";
+
+  return {
+    id: article.id.toString(),
+    title: article.title.rendered,
+    description,
+    content: article.content.rendered,
+    date: formattedDate,
+    category,
+    image,
+    imageCaption: getCaptionFromSchema(article),
+    slug: article.slug,
+  };
+}
+
+async function fetchNewsBySlug(
+  slug: string,
+  locale: string,
+): Promise<NewsArticle | null> {
+  try {
+    if (!WORDPRESS_BASE_URL) {
+      throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+    }
+
+    const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
+    const res = await fetch(
+      `${baseUrl}/wp-json/wp/v2/news?slug=${encodeURIComponent(slug)}&_embed`,
+      {
+        // next: { revalidate: 3600 },
+      },
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch news detail");
+    }
+
+    const data: WordPressNewsResponse[] = await res.json();
+    const article =
+      data.find((item) =>
+        locale === "vi"
+          ? item.link.indexOf("/vi/") !== -1
+          : item.link.indexOf("/vi/") === -1,
+      ) || data[0];
+
+    if (!article) {
+      return null;
+    }
+
+    return mapNewsArticle(article, locale);
+  } catch (error) {
+    console.error("Error fetching news detail:", error);
+    return null;
+  }
+}
+
+async function fetchRelatedNews(
+  currentSlug: string,
+  locale: string,
+): Promise<NewsArticle[]> {
+  try {
+    if (!WORDPRESS_BASE_URL) {
+      throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+    }
+
+    const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
+    const res = await fetch(`${baseUrl}/wp-json/wp/v2/news?per_page=6&_embed`, {
+      // next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch related news");
+    }
+
+    const data: WordPressNewsResponse[] = await res.json();
+
+    return data
+      .filter((item) =>
+        locale === "vi"
+          ? item.link.indexOf("/vi/") !== -1
+          : item.link.indexOf("/vi/") === -1,
+      )
+      .filter((item) => item.slug !== currentSlug)
+      .slice(0, 2)
+      .map((item) => mapNewsArticle(item, locale));
+  } catch (error) {
+    console.error("Error fetching related news:", error);
+    return [];
+  }
+}
+
+export default async function NewsDetailPage({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  const { locale, slug } = await params;
+  const article = await fetchNewsBySlug(slug, locale);
 
   if (!article) {
     notFound();
   }
 
+  const relatedArticles = await fetchRelatedNews(slug, locale);
+
   return (
-    <main className="w-full flex flex-col justify-center items-center">
+    <main className="w-full flex flex-col">
       {/* Hero Section */}
-      <section className="max-w-5xl mx-auto px-6 pt-8">
+      <section className="max-w-7xl mx-auto px-6 pt-8">
         {/* Title and Metadata */}
         <div className="w-full mb-6">
           <h1 className="text-3xl md:text-[41px] font-medium text-[#192B28] leading-tight mb-4">
@@ -122,13 +244,8 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
       </section>
 
       {/* Article Content */}
-      <section className=" max-w-5xl px-6 py-16">
+      <section className="w-full max-w-7xl mx-auto px-6 py-16">
         <div className="prose prose-lg prose-gray max-w-none">
-          {/* Article Description */}
-          <div className="text-xl text-gray-600 leading-relaxed mb-8 font-light">
-            {article.description}
-          </div>
-
           {/* Article Body */}
           <div
             className="prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-headings:font-semibold prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-6"
@@ -138,54 +255,51 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
       </section>
 
       {/* Related Articles Section */}
-      <section className=" py-16">
-        <div className="max-w-6xl mx-auto px-6">
+      <section className="w-full py-16">
+        <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">
             Related Articles
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {mockNewsArticles
-              .filter((relatedArticle) => relatedArticle.slug !== slug)
-              .slice(0, 2)
-              .map((relatedArticle) => (
-                <Link
-                  key={relatedArticle.id}
-                  href={`/news/${relatedArticle.slug}`}
-                >
-                  <article className="bg-white rounded-[4px] overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-                    <div className="relative h-48">
-                      <Image
-                        src={relatedArticle.image}
-                        alt={relatedArticle.title}
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {relatedArticles.map((relatedArticle) => (
+              <Link
+                key={relatedArticle.id}
+                href={`/news/${relatedArticle.slug}`}
+              >
+                <article className="bg-white rounded-[4px] overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+                  <div className="relative h-48">
+                    <Image
+                      src={relatedArticle.image}
+                      alt={relatedArticle.title}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 mb-3 text-sm">
+                      <span className="text-[#5A7363] font-medium">
+                        {relatedArticle.category}
+                      </span>
+                      <span className="text-gray-300">|</span>
+                      <span className="text-gray-500">
+                        {relatedArticle.date}
+                      </span>
                     </div>
 
-                    <div className="p-6">
-                      <div className="flex items-center gap-2 mb-3 text-sm">
-                        <span className="text-[#5A7363] font-medium">
-                          {relatedArticle.category}
-                        </span>
-                        <span className="text-gray-300">|</span>
-                        <span className="text-gray-500">
-                          {relatedArticle.date}
-                        </span>
-                      </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 hover:text-green-600 transition-colors">
+                      {relatedArticle.title}
+                    </h3>
 
-                      <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 hover:text-green-600 transition-colors">
-                        {relatedArticle.title}
-                      </h3>
-
-                      <p className="text-gray-600 line-clamp-3">
-                        {relatedArticle.description}
-                      </p>
-                    </div>
-                  </article>
-                </Link>
-              ))}
+                    <p className="text-gray-600 line-clamp-3">
+                      {relatedArticle.description}
+                    </p>
+                  </div>
+                </article>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
