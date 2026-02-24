@@ -75,7 +75,7 @@
     "tailorMyTrip": "Tùy chỉnh chuyến đi của tôi"
   },
   "DailyExperiences": {
-    "title": "Trải Nghiệm Hàng Ngày",
+    "title": "Tour Ngắn Ngày",
     "description": "Mỗi hành trình được tạo nên từ chính sở thích, nhịp sống và tình yêu với động vật hoang dã của bạn. Không có trải nghiệm nào lặp lại, bởi mỗi chuyến đi thuộc về riêng bạn.",
     "viewMore": "Xem Thêm",
     "explore": "Khám Phá"
@@ -93,8 +93,8 @@
   "Header": {
     "wildlifeExperiences": "Trải Nghiệm Thiên Nhiên Hoang Dã",
     "conservationPrograms": "Những Chương Trình Bảo Tồn",
-    "services": "Dịch Vụ",
-    "archives": "Lưu Trữ",
+    "products": "Sản Phẩm",
+    "library": "Thư Viện",
     "aboutUs": "Về Chúng Tôi",
     "news": "Tin Tức",
     "tripReports": "Báo Cáo Chuyến Đi",

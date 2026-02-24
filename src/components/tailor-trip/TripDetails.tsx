@@ -1,14 +1,11 @@
 "use client";
 
-import type React from "react";
 import { useState } from "react";
 import TripOverview from "@/components/short-trip/TripOverview";
 import TripHighlight from "@/components/short-trip/TripHighlight";
 import TripMap from "@/components/short-trip/TripMap";
 import IncludedExcluded from "@/components/short-trip/IncludedExcluded";
-import TripItinerary from "@/components/short-trip/TripItinerary";
-import AdditionalInfo from "@/components/tailor-trip/AdditionalInfo";
-import Policies from "@/components/short-trip/Policies";
+import RichSectionsAccordion from "@/components/short-trip/RichSectionsAccordion";
 import TripPhotos from "@/components/short-trip/TripPhotos";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -23,37 +20,9 @@ interface TripDetailsProps {
 export default function TripDetails({ tripData }: TripDetailsProps) {
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   const t = useTranslations("ShortTrips");
-  /* ---------------------------- COPY PROTECTION ---------------------------- */
-  const handleCopy = (e: React.ClipboardEvent) => e.preventDefault();
-  const handleContextMenu = (e: React.MouseEvent) => e.preventDefault();
-  const handleDragStart = (e: React.DragEvent) => e.preventDefault();
-
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    const isMac =
-      typeof navigator !== "undefined" &&
-      navigator.platform.toLowerCase().includes("mac");
-
-    const isCopyCombo =
-      (isMac && event.metaKey && event.key.toLowerCase() === "c") ||
-      (!isMac && event.ctrlKey && event.key.toLowerCase() === "c");
-
-    if (isCopyCombo) event.preventDefault();
-  };
 
   return (
-    <main
-    // tabIndex={0}
-    // onCopy={handleCopy}
-    // onContextMenu={handleContextMenu}
-    // onKeyDown={handleKeyDown}
-    // className="min-h-screen bg-white text-slate-900"
-    // style={{
-    //   userSelect: "none",
-    //   WebkitUserSelect: "none",
-    //   MozUserSelect: "none",
-    //   msUserSelect: "none",
-    // }}
-    >
+    <main>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {/* Tabs */}
         <div className="border-b border-gray-200 mb-8">
@@ -186,19 +155,26 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
               <IncludedExcluded
                 included={tripData.included}
                 excluded={tripData.excluded}
+                notAllowed={tripData.notAllowed}
               />
 
               {/* Itinerary Section */}
-              <TripItinerary
-                note={tripData.itineraryNote}
-                items={tripData.itineraryItems}
+              <RichSectionsAccordion
+                title="Sample Itineraries"
+                sections={tripData.itinerarySections}
               />
 
               {/* Additional Info Section */}
-              <AdditionalInfo items={tripData.additionalInfo} />
+              <RichSectionsAccordion
+                title="Additional information"
+                sections={tripData.additionalInfoSections}
+              />
 
               {/* Policies Section */}
-              <Policies sections={tripData.policies} />
+              <RichSectionsAccordion
+                title="Policies"
+                sections={tripData.policySections}
+              />
 
               <div className="flex justify-center gap-2 mt-6 md:mt-10 mb-5">
                 <Button variant="orange" size="lg" className="group font-sans">

@@ -1,19 +1,18 @@
 "use client";
 
-import type React from "react";
 import { useState } from "react";
 import TripOverview from "./TripOverview";
 import TripHighlight from "./TripHighlight";
 import TripMap from "./TripMap";
 import IncludedExcluded from "./IncludedExcluded";
-import TripItinerary from "./TripItinerary";
-import AdditionalInfo from "./AdditionalInfo";
-import Policies, { type PolicySection } from "./Policies";
+import RichSectionsAccordion, {
+  type RichSection,
+} from "./RichSectionsAccordion";
 import TripPhotos from "./TripPhotos";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type { ItineraryItem } from "./TripItinerary";
+import { useLocale } from "next-intl";
 type TabType = "overview" | "photos";
 
 export interface TripDetailsData {
@@ -33,13 +32,10 @@ export interface TripDetailsData {
   mapLocations: { name: string; lat: number; lng: number }[];
   included: string[];
   excluded: string[];
-  itineraryNote: string;
-  itineraryItems: ItineraryItem[];
-  additionalInfo:
-    | string[]
-    | { icon?: string; title: string; content: string }[];
-  reserveNote?: string;
-  policies: PolicySection[];
+  notAllowed: string[];
+  itinerarySections: RichSection[];
+  additionalInfoSections: RichSection[];
+  policySections: RichSection[];
   photos: string[];
 }
 
@@ -50,37 +46,9 @@ interface TripDetailsProps {
 export default function TripDetails({ tripData }: TripDetailsProps) {
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   const t = useTranslations("ShortTrips");
-  /* ---------------------------- COPY PROTECTION ---------------------------- */
-  const handleCopy = (e: React.ClipboardEvent) => e.preventDefault();
-  const handleContextMenu = (e: React.MouseEvent) => e.preventDefault();
-  const handleDragStart = (e: React.DragEvent) => e.preventDefault();
-
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    const isMac =
-      typeof navigator !== "undefined" &&
-      navigator.platform.toLowerCase().includes("mac");
-
-    const isCopyCombo =
-      (isMac && event.metaKey && event.key.toLowerCase() === "c") ||
-      (!isMac && event.ctrlKey && event.key.toLowerCase() === "c");
-
-    if (isCopyCombo) event.preventDefault();
-  };
-
+  const locale = useLocale();
   return (
-    <main
-    // tabIndex={0}
-    // onCopy={handleCopy}
-    // onContextMenu={handleContextMenu}
-    // onKeyDown={handleKeyDown}
-    // className="min-h-screen bg-white text-slate-900"
-    // style={{
-    //   userSelect: "none",
-    //   WebkitUserSelect: "none",
-    //   MozUserSelect: "none",
-    //   msUserSelect: "none",
-    // }}
-    >
+    <main>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {/* Tabs */}
         <div className="border-b border-gray-200 mb-8">
@@ -174,7 +142,9 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                 </svg>
 
                 <p className="md:text-base text-black font-[Inter] font-medium leading-relaxed">
-                  {tripData.overview.description}
+                  {locale === "en"
+                    ? "All these stops are favourite perfect places for memorial photos. Our guides have been trained in the field of photography and always carry good gear for great shots. Don't hesitate to ask our Guides to help you capture artistic and cinematic photos, preserving magical memories of your journey."
+                    : "Tất cả những điểm dừng này đều là những địa điểm hoàn hảo để chụp ảnh kỷ niệm. Hướng dẫn viên của chúng tôi đã được đào tạo trong lĩnh vực nhiếp ảnh và luôn mang theo thiết bị tốt để có những bức ảnh tuyệt vời. Đừng ngần ngại yêu cầu Hướng dẫn viên của chúng tôi giúp bạn chụp những bức ảnh nghệ thuật và điện ảnh, lưu giữ những kỷ niệm kỳ diệu của hành trình."}
                 </p>
               </div>
               {/* Highlight Section */}
@@ -187,19 +157,26 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
               <IncludedExcluded
                 included={tripData.included}
                 excluded={tripData.excluded}
+                notAllowed={tripData.notAllowed}
               />
 
               {/* Itinerary Section */}
-              <TripItinerary
-                note={tripData.itineraryNote}
-                items={tripData.itineraryItems}
+              <RichSectionsAccordion
+                title="Sample Itineraries"
+                sections={tripData.itinerarySections}
               />
 
               {/* Additional Info Section */}
-              <AdditionalInfo items={tripData.additionalInfo} />
+              <RichSectionsAccordion
+                title="Additional information"
+                sections={tripData.additionalInfoSections}
+              />
 
               {/* Policies Section */}
-              <Policies sections={tripData.policies} />
+              <RichSectionsAccordion
+                title="Policies"
+                sections={tripData.policySections}
+              />
 
               <div className="flex justify-center gap-2 mt-6 md:mt-10 mb-5">
                 <Button variant="outline" size="lg" className="bg-transparent">

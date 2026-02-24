@@ -91,120 +91,91 @@ export default async function ShortTripPage() {
       "Surcharge for Lunar New Year / national holidays",
       "Additional services requested by customers (ex. Paragliding experiences, picnic tea with snack for sunset enjoyment, picnic lunch or dinner)",
     ],
-    itineraryNote:
-      "Flexible between 7:00 - 8:00 AM for morning tour and 14:30 - 15:30 for the afternoon tour.",
-    itineraryItems: [
+    notAllowed: [],
+    itinerarySections: [
       {
         title: "Day 1: Hanoi Arrival",
-        description:
-          "Welcome to Vietnam! We'll meet and welcome by Noi Bai Airport, Hanoi Capital. You will be transferred to the hotel, with the rest of the day at leisure. We will have a welcome dinner in the evening.",
-        detail: "Start your day with a warm welcome at our office.",
+        contentHtml:
+          "<p>Welcome to Vietnam! We'll meet and welcome by Noi Bai Airport, Hanoi Capital. You will be transferred to the hotel, with the rest of the day at leisure. We will have a welcome dinner in the evening.</p>",
       },
       {
         title: "Day 2: Hanoi Capital – Van Long Nature Reserve",
-        description:
-          "Today we will make an early start from your hotel at Hanoi Capital to Van Long Nature Reserve, located in Ninh Binh Province. This area is the largest wetland nature reserve in northern Vietnam. We will arrive in time to begin our exploration of this beautiful wetland.",
-        detail:
-          "Greetings and briefing for Red-shanked Doucs, including a presentation about overview of Son Tra's biodiversity and drive by JEEP to reach the first peak of the mountain.",
-        subItems: [
-          "Including a presentation about overview of Son Tra's biodiversity and drive by JEEP to reach the first peak of the mountain",
-          "The route to Son Tra Peak is approximately 30-45 minutes depending on traffic and road conditions",
-          "The route to Son Tra Peak is highly scenic. As you ascend the mountain, you'll pass through lush forests, and as you get higher, you'll start seeing panoramic views of Da Nang City and the coastline. This twisting journey will make the ride even more adventurous",
-          "The Jeep will stop and park by our local tracker if he can find family of colorful Red-shanked Doucs",
-        ],
-        images: ["/short-trip/image1.jpg", "/short-trip/image1.jpg"],
+        contentHtml:
+          "<p>Today we will make an early start from your hotel at Hanoi Capital to Van Long Nature Reserve, located in Ninh Binh Province. This area is the largest wetland nature reserve in northern Vietnam. We will arrive in time to begin our exploration of this beautiful wetland.</p><ul><li>Including a presentation about overview of Son Tra's biodiversity and drive by JEEP to reach the first peak of the mountain</li><li>The route to Son Tra Peak is approximately 30-45 minutes depending on traffic and road conditions</li><li>The route to Son Tra Peak is highly scenic. As you ascend the mountain, you'll pass through lush forests, and as you get higher, you'll start seeing panoramic views of Da Nang City and the coastline. This twisting journey will make the ride even more adventurous</li><li>The Jeep will stop and park by our local tracker if he can find family of colorful Red-shanked Doucs</li></ul>",
       },
       {
         title: "Day 3: Van Long Nature Reserve",
-        description:
-          "We will have a full day to explore Van Long Nature Reserve, the largest wetland nature reserve in northern Vietnam. We will have a full day to explore Van Long Nature Reserve, the largest wetland nature reserve in northern Vietnam. ",
+        contentHtml:
+          "<p>We will have a full day to explore Van Long Nature Reserve, the largest wetland nature reserve in northern Vietnam. We will have a full day to explore Van Long Nature Reserve, the largest wetland nature reserve in northern Vietnam.</p>",
       },
       {
         title: "Day 4: Van Long Nature Reserve – Cat Ba Island (Hai Phong)",
-        description:
-          "After getting our main target in Van Long Nature Reserve, we will depart this beautiful place and drive to Cat Ba Island (Hai Phong), the biggest island in the whole of Halong Bay. It’s approximately 150 kilometers from Hanoi Capital, a trip which takes up to 2 hour to travel by car and 1 hour travel by speedboat. We will arrive in time to begin our exploration of this beautiful and unique Island.",
+        contentHtml:
+          "<p>After getting our main target in Van Long Nature Reserve, we will depart this beautiful place and drive to Cat Ba Island (Hai Phong), the biggest island in the whole of Halong Bay. It’s approximately 150 kilometers from Hanoi Capital, a trip which takes up to 2 hour to travel by car and 1 hour travel by speedboat. We will arrive in time to begin our exploration of this beautiful and unique Island.</p>",
       },
       {
         title: "Day 5: Cat Ba Island (Hai Phong)",
-        description:
-          "We will have a full day to look for one of the top 25 most endangered primates in the world “Cat Ba Langur”, also called “Golden-headed Langur”. This species is endemic to Vietnam and only found on Cat Ba Island.",
+        contentHtml:
+          "<p>We will have a full day to look for one of the top 25 most endangered primates in the world “Cat Ba Langur”, also called “Golden-headed Langur”. This species is endemic to Vietnam and only found on Cat Ba Island.</p>",
       },
       {
         title: "Day 6-7: Tuyen Hoa Nature Reserve (Quang Binh province)",
-        description:
-          "We will have a full day to look for one of the top 25 most endangered primates in the world “Cat Ba Langur”, also called “Golden-headed Langur”. This species is endemic to Vietnam and only found on Cat Ba Island.",
+        contentHtml:
+          "<p>We will have a full day to look for one of the top 25 most endangered primates in the world “Cat Ba Langur”, also called “Golden-headed Langur”. This species is endemic to Vietnam and only found on Cat Ba Island.</p>",
       },
     ],
-    additionalInfo: [
+    additionalInfoSections: [
       {
-        // icon: "⛰️",
         title: "Physical difficulty",
-        content:
-          "Mostly easy walking along tracks, roads, and trails, but there will be a few inclined sections in the mountains.",
+        contentHtml:
+          "<p>Mostly easy walking along tracks, roads, and trails, but there will be a few inclined sections in the mountains.</p>",
       },
       {
-        // icon: "🌳",
         title: "Common wildlife for observation",
-        content:
-          "Broadleaved evergreen forest, Evergreen forest, Secondary forest, Dry dipterocarp forest, Wetland, Rice field, Mountain forest, Pine forest, Bamboo forest, Shoreline.",
+        contentHtml:
+          "<p>Broadleaved evergreen forest, Evergreen forest, Secondary forest, Dry dipterocarp forest, Wetland, Rice field, Mountain forest, Pine forest, Bamboo forest, Shoreline.</p>",
       },
       {
-        // icon: "🏨",
         title: "Accommodation",
-        content:
-          "Comfortable hotel and Guesthouse at the Parks. All accommodations have hot water, free Wi-Fi and most have air-conditioning.",
+        contentHtml:
+          "<p>Comfortable hotel and Guesthouse at the Parks. All accommodations have hot water, free Wi-Fi and most have air-conditioning.</p>",
       },
       {
-        // icon: "🐵",
         title: "Key target primates and mammals",
-        content:
-          'We will have a full day to look for one of the top 25 most endangered primates in the world "Cat Ba Langur", also called "Golden-headed Langur". This species is endemic to Vietnam and only found on Cat Ba Island.',
+        contentHtml:
+          '<p>We will have a full day to look for one of the top 25 most endangered primates in the world "Cat Ba Langur", also called "Golden-headed Langur". This species is endemic to Vietnam and only found on Cat Ba Island.</p>',
       },
       {
-        // icon: "🦅",
         title: "Key target birds",
-        content:
-          'We will have a full day to look for one of the top 25 most endangered primates in the world "Cat Ba Langur", also called "Golden-headed Langur". This species is endemic to Vietnam and only found on Cat Ba Island.',
+        contentHtml:
+          '<p>We will have a full day to look for one of the top 25 most endangered primates in the world "Cat Ba Langur", also called "Golden-headed Langur". This species is endemic to Vietnam and only found on Cat Ba Island.</p>',
       },
       {
-        // icon: "🦅",
         title: "Key nature and historical places",
-        content:
-          'We will have a full day to look for one of the top 25 most endangered primates in the world "Cat Ba Langur", also called "Golden-headed Langur". This species is endemic to Vietnam and only found on Cat Ba Island.',
+        contentHtml:
+          '<p>We will have a full day to look for one of the top 25 most endangered primates in the world "Cat Ba Langur", also called "Golden-headed Langur". This species is endemic to Vietnam and only found on Cat Ba Island.</p>',
       },
       {
-        // icon: "🦅",
         title: "Culture and community’s involvements",
-        content:
-          'We will have a full day to look for one of the top 25 most endangered primates in the world "Cat Ba Langur", also called "Golden-headed Langur". This species is endemic to Vietnam and only found on Cat Ba Island.',
+        contentHtml:
+          '<p>We will have a full day to look for one of the top 25 most endangered primates in the world "Cat Ba Langur", also called "Golden-headed Langur". This species is endemic to Vietnam and only found on Cat Ba Island.</p>',
       },
       {
-        // icon: "🦅",
         title: "Contributions for Conservation",
-        content:
-          'We will have a full day to look for one of the top 25 most endangered primates in the world "Cat Ba Langur", also called "Golden-headed Langur". This species is endemic to Vietnam and only found on Cat Ba Island.',
+        contentHtml:
+          '<p>We will have a full day to look for one of the top 25 most endangered primates in the world "Cat Ba Langur", also called "Golden-headed Langur". This species is endemic to Vietnam and only found on Cat Ba Island.</p>',
       },
     ],
-    reserveNote:
-      "After this step, our consultants will contact you directly via email to confirm it via email.",
-    policies: [
+    policySections: [
       {
         title: "Cancellation policy",
-        items: [
-          "Full refund: You can cancel at least 24 hours before the experience's start time.",
-          "If you cancel less than 24 hours before the experience's start time, the amount you paid will not be refunded.",
-          "All cancellation requests made less than 24 hours from the experience's start time will not be accepted.",
-          "Cut-off times are based on the experience's local time.",
-        ],
+        contentHtml:
+          "<ul><li>Full refund: You can cancel at least 24 hours before the experience's start time.</li><li>If you cancel less than 24 hours before the experience's start time, the amount you paid will not be refunded.</li><li>All cancellation requests made less than 24 hours from the experience's start time will not be accepted.</li><li>Cut-off times are based on the experience's local time.</li></ul>",
       },
       {
         title: "Children policy",
-        items: [
-          "Children under 3: free of charge (sharing meals with parents)",
-          "4-9 year-old children: 50% of the full adult price, including meals",
-          "10-year-old children: 80% of the full adult price, including meals",
-          "Above 16-year-old: full price, including meals.",
-        ],
+        contentHtml:
+          "<ul><li>Children under 3: free of charge (sharing meals with parents)</li><li>4-9 year-old children: 50% of the full adult price, including meals</li><li>10-year-old children: 80% of the full adult price, including meals</li><li>Above 16-year-old: full price, including meals.</li></ul>",
       },
     ],
     photos: [

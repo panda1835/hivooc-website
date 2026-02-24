@@ -1,32 +1,22 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-interface TimeSlot {
-  label: string;
-  time: string;
-}
-
 interface HeroProps {
   title: string;
-  timeSlots?: TimeSlot[];
+  subtitle?: string;
+  slideImages?: string[];
 }
 
-export default function Hero({ title, timeSlots }: HeroProps) {
-  const t = useTranslations("Hero");
+export default function Hero({ title, subtitle, slideImages }: HeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Number of slides
-  const totalSlides = 3;
-
-  // Background images for each slide
-  const slideImages = [
-    "/hero/image1.jpg",
-    "/hero/image2.jpg",
-    "/hero/image3.jpg",
-  ];
+  const images =
+    slideImages && slideImages.length > 0
+      ? slideImages
+      : ["/hero/image1.jpg", "/hero/image2.jpg", "/hero/image3.jpg"];
+  const totalSlides = images.length;
 
   // Auto-play functionality - automatically scrolls
   useEffect(() => {
@@ -55,7 +45,7 @@ export default function Hero({ title, timeSlots }: HeroProps) {
             {/* Background Image */}
             <Image
               unoptimized
-              src={slideImages[index]}
+              src={images[index]}
               alt={`Hero slide ${index + 1}`}
               fill
               className="object-cover"
@@ -70,23 +60,6 @@ export default function Hero({ title, timeSlots }: HeroProps) {
             <div className="relative h-full flex items-center justify-center">
               <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h1 className="text-white mb-6 animate-fade-in-up">{title}</h1>
-
-                {/* Time Slots */}
-                {timeSlots && timeSlots.length > 0 && (
-                  <div className="flex mb-8 flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-200">
-                    {timeSlots.map((slot, index) => (
-                      <div
-                        key={index}
-                        className="border-2 border-white px-8 py-4 min-w-[200px] text-center"
-                      >
-                        <div className="text-white font-semibold text-lg mb-1">
-                          {slot.label}
-                        </div>
-                        <div className="text-white/90 text-sm">{slot.time}</div>
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
             </div>
           </div>

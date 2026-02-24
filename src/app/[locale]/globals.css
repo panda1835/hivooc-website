@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "leaflet/dist/leaflet.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -175,4 +176,41 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
+}
+
+.trip-map-marker {
+  background: transparent;
+  border: 0;
+}
+
+.trip-map-pin-wrap {
+  position: relative;
+  display: inline-block;
+  width: 22px;
+  height: 30px;
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.trip-map-pin-wrap--small {
+  width: 18px;
+  height: 26px;
+}
+
+.trip-map-pin-number {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.trip-map-pin-number--small {
+  top: 4px;
+  font-size: 10px;
 }

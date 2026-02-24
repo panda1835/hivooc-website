@@ -18,8 +18,25 @@ export default function Header() {
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  const withLocaleSlugSuffix = (path: string, newLocale: string) => {
+    const slugPagePattern =
+      /^\/(trip-report|news|destination|species|short-trip|tailor-trip)\/([^/]+)$/;
+    const match = path.match(slugPagePattern);
+
+    if (!match) {
+      return path;
+    }
+
+    const section = match[1];
+    const slug = match[2];
+    const normalizedSlug = slug.replace(/-(en|vi)$/i, "");
+
+    return `/${section}/${normalizedSlug}-${newLocale.toLowerCase()}`;
+  };
+
   const handleLocaleChange = (newLocale: string) => {
-    router.replace(pathname, { locale: newLocale });
+    const nextPathname = withLocaleSlugSuffix(pathname, newLocale);
+    router.replace(nextPathname, { locale: newLocale });
     setLanguageDropdownOpen(false);
   };
 
@@ -47,7 +64,7 @@ export default function Header() {
           title: "",
           items: [
             { label: t("tailorTour"), href: "/tailor-trip", featured: false },
-            { label: t("dailyTours"), href: "/daily-tours", featured: false },
+            { label: t("shortTour"), href: "/short-trip", featured: false },
             {
               label: t("natureEducation"),
               href: "/nature-education",
@@ -65,15 +82,15 @@ export default function Header() {
       columns: [],
     },
     {
-      id: "services",
-      label: t("services"),
-      href: "/services",
+      id: "products",
+      label: t("products"),
+      href: "/products",
       items: [],
       columns: [],
     },
     {
-      id: "archives",
-      label: t("archives"),
+      id: "library",
+      label: t("library"),
       items: [],
       columns: [
         {
@@ -261,7 +278,7 @@ export default function Header() {
                   item.columns.length > 0 &&
                   expandedMenu === item.id && (
                     <div
-                      className="absolute left-0 top-full mt-4 bg-white shadow-lg z-50 py-6 px-6 min-w-[300px]"
+                      className="absolute left-1/2 top-full mt-4 -translate-x-1/2 bg-white shadow-lg z-50 py-6 px-6 min-w-[300px]"
                       onMouseEnter={() => handleMenuEnter(item.id)}
                       onMouseLeave={handleMenuLeave}
                     >

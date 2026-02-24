@@ -46,7 +46,7 @@ export default function TripHighlight({ highlights }: TripHighlightProps) {
                 viewBox="0 0 20 28"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-8"
+                className="w-5 h-5 mt-1 shrink-0"
               >
                 <path
                   d="M10.3333 18.8084L15.4833 21.9167L14.1167 16.0584L18.6667 12.1167L12.675 11.6L10.3333 6.08337L7.99167 11.6L2 12.1167L6.54167 16.0584L5.18333 21.9167L10.3333 18.8084Z"
@@ -54,7 +54,9 @@ export default function TripHighlight({ highlights }: TripHighlightProps) {
                 />
               </svg>
 
-              <p className="text-sm md:text-base text-[#192B28]">{highlight}</p>
+              <p className="text-sm md:text-base leading-relaxed text-[#192B28]">
+                {highlight}
+              </p>
             </div>
           ))}
         </div>
