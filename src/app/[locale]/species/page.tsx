@@ -3,10 +3,10 @@ import SpeciesHero from "@/components/species/SpeciesHero";
 import SpeciesIntro from "@/components/species/SpeciesIntro";
 import { type SpeciesCardData } from "@/components/species/SpeciesCard";
 import { getLocale, getTranslations } from "next-intl/server";
+import { getShortTripCards } from "@/lib/short-trip-cards";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
 import Support from "@/components/home/Support";
 import ShortTrips from "@/components/home/ShortTrips";
-import { type ShortTrip } from "@/components/home/ShortTrips";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 
 interface WordPressTerm {
@@ -31,42 +31,6 @@ interface WordPressSpeciesResponse {
 }
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
-
-const customTripsArray: ShortTrip[] = [
-  {
-    id: 1,
-    category: "PRE-MADE TRIP",
-    title: "Vietnam Primate Photography",
-    description:
-      "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
-    image: "/short-trip/image1.jpg",
-    link: "/short-trip/vietnam-primate-photography",
-    bestTimeToTravel: "APR - JUN",
-    tripLength: "16 DAYS",
-  },
-  {
-    id: 2,
-    category: "PRE-MADE TRIP",
-    title: "Vietnam Primate Photography",
-    description:
-      "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
-    image: "/short-trip/image2.JPG",
-    link: "/short-trip/vietnam-primate-photography-2",
-    bestTimeToTravel: "APR - JUN",
-    tripLength: "16 DAYS",
-  },
-  {
-    id: 3,
-    category: "PRE-MADE TRIP",
-    title: "Vietnam Primate Photography",
-    description:
-      "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same.",
-    image: "/short-trip/image3.jpg",
-    link: "/short-trip/vietnam-primate-photography-3",
-    bestTimeToTravel: "APR - JUN",
-    tripLength: "16 DAYS",
-  },
-];
 
 function toSlug(value: string): string {
   return value
@@ -154,11 +118,13 @@ async function getSpeciesHeroImages(): Promise<string[]> {
 }
 
 export default async function SpeciesPage() {
+  const locale = await getLocale();
   const t = await getTranslations("SpeciesPage");
   const shortTripT = await getTranslations("ShortTrips");
-  const [{ speciesList, filterOptions }, heroImages] = await Promise.all([
+  const [{ speciesList, filterOptions }, heroImages, shortTrips] = await Promise.all([
     getSpeciesData(),
     getSpeciesHeroImages(),
+    getShortTripCards(locale, { limit: 3 }),
   ]);
 
   return (
@@ -186,7 +152,7 @@ export default async function SpeciesPage() {
       <ShortTrips
         title={shortTripT("relatedShortTrip")}
         description={shortTripT("description")}
-        trips={customTripsArray}
+        trips={shortTrips}
       />
       <Support />
     </main>

@@ -52,9 +52,11 @@ export default function IncludedExcluded({
         </div>
       </div>
 
-      {/* Not Allowed */}
+      {/* What's NOT allowed */}
       <div className="space-y-4">
-        <h2 className="text-2xl font-medium text-[#192B28]">Not allowed</h2>
+        <h2 className="text-2xl font-medium text-[#192B28]">
+          What&apos;s NOT allowed
+        </h2>
 
         <div className="space-y-3">
           {notAllowed.map((item, index) => (

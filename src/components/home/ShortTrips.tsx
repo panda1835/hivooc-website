@@ -19,12 +19,18 @@ interface ShortTripsProps {
   title?: string;
   description?: string;
   trips: ShortTrip[];
+  viewMoreHref?: string;
+  leftInfoLabel?: string;
+  rightInfoLabel?: string;
 }
 
 export default function ShortTrips({
   title,
   description,
   trips,
+  viewMoreHref = "/short-trip",
+  leftInfoLabel,
+  rightInfoLabel,
 }: ShortTripsProps) {
   const t = useTranslations("ShortTrips");
 
@@ -48,7 +54,7 @@ export default function ShortTrips({
 
           {/* View More Link */}
           <Link
-            href="/short-trips"
+            href={viewMoreHref}
             className="inline-flex items-center gap-2 text-branding-green hover:text-branding-green/80 transition-colors group"
           >
             <span className="font-medium">{t("viewMore")}</span>
@@ -59,7 +65,12 @@ export default function ShortTrips({
         {/* Trips Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {trips.map((trip) => (
-            <TripCard key={trip.id} {...trip} />
+            <TripCard
+              key={trip.id}
+              {...trip}
+              leftInfoLabel={leftInfoLabel}
+              rightInfoLabel={rightInfoLabel}
+            />
           ))}
         </div>
       </div>

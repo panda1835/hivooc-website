@@ -4,85 +4,32 @@ import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 interface TimeSlot {
   label: string;
   time: string;
 }
 
-interface DailyExperience {
+export interface DailyExperience {
   id: number;
   tourType: string;
   title: string;
-  availabilityNotice: string;
+  availabilityNotice?: string;
   description: string;
   image: string;
   link: string;
   timeSlots: TimeSlot[];
 }
 
-export default function DailyExperiences() {
-  const t = useTranslations("DailyExperiences");
+interface DailyExperiencesProps {
+  experiences?: DailyExperience[];
+}
 
-  // Sample daily experience data - replace with actual data from CMS or API
-  const experiences: DailyExperience[] = [
-    {
-      id: 1,
-      tourType: "SHARED TOUR · FULL DAY",
-      title: "Exploring Nature & Beauties of Son Tra - Ba Na",
-      availabilityNotice: "ONLY 10 SLOTS PER DAY",
-      description:
-        "You will experience 2 of Da Nang's most amazing destinations: Ba Na and Son Tra. See many species of wildlife, including the iconic Red-shanked douc langur or 'The Queens of Primates'.",
-      image: "/daily-experience/image1.png",
-      link: "/experiences/son-tra-ba-na",
-      timeSlots: [
-        {
-          label: "FULL DAY",
-          time: "6 AM - 6:30 PM",
-        },
-      ],
-    },
-    {
-      id: 2,
-      tourType: "SHARED TOUR · FULL DAY",
-      title: "Exploring Nature & Red-shanked Douc Langur in Son Tra Monkey Mountain",
-      availabilityNotice: "ONLY 10 SLOTS PER DAY",
-      description:
-        "Our Share tours take place every day and guarantee the best quality of service for you. We will bring you satisfaction and comfort like your own family.",
-      image: "/daily-experience/image2.jpg",
-      link: "/experiences/son-tra-monkey-mountain",
-      timeSlots: [
-        {
-          label: "MORNING",
-          time: "5 AM - 11 AM",
-        },
-        {
-          label: "AFTERNOON",
-          time: "1:30 PM - 7:30 PM",
-        },
-      ],
-    },
-    {
-      id: 3,
-      tourType: "SHARED TOUR · FULL DAY",
-      title: "Exploring Nature Son Tra - Hai Van Quan Nam O Fish Sauce Village",
-      availabilityNotice: "ONLY 10 SLOTS PER DAY",
-      description:
-        "Our Share tours take place every day and guarantee the best quality of service for you. We will bring you satisfaction and comfort like your own family.",
-      image: "/daily-experience/image3.jpg",
-      link: "/experiences/son-tra-hai-van",
-      timeSlots: [
-        {
-          label: "MORNING",
-          time: "5 AM - 11 AM",
-        },
-        {
-          label: "AFTERNOON",
-          time: "1:30 PM - 7:30 PM",
-        },
-      ],
-    },
-  ];
+export default function DailyExperiences({
+  experiences = [],
+}: DailyExperiencesProps) {
+  const t = useTranslations("DailyExperiences");
 
   return (
     <section className="w-full pb-16 bg-white">
@@ -99,13 +46,13 @@ export default function DailyExperiences() {
           </div>
 
           {/* View More Link */}
-          <a
-            href="/daily-experiences"
+          <Link
+            href="/nature-education"
             className="inline-flex items-center gap-2 text-branding-green hover:text-branding-green/80 transition-colors group"
           >
             <span className="font-medium">{t("viewMore")}</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </a>
+          </Link>
         </div>
 
         {/* Experiences Grid */}
@@ -143,9 +90,11 @@ export default function DailyExperiences() {
                 </h3>
 
                 {/* Availability Notice */}
-                <p className="text-sm font-bold text-branding-orange uppercase tracking-wider mb-3">
-                  {experience.availabilityNotice}
-                </p>
+                {experience.availabilityNotice && (
+                  <p className="text-sm font-bold text-branding-orange uppercase tracking-wider mb-3">
+                    {experience.availabilityNotice}
+                  </p>
+                )}
 
                 {/* Description */}
                 <p className="text-[#00342B]  leading-relaxed mb-6 flex-grow line-clamp-4">
@@ -158,9 +107,9 @@ export default function DailyExperiences() {
                   className="w-full mb-4"
                   asChild
                 >
-                  <a href={experience.link}>
+                  <Link href={experience.link}>
                     {t("explore")}
-                  </a>
+                  </Link>
                 </Button>
 
                 {/* Time Slots */}

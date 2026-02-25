@@ -7,26 +7,22 @@ import Image from "next/image";
 interface HeroProps {
   title: string;
   subtitleTop: string;
-  subtitleBottom: string;
+  slideImages?: string[];
 }
 
 export default function Hero({
   title,
   subtitleTop,
-  subtitleBottom,
+  slideImages,
 }: HeroProps) {
   const t = useTranslations("Hero");
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Number of slides
-  const totalSlides = 3;
-
-  // Background images for each slide
-  const slideImages = [
-    "/hero/image1.jpg",
-    "/hero/image2.jpg",
-    "/hero/image3.jpg",
-  ];
+  const images =
+    slideImages && slideImages.length > 0
+      ? slideImages
+      : ["/hero/image1.jpg", "/hero/image2.jpg", "/hero/image3.jpg"];
+  const totalSlides = images.length;
 
   // Auto-play functionality - automatically scrolls
   useEffect(() => {
@@ -55,7 +51,7 @@ export default function Hero({
             {/* Background Image */}
             <Image
               unoptimized
-              src={slideImages[index]}
+              src={images[index]}
               alt={`Hero slide ${index + 1}`}
               fill
               className="object-cover"
@@ -76,9 +72,6 @@ export default function Hero({
                   {title}
                 </h1>
 
-                <p className="text-white text-[20px] font-medium">
-                  {subtitleBottom}
-                </p>
               </div>
             </div>
           </div>

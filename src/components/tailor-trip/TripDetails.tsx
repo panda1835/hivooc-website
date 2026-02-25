@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { TripDetailsData } from "@/components/short-trip/TripDetails";
+import { useLocale } from "next-intl";
 type TabType = "overview" | "photos";
 
 interface TripDetailsProps {
@@ -20,7 +21,7 @@ interface TripDetailsProps {
 export default function TripDetails({ tripData }: TripDetailsProps) {
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   const t = useTranslations("ShortTrips");
-
+  const locale = useLocale();
   return (
     <main>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
@@ -141,7 +142,9 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                 </svg>
 
                 <p className="md:text-base text-[#BA0000] font-[Inter] font-medium leading-relaxed">
-                  {tripData.overview.description}
+                  {locale === "en"
+                    ? "This experience is designed for those who are truly passionate, patient, and seeking a deep connection with the wild."
+                    : "Trải nghiệm này được thiết kế dành cho những người thực sự đam mê, kiên nhẫn và mong muốn có một kết nối sâu sắc với thiên nhiên hoang dã."}
                 </p>
               </div>
 
@@ -160,19 +163,25 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
 
               {/* Itinerary Section */}
               <RichSectionsAccordion
-                title="Sample Itineraries"
+                title={
+                  locale === "en" ? "Sample Itineraries" : "Hành trình mẫu"
+                }
                 sections={tripData.itinerarySections}
               />
 
               {/* Additional Info Section */}
               <RichSectionsAccordion
-                title="Additional information"
+                title={
+                  locale === "en"
+                    ? "Additional information"
+                    : "Thông tin bổ sung"
+                }
                 sections={tripData.additionalInfoSections}
               />
 
               {/* Policies Section */}
               <RichSectionsAccordion
-                title="Policies"
+                title={locale === "en" ? "Policies" : "Chính sách"}
                 sections={tripData.policySections}
               />
 

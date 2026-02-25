@@ -13,6 +13,8 @@ interface TripCardProps {
   link: string;
   bestTimeToTravel: string;
   tripLength: string;
+  leftInfoLabel?: string;
+  rightInfoLabel?: string;
 }
 
 export default function TripCard({
@@ -23,6 +25,8 @@ export default function TripCard({
   link,
   bestTimeToTravel,
   tripLength,
+  leftInfoLabel,
+  rightInfoLabel,
 }: TripCardProps) {
   const t = useTranslations("ShortTrips");
 
@@ -54,7 +58,7 @@ export default function TripCard({
         <h3 className="text-[#1A4D2E] mb-3">{title}</h3>
 
         {/* Description */}
-        <p className="text-[#00342B] leading-relaxed mb-6 flex-grow">
+        <p className="text-[#00342B] leading-relaxed mb-6 flex-grow line-clamp-3">
           {description}
         </p>
 
@@ -67,13 +71,13 @@ export default function TripCard({
         <div className="text-[14px] font-medium grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
           <div className="text-center">
             <p className="text-xs text-[#5A7363]  uppercase tracking-wider mb-1">
-              {t("bestTimeToTravel")}
+              {leftInfoLabel || t("bestTimeToTravel")}
             </p>
             <p className="">{bestTimeToTravel}</p>
           </div>
           <div className="text-center">
             <p className="text-xs text-[#5A7363]  uppercase tracking-wider mb-1">
-              {t("tripLength")}
+              {rightInfoLabel || t("tripLength")}
             </p>
             <p className="">{tripLength}</p>
           </div>

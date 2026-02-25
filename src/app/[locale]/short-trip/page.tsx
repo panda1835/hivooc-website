@@ -1,31 +1,17 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { MapPin, Search } from "lucide-react";
+import Hero from "@/components/our-story/Hero";
+import { fetchWpImagesFromApiRoute, type WPMedia } from "@/lib/wordpress-media";
+import {
+  extractFeaturedImage,
+  getTermsByTaxonomy,
+  parseGeneralLocationDuration,
+  type WPTerm,
+} from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
-
-interface WPTerm {
-  name?: string;
-  taxonomy?: string;
-}
-
-interface WPMediaSize {
-  source_url?: string;
-}
-
-interface WPMedia {
-  source_url?: string;
-  media_details?: {
-    sizes?: {
-      full?: WPMediaSize;
-      large?: WPMediaSize;
-      medium_large?: WPMediaSize;
-      medium?: WPMediaSize;
-      thumbnail?: WPMediaSize;
-    };
-  };
-}
 
 interface WPTour {
   id: number;
@@ -59,14 +45,6 @@ interface ShortTripCardData {
   image: string;
 }
 
-function getTermsByTaxonomy(post: WPTour, taxonomy: string): string[] {
-  const groups = post._embedded?.["wp:term"] || [];
-  return groups
-    .flat()
-    .filter((term) => term.taxonomy === taxonomy && Boolean(term.name))
-    .map((term) => term.name as string);
-}
-
 function extractSchemaImage(post: WPTour): string | null {
   const graph = post.yoast_head_json?.schema?.["@graph"];
   if (!graph) {
@@ -83,60 +61,12 @@ function extractSchemaImage(post: WPTour): string | null {
   return imageNode?.url || imageNode?.contentUrl || null;
 }
 
-function extractFeaturedMedia(post: WPTour): string | null {
-  const media = post._embedded?.["wp:featuredmedia"]?.[0];
-  if (!media) {
-    return null;
-  }
-
-  const sizes = media.media_details?.sizes;
-  return (
-    sizes?.large?.source_url ||
-    sizes?.medium_large?.source_url ||
-    sizes?.medium?.source_url ||
-    sizes?.thumbnail?.source_url ||
-    sizes?.full?.source_url ||
-    media.source_url ||
-    null
-  );
-}
-
-function parseGeneralField(general?: string): {
-  location: string;
-  duration: string;
-} {
-  const fallback = {
+function toCard(post: WPTour): ShortTripCardData {
+  const { location, duration } = parseGeneralLocationDuration(post.acf?.general, {
     location: "Vietnam",
     duration: "Flexible duration",
-  };
-
-  if (!general) {
-    return fallback;
-  }
-
-  const normalizedLines = general
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean);
-
-  const locationLine = normalizedLines.find((line) =>
-    line.toLowerCase().startsWith("location:"),
-  );
-  const durationLine = normalizedLines.find((line) =>
-    line.toLowerCase().startsWith("duration:"),
-  );
-
-  return {
-    location:
-      locationLine?.split(":").slice(1).join(":").trim() || fallback.location,
-    duration:
-      durationLine?.split(":").slice(1).join(":").trim() || fallback.duration,
-  };
-}
-
-function toCard(post: WPTour): ShortTripCardData {
-  const { location, duration } = parseGeneralField(post.acf?.general);
-  const featuredImage = extractFeaturedMedia(post);
+  });
+  const featuredImage = extractFeaturedImage(post);
   const schemaImage = extractSchemaImage(post);
   const destinationName = getTermsByTaxonomy(post, "destination")[0];
   const typeName = getTermsByTaxonomy(post, "tour-type")[0] || "Short Trip";
@@ -159,9 +89,10 @@ async function getShortTrips(): Promise<ShortTripCardData[]> {
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
   const response = await fetch(
-    `${baseUrl}/wp-json/wp/v2/hivooc-tour?per_page=100&_embed`,
+    `${baseUrl}/wp-json/wp/v2/short-tour?per_page=100&_embed`,
     {
-      next: { revalidate: 300 },
+      // TEMP: Content initiation phase - enable fetch cache when content is stable.
+      // next: { revalidate: 300 },
     },
   );
 
@@ -173,9 +104,33 @@ async function getShortTrips(): Promise<ShortTripCardData[]> {
   return data.map(toCard);
 }
 
+async function getShortTripHeroImages(): Promise<string[]> {
+  if (!WORDPRESS_BASE_URL) {
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+  }
+
+  const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
+  try {
+    return await fetchWpImagesFromApiRoute(
+      `${baseUrl}/wp-json/wp/v2/hero-image?slug=short-trip&_embed`,
+    );
+  } catch {
+    return [];
+  }
+}
+
 export default async function ShortTripListingPage() {
-  const trips = await getShortTrips();
-  const heroImage = trips[0]?.image || "/hero/image1.jpg";
+  const [trips, heroImages] = await Promise.all([
+    getShortTrips(),
+    getShortTripHeroImages(),
+  ]);
+  const fallbackHeroImages = trips.slice(0, 3).map((trip) => trip.image);
+  const carouselHeroImages =
+    heroImages.length > 0
+      ? heroImages
+      : fallbackHeroImages.length > 0
+        ? fallbackHeroImages
+        : ["/hero/image1.jpg"];
   const typeFilters = Array.from(
     new Set(trips.map((trip) => trip.type)),
   ).sort();
@@ -185,24 +140,12 @@ export default async function ShortTripListingPage() {
 
   return (
     <main className="w-full bg-[#FFFFFF]">
-      <section className="relative h-[460px] md:h-[560px] overflow-hidden">
-        <Image
-          unoptimized
-          src={heroImage}
-          alt="Short trip hero"
-          fill
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
-          <div>
-            <h1 className="text-white text-4xl md:text-6xl font-medium">
-              Short trip experience like no other
-            </h1>
-          </div>
-        </div>
-      </section>
+      <Hero
+        title="Short trip experience like no other"
+        subtitle="Every short trip is designed to immerse you in nature, wildlife, and meaningful local conservation stories."
+        backgroundImages={carouselHeroImages}
+        backgroundAlt="Short trip hero"
+      />
 
       <section className="bg-[#F5F0E9] py-14 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

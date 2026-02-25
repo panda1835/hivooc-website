@@ -20,7 +20,7 @@ export default function Header() {
 
   const withLocaleSlugSuffix = (path: string, newLocale: string) => {
     const slugPagePattern =
-      /^\/(trip-report|news|destination|species|short-trip|tailor-trip)\/([^/]+)$/;
+      /^\/(trip-report|news|destination|species|short-trip|tailor-trip|nature-education)\/([^/]+)$/;
     const match = path.match(slugPagePattern);
 
     if (!match) {

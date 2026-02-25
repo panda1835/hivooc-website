@@ -5,6 +5,23 @@ interface WordPressSchemaNode {
   caption?: string;
 }
 
+export interface WPMediaSize {
+  source_url?: string;
+}
+
+export interface WPMedia {
+  source_url?: string;
+  media_details?: {
+    sizes?: {
+      full?: WPMediaSize;
+      large?: WPMediaSize;
+      medium_large?: WPMediaSize;
+      medium?: WPMediaSize;
+      thumbnail?: WPMediaSize;
+    };
+  };
+}
+
 interface WordPressMediaLike {
   yoast_head_json?: {
     schema?: {
@@ -17,16 +34,7 @@ interface WordPressMediaLike {
     [key: string]: unknown;
   };
   _embedded?: {
-    "wp:featuredmedia"?: Array<{
-      source_url?: string;
-      media_details?: {
-        sizes?: {
-          thumbnail?: {
-            source_url?: string;
-          };
-        };
-      };
-    }>;
+    "wp:featuredmedia"?: WPMedia[];
   };
 }
 

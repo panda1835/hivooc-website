@@ -143,7 +143,7 @@ async function fetchRelatedNews(
     }
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-    const res = await fetch(`${baseUrl}/wp-json/wp/v2/news?per_page=6&_embed`, {
+    const res = await fetch(`${baseUrl}/wp-json/wp/v2/news?per_page=9&_embed`, {
       // next: { revalidate: 3600 },
     });
 
@@ -160,7 +160,7 @@ async function fetchRelatedNews(
           : item.link.indexOf("/vi/") === -1,
       )
       .filter((item) => item.slug !== currentSlug)
-      .slice(0, 2)
+      .slice(0, 3)
       .map((item) => mapNewsArticle(item, locale));
   } catch (error) {
     console.error("Error fetching related news:", error);
@@ -239,13 +239,14 @@ export default async function NewsDetailPage({
             Related Articles
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {relatedArticles.map((relatedArticle) => (
               <Link
                 key={relatedArticle.id}
                 href={`/news/${relatedArticle.slug}`}
+                className="h-full"
               >
-                <article className="bg-white rounded-[4px] overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+                <article className="h-full bg-white rounded-[4px] overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col">
                   <div className="relative h-48">
                     <Image
                       src={relatedArticle.image}
@@ -256,7 +257,7 @@ export default async function NewsDetailPage({
                     />
                   </div>
 
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col flex-1">
                     <div className="flex items-center gap-2 mb-3 text-sm">
                       <span className="text-[#5A7363] font-medium">
                         {relatedArticle.category}
