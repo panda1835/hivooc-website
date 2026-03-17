@@ -2,6 +2,8 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
+import BookThisTripButton from "./BookThisTripButton";
+import { Link } from "@/i18n/navigation";
 
 interface PricingTier {
   pax: string;
@@ -67,16 +69,17 @@ export default function Pricing({
             </div>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="lg" className="bg-transparent">
-              {t("bookThisTrip")}
-            </Button>
+            <BookThisTripButton label={t("bookThisTrip")} className="bg-transparent" />
             <Button
+              asChild
               variant="orange"
               size="lg"
               className="group font-sans cursor-pointer"
             >
-              {t("tailorThisTrip")}
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              <Link href="/tailor-my-trip-form">
+                {t("tailorThisTrip")}
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
           </div>
         </div>

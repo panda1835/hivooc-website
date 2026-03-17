@@ -13,6 +13,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
+import BookThisTripButton from "./BookThisTripButton";
+import { Link } from "@/i18n/navigation";
 type TabType = "overview" | "photos";
 
 export interface TripDetailsData {
@@ -179,12 +181,15 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
               />
 
               <div className="flex justify-center gap-2 mt-6 md:mt-10 mb-5">
-                <Button variant="outline" size="lg" className="bg-transparent">
-                  {t("bookThisTrip")}
-                </Button>
-                <Button variant="orange" size="lg" className="group font-sans">
-                  {t("tailorThisTrip")}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                <BookThisTripButton
+                  label={t("bookThisTrip")}
+                  className="bg-transparent"
+                />
+                <Button asChild variant="orange" size="lg" className="group font-sans">
+                  <Link href="/tailor-my-trip-form">
+                    {t("tailorThisTrip")}
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </Button>
               </div>
             </>
@@ -193,12 +198,15 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
               {/* Photos Section */}
               <TripPhotos images={tripData.photos} />
               <div className="flex justify-center gap-2 mt-6 md:mt-10 mb-5">
-                <Button variant="outline" size="lg" className="bg-transparent">
-                  {t("bookThisTrip")}
-                </Button>
-                <Button variant="orange" size="lg" className="group font-sans">
-                  {t("tailorThisTrip")}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                <BookThisTripButton
+                  label={t("bookThisTrip")}
+                  className="bg-transparent"
+                />
+                <Button asChild variant="orange" size="lg" className="group font-sans">
+                  <Link href="/tailor-my-trip-form">
+                    {t("tailorThisTrip")}
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </Button>
               </div>
             </>
