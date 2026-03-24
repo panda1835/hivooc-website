@@ -318,7 +318,7 @@ export default async function ShortTripPage({ params }: PageProps) {
   const relatedTrips = await getRelatedShortTrips(post.id);
 
   return (
-    <main className="flex flex-col w-full">
+    <main className="flex flex-col w-full non-selectable-content">
       <Hero title={heroTitle} subtitle={heroSubtitle} slideImages={heroSlides} />
 
       <Pricing

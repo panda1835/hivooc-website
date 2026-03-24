@@ -83,7 +83,7 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                     </clipPath>
                   </defs>
                 </svg>
-                OVERVIEW
+                {locale === "en" ? "OVERVIEW" : "TỔNG QUAN"}
               </div>
 
               {activeTab === "overview" && (
@@ -111,7 +111,7 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                     fill={activeTab === "photos" ? "#1A4D2E" : "#666666"}
                   />
                 </svg>
-                PHOTOS
+                {locale === "en" ? "PHOTOS" : "ẢNH"}
               </div>
 
               {activeTab === "photos" && (
@@ -185,7 +185,12 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                   label={t("bookThisTrip")}
                   className="bg-transparent"
                 />
-                <Button asChild variant="orange" size="lg" className="group font-sans">
+                <Button
+                  asChild
+                  variant="orange"
+                  size="lg"
+                  className="group font-sans"
+                >
                   <Link href="/tailor-my-trip-form">
                     {t("tailorThisTrip")}
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -202,7 +207,12 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                   label={t("bookThisTrip")}
                   className="bg-transparent"
                 />
-                <Button asChild variant="orange" size="lg" className="group font-sans">
+                <Button
+                  asChild
+                  variant="orange"
+                  size="lg"
+                  className="group font-sans"
+                >
                   <Link href="/tailor-my-trip-form">
                     {t("tailorThisTrip")}
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

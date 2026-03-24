@@ -11,6 +11,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ImageProtection from "@/components/ImageProtection";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -61,6 +62,7 @@ export default async function RootLayout({ children, params }: Props) {
         className={`${inter.variable} ${geistMono.variable} ${ibmPlexSansCondensed.variable} ${dancingScript.variable} ${instrumentSerif.variable}`}
       >
         <NextIntlClientProvider messages={messages}>
+          <ImageProtection />
           <Header />
           {children}
           <Footer />

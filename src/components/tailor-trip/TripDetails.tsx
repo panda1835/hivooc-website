@@ -12,6 +12,7 @@ import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { TripDetailsData } from "@/components/short-trip/TripDetails";
 import { useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 type TabType = "overview" | "photos";
 
 interface TripDetailsProps {
@@ -123,14 +124,14 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                       d="M4 17.9768L4 6.97681L1 6.97681L1 17.9768L4 17.9768Z"
                       fill="#555555"
                       stroke="white"
-                      stroke-width="2"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M4 6.97683C7.56133 3.71716 9.62533 1.84683 10.192 1.36583C11.042 0.644332 12.002 0.947332 12.002 2.75333C12.002 4.55933 9.3595 5.60083 9.3595 6.97683C9.3575 6.98516 12.737 6.98567 19.498 6.97833C19.6951 6.97807 19.8903 7.01664 20.0724 7.09184C20.2546 7.16704 20.4201 7.2774 20.5596 7.41661C20.6991 7.55582 20.8098 7.72115 20.8853 7.90315C20.9609 8.08516 20.9999 8.28026 21 8.47733L21 8.47883C21.0001 8.67612 20.9613 8.87149 20.8858 9.05378C20.8104 9.23607 20.6997 9.4017 20.5603 9.54123C20.4208 9.68076 20.2552 9.79144 20.0729 9.86695C19.8906 9.94247 19.6953 9.98133 19.498 9.98133L15.493 9.98133C14.889 13.9673 14.5557 16.1345 14.493 16.4828C14.399 17.0053 13.9 17.9768 12.466 17.9768L4 17.9768L4 6.97683Z"
                       stroke="white"
-                      stroke-width="2"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
                     />
                   </mask>
                   <g mask="url(#mask0_333_6038)">
@@ -186,9 +187,11 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
               />
 
               <div className="flex justify-center gap-2 mt-6 md:mt-10 mb-5">
-                <Button variant="orange" size="lg" className="group font-sans">
-                  {t("tailorMyTrip")}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                <Button asChild variant="orange" size="lg" className="group font-sans">
+                  <Link href="/tailor-my-trip-form">
+                    {t("tailorMyTrip")}
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </Button>
               </div>
             </>
@@ -197,9 +200,11 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
               {/* Photos Section */}
               <TripPhotos images={tripData.photos} />
               <div className="flex justify-center gap-2 mt-6 md:mt-10 mb-5">
-                <Button variant="orange" size="lg" className="group font-sans">
-                  {t("tailorMyTrip")}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                <Button asChild variant="orange" size="lg" className="group font-sans">
+                  <Link href="/tailor-my-trip-form">
+                    {t("tailorMyTrip")}
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </Button>
               </div>
             </>

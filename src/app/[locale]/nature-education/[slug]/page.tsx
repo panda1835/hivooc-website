@@ -336,7 +336,7 @@ export default async function NatureEducationPage({ params }: PageProps) {
   const isVietnamese = locale === "vi";
 
   return (
-    <main className="flex flex-col w-full">
+    <main className="flex flex-col w-full non-selectable-content">
       <Hero title={heroTitle} subtitle={heroSubtitle} slideImages={heroSlides} />
 
       <Pricing

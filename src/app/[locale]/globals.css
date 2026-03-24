@@ -150,6 +150,14 @@
   button {
     @apply cursor-pointer;
   }
+
+  img,
+  picture {
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
 }
 
 /* Hide scrollbar for horizontal scroll */
@@ -213,4 +221,10 @@
 .trip-map-pin-number--small {
   top: 4px;
   font-size: 10px;
+}
+
+.non-selectable-content,
+.non-selectable-content * {
+  user-select: none;
+  -webkit-user-select: none;
 }

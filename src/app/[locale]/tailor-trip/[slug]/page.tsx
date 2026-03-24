@@ -325,7 +325,7 @@ export default async function TailorTripDetailPage({ params }: PageProps) {
   } = parseTourData(post);
 
   return (
-    <main className="flex flex-col w-full">
+    <main className="flex flex-col w-full non-selectable-content">
       <Hero
         subtitleTop={heroSubtitleTop}
         title={heroTitle}

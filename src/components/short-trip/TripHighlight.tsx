@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import { useState } from "react";
-
+import { useLocale } from "next-intl";
 interface TripHighlightProps {
   highlights: {
     description: string;
@@ -27,10 +27,13 @@ export default function TripHighlight({ highlights }: TripHighlightProps) {
   const expandGallery = () => {
     setIsExpanded(true);
   };
+  const locale = useLocale();
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-medium text-[#192B28]">Highlight</h2>
+      <h2 className="text-2xl font-medium text-[#192B28]">
+        {locale === "en" ? "Highlight" : "Điểm nổi bật"}
+      </h2>
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Highlights List */}
@@ -54,7 +57,7 @@ export default function TripHighlight({ highlights }: TripHighlightProps) {
                 />
               </svg>
 
-              <p className="text-sm md:text-base leading-relaxed text-[#192B28]">
+              <p className="text-md md:text-lg leading-relaxed text-[#192B28]">
                 {highlight}
               </p>
             </div>
