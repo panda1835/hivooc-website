@@ -12,17 +12,17 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Logo and Description */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex flex-col gap-3 mb-4">
               <Image
                 unoptimized
                 src="/logo.png"
                 alt="HIVOOC Logo"
                 width={400}
                 height={400}
-                className="w-40 h-40 object-contain"
+                className="w-40 h-20 object-contain"
               />
               <div>
-                <p className="text-xs  italic font-dancing-script text-white/90">
+                <p className="text-lg  italic font-dancing-script text-white/90">
                   Wildlife Tourism For Conservation
                 </p>
               </div>
@@ -35,7 +35,9 @@ export default function Footer() {
 
           {/* Explore Links */}
           <div className="lg:col-span-1">
-            <h3 className="text-lg font-light sm:text-xl mb-4 sm:mb-6">{t("explore")}</h3>
+            <h3 className="text-lg font-light sm:text-xl mb-4 sm:mb-6">
+              {t("explore")}
+            </h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
                 <Link

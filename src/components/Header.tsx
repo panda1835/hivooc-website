@@ -143,11 +143,11 @@ export default function Header() {
                   unoptimized
                   src="/logo.png"
                   alt="HIVOOC Logo"
-                  width={150}
-                  height={150}
-                  className="w-32 h-32 object-contain"
+                  width={250}
+                  height={250}
+                  className="w-40 h-32 object-contain"
                 />
-                <p className="hidden md:block text-xs  italic font-dancing-script text-white/90">
+                <p className="hidden md:block text-lg italic font-dancing-script text-white/90">
                   Wildlife Tourism For Conservation
                 </p>
               </Link>
