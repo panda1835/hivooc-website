@@ -148,7 +148,7 @@ export default function Header() {
                   className="w-40 h-32 object-contain"
                 />
                 <p className="hidden md:block text-lg italic font-dancing-script text-white/90">
-                  Wildlife Tourism For Conservation
+                  Primate Tourism For Conservation
                 </p>
               </Link>
             </div>

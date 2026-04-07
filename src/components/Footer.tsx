@@ -23,7 +23,7 @@ export default function Footer() {
               />
               <div>
                 <p className="text-lg  italic font-dancing-script text-white/90">
-                  Wildlife Tourism For Conservation
+                  Primate Tourism For Conservation
                 </p>
               </div>
             </div>
