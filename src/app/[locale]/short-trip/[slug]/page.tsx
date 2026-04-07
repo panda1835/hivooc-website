@@ -325,9 +325,15 @@ export default async function ShortTripPage({ params }: PageProps) {
         title={pricing.title}
         description={pricing.description}
         pricingTiers={pricing.pricingTiers}
+        inquiryType="Short Tour"
+        inquiryName={heroTitle}
       />
 
-      <TripDetails tripData={details} />
+      <TripDetails
+        tripData={details}
+        inquiryType="Short Tour"
+        inquiryName={heroTitle}
+      />
       <ContributeToConservation />
 
       {relatedTrips.length > 0 && (

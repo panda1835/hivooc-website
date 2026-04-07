@@ -144,12 +144,12 @@ export default async function NatureEducationListingPage({ params }: PageProps) 
       <Hero
         title={
           isVietnamese
-            ? "Chuong trinh giao duc thien nhien"
+            ? "Chương trình giáo dục thiên nhiên"
             : "Nature education programs"
         }
         subtitle={
           isVietnamese
-            ? "Trai nghiem hoc tap ngoai troi giup ket noi con nguoi voi thien nhien va hanh dong bao ton."
+            ? "Trải nghiệm học tập ngoài trời giúp kết nối con người với thiên nhiên và hành động bảo tồn."
             : "Outdoor learning experiences that connect people with nature and inspire conservation action."
         }
         backgroundImages={carouselHeroImages}
@@ -160,12 +160,12 @@ export default async function NatureEducationListingPage({ params }: PageProps) 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#00342B] mb-4">
             {isVietnamese
-              ? "Hoc tu nhien thong qua trai nghiem thuc te"
+              ? "Học từ thiên nhiên thông qua trải nghiệm thực tế"
               : "Learn from nature through direct experiences"}
           </h2>
           <p className="text-[#00342B] leading-relaxed">
             {isVietnamese
-              ? "Cac chuong trinh giao duc thien nhien cua chung toi ket hop kien thuc da dang sinh hoc, ky nang quan sat va trai nghiem ngoai troi an toan cho hoc sinh, gia dinh va nhom quan tam. Moi chuong trinh duoc thiet ke de khuyen khich y thuc bao ton va tinh yeu thien nhien."
+              ? "Các chương trình giáo dục thiên nhiên của chúng tôi kết hợp kiến thức đa dạng sinh học, kỹ năng quan sát và trải nghiệm ngoài trời an toàn cho học sinh, gia đình và nhóm quan tâm. Mỗi chương trình được thiết kế để khuyến khích ý thức bảo tồn và tình yêu thiên nhiên."
               : "Our nature education programs combine biodiversity knowledge, observation skills, and safe outdoor learning experiences for students, families, and groups. Each program is designed to build conservation awareness and a lasting connection with nature."}
           </p>
         </div>
@@ -174,11 +174,11 @@ export default async function NatureEducationListingPage({ params }: PageProps) 
       <section id="program-list" className="py-14 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#00342B] mb-1">
-            {isVietnamese ? "Chuong trinh noi bat" : "Featured programs"}
+            {isVietnamese ? "Chương trình nổi bật" : "Featured programs"}
           </h2>
           <p className="text-[#00342B] mb-8">
             {isVietnamese
-              ? "Kham pha cac chuong trinh giao duc thien nhien duoc xay dung theo tung nhom doi tuong va muc tieu hoc tap."
+              ? "Khám phá các chương trình giáo dục thiên nhiên được xây dựng theo từng nhóm đối tượng và mục tiêu học tập."
               : "Explore nature education programs designed for different audiences and learning outcomes."}
           </p>
 
@@ -186,7 +186,7 @@ export default async function NatureEducationListingPage({ params }: PageProps) 
             {programs.length === 0 && (
               <div className="md:col-span-2 lg:col-span-3 bg-white border border-gray-200 rounded-sm p-6 text-branding-green/80">
                 {isVietnamese
-                  ? "Hien chua co chuong trinh giao duc thien nhien nao."
+                  ? "Hiện chưa có chương trình giáo dục thiên nhiên nào."
                   : "No nature education programs are available right now."}
               </div>
             )}
@@ -228,7 +228,7 @@ export default async function NatureEducationListingPage({ params }: PageProps) 
                     href={`/nature-education/${program.slug}`}
                     className="mt-6 h-10 border border-gray-400 rounded-sm inline-flex items-center justify-center text-sm text-branding-green hover:bg-branding-green hover:text-white transition-colors"
                   >
-                    {isVietnamese ? "Kham pha" : "Explore"}
+                    {isVietnamese ? "Khám phá" : "Explore"}
                   </Link>
                 </div>
               </article>

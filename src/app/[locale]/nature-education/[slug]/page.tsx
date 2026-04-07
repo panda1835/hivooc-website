@@ -343,17 +343,23 @@ export default async function NatureEducationPage({ params }: PageProps) {
         title={pricing.title}
         description={pricing.description}
         pricingTiers={pricing.pricingTiers}
+        inquiryType="Nature Education Tour"
+        inquiryName={heroTitle}
       />
 
-      <TripDetails tripData={details} />
+      <TripDetails
+        tripData={details}
+        inquiryType="Nature Education Tour"
+        inquiryName={heroTitle}
+      />
       <ContributeToConservation />
 
       {relatedPrograms.length > 0 && (
         <ShortTrips
-          title={isVietnamese ? "Chuong trinh lien quan" : "Related programs"}
+          title={isVietnamese ? "Chương trình liên quan" : "Related programs"}
           description={
             isVietnamese
-              ? "Tiep tuc kham pha cac chuong trinh giao duc thien nhien khac phu hop voi muc tieu hoc tap cua ban."
+              ? "Tiếp tục khám phá các chương trình giáo dục thiên nhiên khác phù hợp với mục tiêu học tập của bạn."
               : "Continue exploring more nature education programs that match your learning goals."
           }
           trips={relatedPrograms}

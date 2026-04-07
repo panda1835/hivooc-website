@@ -14,12 +14,16 @@ interface PricingProps {
   title: string;
   description: string;
   pricingTiers: PricingTier[];
+  inquiryType: string;
+  inquiryName: string;
 }
 
 export default function Pricing({
   title,
   description,
   pricingTiers,
+  inquiryType,
+  inquiryName,
 }: PricingProps) {
   const t = useTranslations("ShortTrips");
   return (
@@ -69,7 +73,12 @@ export default function Pricing({
             </div>
           </div>
           <div className="flex gap-2">
-            <BookThisTripButton label={t("bookThisTrip")} className="bg-transparent" />
+            <BookThisTripButton
+              label={t("bookThisTrip")}
+              className="bg-transparent"
+              inquiryType={inquiryType}
+              inquiryName={inquiryName}
+            />
             <Button
               asChild
               variant="orange"

@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { useLocale } from "next-intl";
-import { useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 const inputClass =
   "w-full rounded-[4px] border border-[#D8D5CF] bg-white px-4 py-3 text-branding-green placeholder:text-branding-green/45 focus:outline-none focus:ring-2 focus:ring-branding-orange/25";
@@ -12,6 +12,7 @@ const textareaClass =
 const sectionTitleClass =
   "font-condensed text-[30px] leading-tight text-branding-green";
 const labelClass = "text-lg font-medium text-branding-green";
+type InquiryFields = Record<string, string | string[]>;
 
 function checkList(name: string, options: string[]) {
   return (
@@ -34,6 +35,48 @@ function checkList(name: string, options: string[]) {
   );
 }
 
+function toReadableLabel(key: string): string {
+  const normalized = key
+    .replaceAll(/[_-]+/g, " ")
+    .replaceAll(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  if (!normalized) {
+    return "Field";
+  }
+
+  return normalized
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function collectFormFields(form: HTMLFormElement): InquiryFields {
+  const formData = new FormData(form);
+  const fields: InquiryFields = {};
+
+  for (const [key, rawValue] of formData.entries()) {
+    const value = String(rawValue).trim();
+
+    if (!value) {
+      continue;
+    }
+
+    const existing = fields[key];
+
+    if (existing === undefined) {
+      fields[key] = value;
+    } else if (Array.isArray(existing)) {
+      existing.push(value);
+    } else {
+      fields[key] = [existing, value];
+    }
+  }
+
+  return fields;
+}
+
 export default function TailorForm() {
   const locale = useLocale();
   const isVi = locale === "vi";
@@ -50,10 +93,89 @@ export default function TailorForm() {
 
   const [started, setStarted] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitState, setSubmitState] = useState<"idle" | "success" | "error">(
+    "idle",
+  );
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [pendingFields, setPendingFields] = useState<InquiryFields>({});
+  const formRef = useRef<HTMLFormElement>(null);
 
   const nextStep = () =>
     setCurrentStep((value) => Math.min(value + 1, stepLabels.length - 1));
   const prevStep = () => setCurrentStep((value) => Math.max(value - 1, 0));
+
+  const closeConfirmModal = () => {
+    setIsConfirmOpen(false);
+    setSubmitState("idle");
+    setSubmitError(null);
+  };
+
+  const openConfirmModal = () => {
+    const form = formRef.current;
+    if (!form) {
+      return;
+    }
+
+    const fields = collectFormFields(form);
+    setPendingFields(fields);
+    setSubmitState("idle");
+    setSubmitError(null);
+    setIsConfirmOpen(true);
+  };
+
+  const handleConfirmSubmit = async () => {
+    const form = formRef.current;
+    if (!form) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitState("idle");
+    setSubmitError(null);
+
+    try {
+      const response = await fetch("/api/tour-inquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          formType: "Tailor Tour",
+          inquiryTitle: "Tailor-Made Tour Inquiry",
+          locale,
+          sourcePath: window.location.pathname,
+          fields: pendingFields,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorPayload = (await response.json().catch(() => null)) as {
+          error?: string;
+          details?: string;
+        } | null;
+        throw new Error(
+          errorPayload?.details ||
+            errorPayload?.error ||
+            "Failed to send tailor inquiry",
+        );
+      }
+
+      setSubmitState("success");
+      form.reset();
+      setCurrentStep(0);
+    } catch (error) {
+      const message =
+        error instanceof Error && error.message
+          ? error.message
+          : "We could not send your request right now. Please try again.";
+      setSubmitState("error");
+      setSubmitError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-8 text-branding-green">
@@ -171,7 +293,11 @@ export default function TailorForm() {
             </p>
           </div>
 
-          <form className="space-y-10">
+          <form
+            ref={formRef}
+            className="space-y-10"
+            onSubmit={(event) => event.preventDefault()}
+          >
             <section hidden={currentStep !== 0} className="space-y-8">
               <h2 className={sectionTitleClass}>
                 {tx(
@@ -1151,13 +1277,130 @@ export default function TailorForm() {
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               ) : (
-                <Button type="submit" variant="green">
+                <Button
+                  type="button"
+                  variant="green"
+                  onClick={openConfirmModal}
+                >
                   {tx("Submit request", "Gửi yêu cầu")}
                 </Button>
               )}
             </div>
           </form>
         </section>
+      )}
+
+      {isConfirmOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 py-6"
+          onClick={closeConfirmModal}
+          role="presentation"
+        >
+          <div
+            className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-lg bg-white p-8 text-branding-green shadow-sm md:p-10"
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label={tx("Confirm your request", "Xác nhận yêu cầu của bạn")}
+          >
+            <button
+              type="button"
+              className="absolute right-4 top-4 rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+              aria-label={tx("Close form", "Đóng biểu mẫu")}
+              onClick={closeConfirmModal}
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            {submitState === "success" ? (
+              <div className="space-y-4  p-5">
+                <h3 className="text-xl font-semibold ">
+                  {tx(
+                    "Request submitted successfully",
+                    "Yêu cầu đã được gửi thành công",
+                  )}
+                </h3>
+                <p className="">
+                  {tx(
+                    "Thank you. We received your booking request and our team will contact you soon.",
+                    "Cảm ơn bạn. Chúng tôi đã nhận được yêu cầu của bạn và đội ngũ sẽ sớm liên hệ.",
+                  )}
+                </p>
+                <div>
+                  <Button
+                    type="button"
+                    variant="green"
+                    onClick={closeConfirmModal}
+                  >
+                    {tx("Close", "Đóng")}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-5">
+                <h3 className="text-2xl font-medium">
+                  {tx("Confirm your request", "Xác nhận yêu cầu của bạn")}
+                </h3>
+                <p className="text-sm text-branding-green/80">
+                  {tx(
+                    "Please review your selections before sending.",
+                    "Vui lòng xem lại thông tin trước khi gửi.",
+                  )}
+                </p>
+
+                <div className="overflow-x-auto rounded border border-[#DDD8CF]">
+                  <table className="w-full border-collapse text-sm">
+                    <tbody>
+                      {Object.entries(pendingFields).map(([key, value]) => (
+                        <tr
+                          key={key}
+                          className="border-b border-[#EEE9E0] last:border-b-0"
+                        >
+                          <td className="w-1/3 bg-[#F7F3EA] px-4 py-3 font-medium">
+                            {toReadableLabel(key)}
+                          </td>
+                          <td className="px-4 py-3">
+                            {Array.isArray(value) ? value.join(", ") : value}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {submitState === "error" && (
+                  <p className="text-sm text-red-700">
+                    {submitError ||
+                      tx(
+                        "We could not send your request right now. Please try again.",
+                        "Hiện chưa thể gửi yêu cầu của bạn. Vui lòng thử lại.",
+                      )}
+                  </p>
+                )}
+
+                <div className="flex flex-wrap justify-end gap-3">
+                  <Button
+                    type="button"
+                    variant="outline-green"
+                    onClick={closeConfirmModal}
+                  >
+                    {tx("Back", "Quay lại")}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="green"
+                    onClick={handleConfirmSubmit}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting
+                      ? tx("Sending...", "Đang gửi...")
+                      : tx("Submit request", "Gửi yêu cầu")}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

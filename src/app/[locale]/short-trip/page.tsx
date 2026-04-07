@@ -16,6 +16,7 @@ const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 interface WPTour {
   id: number;
   slug: string;
+  link?: string;
   title?: { rendered?: string };
   acf?: {
     general?: string;
@@ -61,20 +62,25 @@ function extractSchemaImage(post: WPTour): string | null {
   return imageNode?.url || imageNode?.contentUrl || null;
 }
 
-function toCard(post: WPTour): ShortTripCardData {
+function toCard(post: WPTour, locale: string): ShortTripCardData {
+  const isVietnamese = locale === "vi";
   const { location, duration } = parseGeneralLocationDuration(post.acf?.general, {
-    location: "Vietnam",
-    duration: "Flexible duration",
+    location: isVietnamese ? "Việt Nam" : "Vietnam",
+    duration: isVietnamese ? "Linh hoạt thời lượng" : "Flexible duration",
   });
   const featuredImage = extractFeaturedImage(post);
   const schemaImage = extractSchemaImage(post);
   const destinationName = getTermsByTaxonomy(post, "destination")[0];
-  const typeName = getTermsByTaxonomy(post, "tour-type")[0] || "Short Trip";
+  const typeName =
+    getTermsByTaxonomy(post, "tour-type")[0] ||
+    (isVietnamese ? "Chuyến đi ngắn" : "Short Trip");
 
   return {
     id: post.id,
     slug: post.slug,
-    title: decodeHtmlEntities(post.title?.rendered || "Short trip"),
+    title: decodeHtmlEntities(
+      post.title?.rendered || (isVietnamese ? "Chuyến đi ngắn" : "Short trip"),
+    ),
     type: typeName,
     location: destinationName || location,
     duration,
@@ -82,7 +88,7 @@ function toCard(post: WPTour): ShortTripCardData {
   };
 }
 
-async function getShortTrips(): Promise<ShortTripCardData[]> {
+async function getShortTrips(locale: string): Promise<ShortTripCardData[]> {
   if (!WORDPRESS_BASE_URL) {
     throw new Error("Missing WORDPRESS_BASE_URL environment variable");
   }
@@ -101,7 +107,13 @@ async function getShortTrips(): Promise<ShortTripCardData[]> {
   }
 
   const data: WPTour[] = await response.json();
-  return data.map(toCard);
+  const filtered = data.filter((tour) =>
+    locale === "vi"
+      ? (tour.link || "").includes("/vi/")
+      : !(tour.link || "").includes("/vi/"),
+  );
+
+  return filtered.map((tour) => toCard(tour, locale));
 }
 
 async function getShortTripHeroImages(): Promise<string[]> {
@@ -119,9 +131,15 @@ async function getShortTripHeroImages(): Promise<string[]> {
   }
 }
 
-export default async function ShortTripListingPage() {
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function ShortTripListingPage({ params }: PageProps) {
+  const { locale } = await params;
+  const isVietnamese = locale === "vi";
   const [trips, heroImages] = await Promise.all([
-    getShortTrips(),
+    getShortTrips(locale),
     getShortTripHeroImages(),
   ]);
   const fallbackHeroImages = trips.slice(0, 3).map((trip) => trip.image);
@@ -141,34 +159,44 @@ export default async function ShortTripListingPage() {
   return (
     <main className="w-full bg-[#FFFFFF]">
       <Hero
-        title="Short trip experience like no other"
-        subtitle="Every short trip is designed to immerse you in nature, wildlife, and meaningful local conservation stories."
+        title={
+          isVietnamese
+            ? "Trải nghiệm chuyến đi ngắn không nơi nào có được"
+            : "Short trip experience like no other"
+        }
+        subtitle={
+          isVietnamese
+            ? "Mỗi chuyến đi ngắn được thiết kế để bạn hòa mình vào thiên nhiên, đời sống hoang dã và những câu chuyện bảo tồn địa phương đầy ý nghĩa."
+            : "Every short trip is designed to immerse you in nature, wildlife, and meaningful local conservation stories."
+        }
         backgroundImages={carouselHeroImages}
-        backgroundAlt="Short trip hero"
+        backgroundAlt={isVietnamese ? "Ảnh bìa chuyến đi ngắn" : "Short trip hero"}
       />
 
       <section className="bg-[#F5F0E9] py-14 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[#00342B] mb-4">
-            Your date. Your destination. Our planning and Expertise.
+            {isVietnamese
+              ? "Ngày khởi hành của bạn. Điểm đến của bạn. Kế hoạch và chuyên môn của chúng tôi."
+              : "Your date. Your destination. Our planning and Expertise."}
           </h2>
           <p className="text-[#00342B] leading-relaxed">
-            We create personalized travel itineraries with destinations, routes,
-            and schedules designed especially for you. Leave all the travel
-            planning and execution to our team. Whether you have your own
-            aircraft, are interested in a private charter, or choose to fly
-            commercial, we will make all air and ground arrangements in your
-            preferred style so you can enjoy every moment.
+            {isVietnamese
+              ? "Chúng tôi xây dựng hành trình cá nhân hóa với điểm đến, tuyến di chuyển và lịch trình được thiết kế riêng cho bạn. Hãy để đội ngũ của chúng tôi lo toàn bộ khâu lên kế hoạch và vận hành chuyến đi. Dù bạn có máy bay riêng, muốn thuê chuyến bay charter hay lựa chọn chuyến bay thương mại, chúng tôi đều sắp xếp đầy đủ phương án di chuyển đường không và đường bộ theo phong cách bạn mong muốn để bạn tận hưởng trọn vẹn từng khoảnh khắc."
+              : "We create personalized travel itineraries with destinations, routes, and schedules designed especially for you. Leave all the travel planning and execution to our team. Whether you have your own aircraft, are interested in a private charter, or choose to fly commercial, we will make all air and ground arrangements in your preferred style so you can enjoy every moment."}
           </p>
         </div>
       </section>
 
       <section id="trip-list" className="py-14 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-[#00342B] mb-1">Short Trips adventure</h2>
+          <h2 className="text-[#00342B] mb-1">
+            {isVietnamese ? "Hành trình ngắn nổi bật" : "Short Trips adventure"}
+          </h2>
           <p className="text-[#00342B] mb-8">
-            Every journey is crafted to match your interests, pace, and wildlife
-            dreams. No two experiences are the same.
+            {isVietnamese
+              ? "Mỗi hành trình được thiết kế theo sở thích, nhịp độ và mong muốn khám phá động vật hoang dã của bạn. Không có hai trải nghiệm nào giống nhau."
+              : "Every journey is crafted to match your interests, pace, and wildlife dreams. No two experiences are the same."}
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 md:gap-8 items-start">
@@ -177,13 +205,13 @@ export default async function ShortTripListingPage() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                 <input
                   type="text"
-                  placeholder="Search Tour"
+                  placeholder={isVietnamese ? "Tìm kiếm tour" : "Search Tour"}
                   className="w-full h-10 border border-gray-300 rounded-sm pl-9 pr-3 text-sm bg-white"
                 />
               </div>
 
               <div className="mt-4  text-sm text-branding-green font-medium">
-                Filter by
+                {isVietnamese ? "Lọc theo" : "Filter by"}
               </div>
 
               {/* Divider */}
@@ -191,10 +219,12 @@ export default async function ShortTripListingPage() {
 
               <div className="mt-4 space-y-5 text-sm text-branding-green/90">
                 <div>
-                  <p className="font-medium mb-2">Type</p>
+                  <p className="font-medium mb-2">
+                    {isVietnamese ? "Loại hình" : "Type"}
+                  </p>
                   {typeFilters.length === 0 && (
                     <p className="text-xs text-branding-green/70">
-                      No types available
+                      {isVietnamese ? "Chưa có loại hình" : "No types available"}
                     </p>
                   )}
                   {typeFilters.map((typeName) => (
@@ -209,10 +239,14 @@ export default async function ShortTripListingPage() {
                 </div>
 
                 <div>
-                  <p className="font-medium mb-2">Destination</p>
+                  <p className="font-medium mb-2">
+                    {isVietnamese ? "Điểm đến" : "Destination"}
+                  </p>
                   {destinationFilters.length === 0 && (
                     <p className="text-xs text-branding-green/70">
-                      No destinations available
+                      {isVietnamese
+                        ? "Chưa có điểm đến"
+                        : "No destinations available"}
                     </p>
                   )}
                   {destinationFilters.map((destinationName) => (
@@ -231,7 +265,9 @@ export default async function ShortTripListingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {trips.length === 0 && (
                 <div className="md:col-span-2 bg-white border border-gray-200 rounded-sm p-6 text-branding-green/80">
-                  No short trips are available right now.
+                  {isVietnamese
+                    ? "Hiện chưa có chuyến đi ngắn nào."
+                    : "No short trips are available right now."}
                 </div>
               )}
 
@@ -269,7 +305,7 @@ export default async function ShortTripListingPage() {
                       href={`/short-trip/${trip.slug}`}
                       className="mt-6 h-10 border border-gray-400 rounded-sm inline-flex items-center justify-center text-sm text-branding-green hover:bg-branding-green hover:text-white transition-colors"
                     >
-                      Explore
+                      {isVietnamese ? "Khám phá" : "Explore"}
                     </Link>
                   </div>
                 </article>

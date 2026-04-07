@@ -43,9 +43,15 @@ export interface TripDetailsData {
 
 interface TripDetailsProps {
   tripData: TripDetailsData;
+  inquiryType: string;
+  inquiryName: string;
 }
 
-export default function TripDetails({ tripData }: TripDetailsProps) {
+export default function TripDetails({
+  tripData,
+  inquiryType,
+  inquiryName,
+}: TripDetailsProps) {
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   const t = useTranslations("ShortTrips");
   const locale = useLocale();
@@ -184,6 +190,8 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                 <BookThisTripButton
                   label={t("bookThisTrip")}
                   className="bg-transparent"
+                  inquiryType={inquiryType}
+                  inquiryName={inquiryName}
                 />
                 <Button
                   asChild
@@ -206,6 +214,8 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                 <BookThisTripButton
                   label={t("bookThisTrip")}
                   className="bg-transparent"
+                  inquiryType={inquiryType}
+                  inquiryName={inquiryName}
                 />
                 <Button
                   asChild
