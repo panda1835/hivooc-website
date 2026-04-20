@@ -1,4 +1,5 @@
 import Hero from "@/components/our-story/Hero";
+import BookConservationTourButton from "@/components/conservation-program/BookConservationTourButton";
 import ConservationProgramListing from "@/components/conservation-program/ConservationProgramListing";
 import { getTranslations, getLocale } from "next-intl/server";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
@@ -141,6 +142,7 @@ export default async function ConservationProgramsPage() {
         backgroundAlt="Conservation Programs Background"
       />
       <ConservationProgramListing programs={programs} />
+      <BookConservationTourButton />
       <ContributeToConservation />
       <TailorMadeTrips tours={tailorTours} />
       <Support />

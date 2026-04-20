@@ -81,13 +81,13 @@ export default function Header() {
       items: [],
       columns: [],
     },
-    {
-      id: "products",
-      label: t("products"),
-      href: "/products",
-      items: [],
-      columns: [],
-    },
+    // {
+    //   id: "products",
+    //   label: t("products"),
+    //   href: "/products",
+    //   items: [],
+    //   columns: [],
+    // },
     {
       id: "library",
       label: t("library"),

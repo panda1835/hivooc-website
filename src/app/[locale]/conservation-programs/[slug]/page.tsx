@@ -1,5 +1,6 @@
 import DetailHero from "@/components/ui/DetailHero";
 import { notFound } from "next/navigation";
+import BookConservationTourButton from "@/components/conservation-program/BookConservationTourButton";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
 import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
@@ -123,6 +124,7 @@ export default async function ConservationProgramDetailPage({
             dangerouslySetInnerHTML={{ __html: program.content }}
           />
         </div>
+        <BookConservationTourButton programTitle={program.title} />
         <div className="mt-16">
           <ContributeToConservation />
           <TailorMadeTrips tours={tailorTours} />
