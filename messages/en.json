@@ -302,6 +302,16 @@
       "description": "Tailor-made wildlife experiences that bring you closer to nature's most extraordinary moments"
     }
   },
+  "ConservationProgram": {
+    "Hero": {
+      "title": "Conservation Programs",
+      "description": "Explore conservation work, field projects, and community initiatives protecting Vietnam's wildlife."
+    },
+    "Listing": {
+      "title": "Latest",
+      "description": "Follow HiVOOC conservation programs and learn how each project supports habitats, species, and local communities."
+    }
+  },
   "OurStory": {
     "Hero": {
       "title": "Our Story",

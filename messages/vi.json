@@ -296,6 +296,22 @@
       "author": "Sarah Mitchell, Nhiếp ảnh gia Động vật hoang dã"
     }
   },
+  "TripReport": {
+    "Hero": {
+      "title": "Báo Cáo Chuyến Đi",
+      "description": "Những trải nghiệm thiên nhiên được thiết kế riêng đưa bạn đến gần hơn với những khoảnh khắc phi thường nhất của thiên nhiên"
+    }
+  },
+  "ConservationProgram": {
+    "Hero": {
+      "title": "Những Chương Trình Bảo Tồn",
+      "description": "Khám phá các dự án thực địa, hoạt động cộng đồng và nỗ lực bảo vệ động vật hoang dã Việt Nam."
+    },
+    "Listing": {
+      "title": "Mới Nhất",
+      "description": "Theo dõi các chương trình bảo tồn của HiVOOC và tìm hiểu cách mỗi dự án hỗ trợ sinh cảnh, loài hoang dã và cộng đồng địa phương."
+    }
+  },
   "OurStory": {
     "Hero": {
       "title": "Câu Chuyện Của Chúng Tôi",

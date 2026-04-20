@@ -5,6 +5,7 @@ import ContributeToConservation from "@/components/short-trip/ContributeToConser
 import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
+import { getTailorTourCards } from "@/lib/tailor-tour-cards";
 
 interface TripReportACF {
   title: string;
@@ -34,8 +35,7 @@ interface TripReport {
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
-async function getTripReports(): Promise<TripReport[]> {
-  const locale = await getLocale();
+async function getTripReports(locale: string): Promise<TripReport[]> {
   try {
     if (!WORDPRESS_BASE_URL) {
       throw new Error("Missing WORDPRESS_BASE_URL environment variable");
@@ -104,10 +104,12 @@ async function getTripReportsHeroImages(): Promise<string[]> {
 }
 
 export default async function TripReportPage() {
+  const locale = await getLocale();
   const t = await getTranslations("TripReport.Hero");
-  const [tripReports, heroImages] = await Promise.all([
-    getTripReports(),
+  const [tripReports, heroImages, tailorTours] = await Promise.all([
+    getTripReports(locale),
     getTripReportsHeroImages(),
+    getTailorTourCards(locale, { limit: 4 }),
   ]);
 
   return (
@@ -120,7 +122,7 @@ export default async function TripReportPage() {
       />
       <TripReportListing reports={tripReports} />
       <ContributeToConservation />
-      <TailorMadeTrips />
+      <TailorMadeTrips tours={tailorTours} />
       <Support />
     </main>
   );

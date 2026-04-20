@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Button } from "../ui/button";
 
 export default function Support() {
@@ -22,8 +23,9 @@ export default function Support() {
               variant="outline-green"
               size="lg"
               className="bg-transparent border-white text-white hover:bg-white hover:text-branding-orange"
+              asChild
             >
-              {t("browseProgram")}
+              <Link href="/conservation-programs">{t("browseProgram")}</Link>
             </Button>
           </div>
         </div>

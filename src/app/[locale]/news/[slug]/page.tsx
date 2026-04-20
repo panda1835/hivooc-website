@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { extractWpImageCaption, extractWpImageUrl } from "@/lib/wordpress-media";
+import TailorMadeTrips from "@/components/home/TailorMadeTrips";
+import { getTailorTourCards } from "@/lib/tailor-tour-cards";
 
 interface WordPressTerm {
   name: string;
@@ -174,7 +176,10 @@ export default async function NewsDetailPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const article = await fetchNewsBySlug(slug, locale);
+  const [article, tailorTours] = await Promise.all([
+    fetchNewsBySlug(slug, locale),
+    getTailorTourCards(locale, { limit: 4 }),
+  ]);
 
   if (!article) {
     notFound();
@@ -282,6 +287,8 @@ export default async function NewsDetailPage({
           </div>
         </div>
       </section>
+
+      <TailorMadeTrips tours={tailorTours} />
     </main>
   );
 }

@@ -1,0 +1,69 @@
+import type { TailorTourCard } from "@/components/home/TailorMadeTrips";
+import type { WPMedia } from "@/lib/wordpress-media";
+import { extractFeaturedImage } from "@/lib/wordpress-post-helpers";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
+
+const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
+
+interface WPTailorTour {
+  id: number;
+  slug: string;
+  link?: string;
+  title?: { rendered?: string };
+  acf?: {
+    overview?: {
+      description?: string;
+    };
+  };
+  _embedded?: {
+    "wp:featuredmedia"?: WPMedia[];
+  };
+}
+
+function toTailorTourCard(post: WPTailorTour): TailorTourCard {
+  return {
+    id: post.id,
+    category: "TAILOR-MADE TOUR",
+    title: decodeHtmlEntities(post.title?.rendered || "Tailor-made tour"),
+    description:
+      decodeHtmlEntities(
+        post.acf?.overview?.description ||
+          "Every journey is crafted to match your interests, pace, and wildlife dreams.",
+      ) ||
+      "Every journey is crafted to match your interests, pace, and wildlife dreams.",
+    image: extractFeaturedImage(post) || "/tailor-made-trip/image1.jpg",
+    link: `/tailor-trip/${post.slug}`,
+  };
+}
+
+export async function getTailorTourCards(
+  locale: string,
+  options: { limit?: number } = {},
+): Promise<TailorTourCard[]> {
+  if (!WORDPRESS_BASE_URL) {
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+  }
+
+  const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
+  const res = await fetch(
+    `${baseUrl}/wp-json/wp/v2/tailor-made-tour?per_page=100&_embed`,
+    {
+      // TEMP: Content initiation phase - enable fetch cache when content is stable.
+      // next: { revalidate: 300 },
+    },
+  );
+
+  if (!res.ok) {
+    return [];
+  }
+
+  const data: WPTailorTour[] = await res.json();
+  const filtered = data.filter((tour) =>
+    locale === "vi"
+      ? (tour.link || "").includes("/vi/")
+      : !(tour.link || "").includes("/vi/"),
+  );
+
+  const cards = filtered.map(toTailorTourCard);
+  return typeof options.limit === "number" ? cards.slice(0, options.limit) : cards;
+}

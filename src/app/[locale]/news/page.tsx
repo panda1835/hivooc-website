@@ -2,6 +2,8 @@ import Hero from "@/components/our-story/Hero";
 import NewsListing from "@/components/news/NewsListing";
 import { getTranslations, getLocale } from "next-intl/server";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
+import TailorMadeTrips from "@/components/home/TailorMadeTrips";
+import { getTailorTourCards } from "@/lib/tailor-tour-cards";
 
 interface WordPressTerm {
   name: string;
@@ -41,9 +43,7 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }
 
-async function getNewsArticles(): Promise<NewsArticle[]> {
-  const locale = await getLocale();
-
+async function getNewsArticles(locale: string): Promise<NewsArticle[]> {
   try {
     if (!WORDPRESS_BASE_URL) {
       throw new Error("Missing WORDPRESS_BASE_URL environment variable");
@@ -114,10 +114,12 @@ async function getNewsHeroImages(): Promise<string[]> {
 }
 
 export default async function NewsPage() {
+  const locale = await getLocale();
   const t = await getTranslations("News.Hero");
-  const [newsArticles, heroImages] = await Promise.all([
-    getNewsArticles(),
+  const [newsArticles, heroImages, tailorTours] = await Promise.all([
+    getNewsArticles(locale),
     getNewsHeroImages(),
+    getTailorTourCards(locale, { limit: 4 }),
   ]);
 
   return (
@@ -129,6 +131,7 @@ export default async function NewsPage() {
         backgroundAlt="HiVOOC News Background"
       />
       <NewsListing articles={newsArticles} />
+      <TailorMadeTrips tours={tailorTours} />
     </main>
   );
 }
