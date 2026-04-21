@@ -322,28 +322,39 @@ export default function Header() {
 
             {/* Mobile Navigation Items */}
             <div className="space-y-2">
-              {menuItems.map((item) => (
-                <div key={item.id}>
-                  <button
-                    onClick={() =>
-                      setExpandedMenu(expandedMenu === item.id ? null : item.id)
-                    }
-                    className="w-full flex items-center justify-between text-branding-green font-medium  font-sans py-2"
-                  >
-                    {item.label}
-                    {item.columns && item.columns.length > 0 && (
-                      <ChevronDown
-                        className={`w-4 h-4 transition-transform ${
-                          expandedMenu === item.id ? "rotate-180" : ""
-                        }`}
-                      />
-                    )}
-                  </button>
+              {menuItems.map((item) => {
+                const hasSubmenu = Boolean(item.columns && item.columns.length > 0);
 
-                  {/* Mobile Submenu */}
-                  {item.columns &&
-                    item.columns.length > 0 &&
-                    expandedMenu === item.id && (
+                return (
+                  <div key={item.id}>
+                    {hasSubmenu ? (
+                      <button
+                        onClick={() =>
+                          setExpandedMenu(
+                            expandedMenu === item.id ? null : item.id,
+                          )
+                        }
+                        className="w-full flex items-center justify-between text-branding-green font-medium  font-sans py-2"
+                      >
+                        {item.label}
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform ${
+                            expandedMenu === item.id ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.href || "/"}
+                        className="block text-branding-green font-medium  font-sans py-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
+
+                    {/* Mobile Submenu */}
+                    {hasSubmenu && expandedMenu === item.id && (
                       <div className="pl-4 space-y-2 pb-2">
                         {item.columns.flatMap((column) =>
                           column.items.map((subItem, idx) => (
@@ -364,8 +375,9 @@ export default function Header() {
                         )}
                       </div>
                     )}
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Mobile CTA Button */}
