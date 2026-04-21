@@ -8,9 +8,8 @@ import Specialist from "@/components/our-story/Specialist";
 import GetStarted from "@/components/home/GetStarted";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTranslations } from "next-intl/server";
-import type { WPMedia } from "@/lib/wordpress-media";
+import { extractWpImageUrl, type WPMedia } from "@/lib/wordpress-media";
 import {
-  extractFeaturedImage,
   getTermsByTaxonomy,
   type WPTerm,
 } from "@/lib/wordpress-post-helpers";
@@ -43,7 +42,7 @@ function toLangurTracker(post: WPLangurTrackerPost): LangurTracker {
       topics.length > 0
         ? decodeHtmlEntities(topics.join(" / "))
         : "Langur tracker",
-    image: extractFeaturedImage(post) || "/our-story/tracker.jpg",
+    image: extractWpImageUrl(post) || "/our-story/tracker.jpg",
     description: decodeHtmlEntities(stripHtml(post.content?.rendered || "")),
   };
 }
