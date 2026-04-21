@@ -20,6 +20,7 @@ const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
 interface WPLangurTrackerPost {
   id: number;
+  link?: string;
   title?: { rendered?: string };
   content?: { rendered?: string };
   _embedded?: {
@@ -47,7 +48,7 @@ function toLangurTracker(post: WPLangurTrackerPost): LangurTracker {
   };
 }
 
-async function getLangurTrackers(): Promise<LangurTracker[]> {
+async function getLangurTrackers(locale: string): Promise<LangurTracker[]> {
   const baseUrl = (WORDPRESS_BASE_URL || "https://hivooc.com").replace(/\/$/, "");
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/langur-tracker?per_page=100&_embed`,
@@ -62,12 +63,23 @@ async function getLangurTrackers(): Promise<LangurTracker[]> {
   }
 
   const data: WPLangurTrackerPost[] = await res.json();
-  return data.map(toLangurTracker);
+  const filtered = data.filter((tracker) =>
+    locale === "vi"
+      ? (tracker.link || "").includes("/vi/")
+      : !(tracker.link || "").includes("/vi/"),
+  );
+
+  return filtered.map(toLangurTracker);
 }
 
-export default async function TailorTripPage() {
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function TailorTripPage({ params }: PageProps) {
+  const { locale } = await params;
   const t = await getTranslations("OurStory.Hero");
-  const trackers = await getLangurTrackers();
+  const trackers = await getLangurTrackers(locale);
 
   return (
     <main className="w-full">
