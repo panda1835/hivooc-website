@@ -1,57 +1,26 @@
+"use client";
+
 import React, { useState } from "react";
 import Image from "next/image";
 
-const TRACKERS = [
-  {
-    name: "Vũ Nguyễn",
-    title: "SON TRA LANGUR TRACKER",
-    image: "/our-story/tracker.jpg",
-    description:
-      "Special local staff in Son Tra Peninsula who play an important role in our primate tours. He work for his passion and love for the QUEEN (Red-shanked douc langur and wildlife of the Son Tra peninsula.",
-  },
-  {
-    name: "Mr. Nguyen Huu Tho",
-    title: "SON TRA LANGUR TRACKER",
-    image: "/our-story/tracker.jpg",
-    description:
-      "Special local staff in Son Tra Peninsula who play an important role in our primate tours. He work for his passion and love for the QUEEN (Red-shanked douc langur and wildlife of the Son Tra peninsula.",
-  },
-  {
-    name: "Tam My Tay team",
-    title: "TAM MY TAY LANGUR TRACKER",
-    image: "/our-story/tracker.jpg",
-    description:
-      "The Tam My Tay Conservation Community Group, dedicated and passionate, has inspired their community to work together to protect the last douc langurs in Nui Thanh district, Quang Nam province.",
-  },
-  {
-    name: "Mr. Nguyen Thanh Tu (Tú Vooc)",
-    title: "HA TINH LANGUR TRACKER",
-    image: "/our-story/tracker.jpg",
-    description:
-      "Mr. Nguyen Thanh Tu (Tu Vooc) and the community protection team in Thach Hoa, Quang Binh is a testament to the dedication and tireless efforts of individuals and the local community in conservation. Their significant contributions have helped protect and increase the population of the Ha Tinh langur, a critically endangered primate",
-  },
-  {
-    name: "Mr. Nguyen Thanh Tu (Tú Vooc)",
-    title: "HA TINH LANGUR TRACKER",
-    image: "/our-story/tracker.jpg",
-    description:
-      "Mr. Nguyen Thanh Tu (Tu Vooc) and the community protection team in Thach Hoa, Quang Binh is a testament to the dedication and tireless efforts of individuals and the local community in conservation. Their significant contributions have helped protect and increase the population of the Ha Tinh langur, a critically endangered primate",
-  },
-  {
-    name: "Mr. Nguyen Thanh Tu (Tú Vooc)",
-    title: "HA TINH LANGUR TRACKER",
-    image: "/our-story/tracker.jpg",
-    description:
-      "Mr. Nguyen Thanh Tu (Tu Vooc) and the community protection team in Thach Hoa, Quang Binh is a testament to the dedication and tireless efforts of individuals and the local community in conservation. Their significant contributions have helped protect and increase the population of the Ha Tinh langur, a critically endangered primate",
-  },
-];
+export interface LangurTracker {
+  id: number;
+  name: string;
+  title: string;
+  image: string;
+  description: string;
+}
+
+interface TrackerProps {
+  trackers?: LangurTracker[];
+}
 
 const PAGE_SIZE = 6;
 
-const Tracker = () => {
+const Tracker = ({ trackers = [] }: TrackerProps) => {
   const [page, setPage] = useState(1);
-  const totalPages = Math.ceil(TRACKERS.length / PAGE_SIZE);
-  const paginatedTrackers = TRACKERS.slice(
+  const totalPages = Math.ceil(trackers.length / PAGE_SIZE);
+  const paginatedTrackers = trackers.slice(
     (page - 1) * PAGE_SIZE,
     page * PAGE_SIZE,
   );
@@ -66,8 +35,14 @@ const Tracker = () => {
           <div className="flex-1 border-t border-[#2F3F3B]" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {paginatedTrackers.map((tracker, idx) => (
-            <div key={idx} className=" overflow-hidden flex flex-col h-full">
+          {paginatedTrackers.length === 0 && (
+            <div className="md:col-span-3 border border-[#2F3F3B]/20 rounded-[4px] p-6 text-[#00342B]">
+              No langur trackers are available right now.
+            </div>
+          )}
+
+          {paginatedTrackers.map((tracker) => (
+            <div key={tracker.id} className=" overflow-hidden flex flex-col h-full">
               <div className="w-full h-48 relative overflow-hidden rounded-[4px]">
                 <Image
                   unoptimized

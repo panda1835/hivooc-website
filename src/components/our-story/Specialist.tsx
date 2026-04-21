@@ -22,7 +22,7 @@ function SpecialistCard() {
       <div className="flex-1">
         <div className="font-bold text-[22px] mb-2">{specialist.name}</div>
         <div className="flex gap-4 mb-4">
-          <div className="bg-[#F5F6F7] rounded px-4 py-2 text-[15px] flex items-center gap-2">
+          {/* <div className="bg-[#F5F6F7] rounded px-4 py-2 text-[15px] flex items-center gap-2">
             <span className="font-semibold flex gap-2 items-center">
               <svg
                 width="20"
@@ -46,7 +46,7 @@ function SpecialistCard() {
               Expert in
             </span>
             <span>{specialist.expertIn}</span>
-          </div>
+          </div> */}
         </div>
         <div className="text-[16px] text-[#2B3A3A] leading-relaxed whitespace-pre-line">
           {specialist.description}

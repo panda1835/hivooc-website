@@ -1,18 +1,73 @@
-"use client";
-
 import Hero from "@/components/our-story/Hero";
 import HiVOOCStory from "@/components/our-story/HiVOOCStory";
 import Founder from "@/components/our-story/Founder";
 import SellingPoint from "@/components/our-story/SellingPoints";
 import Advisors from "@/components/our-story/Advisors";
-import Tracker from "@/components/our-story/Tracker";
+import Tracker, { type LangurTracker } from "@/components/our-story/Tracker";
 import Specialist from "@/components/our-story/Specialist";
 import GetStarted from "@/components/home/GetStarted";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import type { WPMedia } from "@/lib/wordpress-media";
+import {
+  extractFeaturedImage,
+  getTermsByTaxonomy,
+  type WPTerm,
+} from "@/lib/wordpress-post-helpers";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
-export default function TailorTripPage() {
-  const t = useTranslations("OurStory.Hero");
+const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
+
+interface WPLangurTrackerPost {
+  id: number;
+  title?: { rendered?: string };
+  content?: { rendered?: string };
+  _embedded?: {
+    "wp:featuredmedia"?: WPMedia[];
+    "wp:term"?: WPTerm[][];
+  };
+}
+
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function toLangurTracker(post: WPLangurTrackerPost): LangurTracker {
+  const topics = getTermsByTaxonomy(post, "topic");
+
+  return {
+    id: post.id,
+    name: decodeHtmlEntities(post.title?.rendered || "Langur tracker"),
+    title:
+      topics.length > 0
+        ? decodeHtmlEntities(topics.join(" / "))
+        : "Langur tracker",
+    image: extractFeaturedImage(post) || "/our-story/tracker.jpg",
+    description: decodeHtmlEntities(stripHtml(post.content?.rendered || "")),
+  };
+}
+
+async function getLangurTrackers(): Promise<LangurTracker[]> {
+  const baseUrl = (WORDPRESS_BASE_URL || "https://hivooc.com").replace(/\/$/, "");
+  const res = await fetch(
+    `${baseUrl}/wp-json/wp/v2/langur-tracker?per_page=100&_embed`,
+    {
+      // TEMP: Content initiation phase - enable fetch cache when content is stable.
+      // next: { revalidate: 300 },
+    },
+  );
+
+  if (!res.ok) {
+    return [];
+  }
+
+  const data: WPLangurTrackerPost[] = await res.json();
+  return data.map(toLangurTracker);
+}
+
+export default async function TailorTripPage() {
+  const t = await getTranslations("OurStory.Hero");
+  const trackers = await getLangurTrackers();
 
   return (
     <main className="w-full">
@@ -21,7 +76,7 @@ export default function TailorTripPage() {
       <Founder />
       <SellingPoint />
       <Advisors />
-      <Tracker />
+      <Tracker trackers={trackers} />
       <Specialist />
       <GetStarted />
       <TailorMadeTrips />
