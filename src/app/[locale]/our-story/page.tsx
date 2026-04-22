@@ -7,6 +7,7 @@ import Tracker, { type LangurTracker } from "@/components/our-story/Tracker";
 import Specialist from "@/components/our-story/Specialist";
 import GetStarted from "@/components/home/GetStarted";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
+import { getTailorTourCards } from "@/lib/tailor-tour-cards";
 import { getTranslations } from "next-intl/server";
 import { extractWpImageUrl, type WPMedia } from "@/lib/wordpress-media";
 import {
@@ -78,7 +79,10 @@ type PageProps = {
 export default async function TailorTripPage({ params }: PageProps) {
   const { locale } = await params;
   const t = await getTranslations("OurStory.Hero");
-  const trackers = await getLangurTrackers(locale);
+  const [trackers, tailorTours] = await Promise.all([
+    getLangurTrackers(locale),
+    getTailorTourCards(locale, { limit: 4 }),
+  ]);
 
   return (
     <main className="w-full">
@@ -90,7 +94,7 @@ export default async function TailorTripPage({ params }: PageProps) {
       <Tracker trackers={trackers} />
       <Specialist />
       <GetStarted />
-      <TailorMadeTrips />
+      <TailorMadeTrips tours={tailorTours} />
     </main>
   );
 }
