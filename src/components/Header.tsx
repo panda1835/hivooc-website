@@ -145,7 +145,7 @@ export default function Header() {
                   alt="HIVOOC Logo"
                   width={250}
                   height={250}
-                  className="w-40 h-32 object-contain"
+                  className="w-40 h-20 object-contain"
                 />
                 <p className="hidden md:block text-lg italic font-dancing-script text-white/90">
                   Primate Tourism For Conservation
@@ -159,7 +159,7 @@ export default function Header() {
               <div className="relative">
                 <button
                   onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
-                  className="flex items-center gap-2 bg-white/10 rounded-[4px] px-3 h-10 py-2 text-xs  text-white hover:bg-white/20 transition-colors"
+                  className="flex items-center gap-2 bg-branding-green rounded-[4px] px-3 h-10 py-2 text-normal  text-white hover:bg-white/20 transition-colors"
                 >
                   <Globe className="w-4 h-4" />
                   <span className="hidden sm:inline">
@@ -323,7 +323,9 @@ export default function Header() {
             {/* Mobile Navigation Items */}
             <div className="space-y-2">
               {menuItems.map((item) => {
-                const hasSubmenu = Boolean(item.columns && item.columns.length > 0);
+                const hasSubmenu = Boolean(
+                  item.columns && item.columns.length > 0,
+                );
 
                 return (
                   <div key={item.id}>

@@ -25,7 +25,7 @@ export default function IncludedExcluded({
             <div key={index} className="flex items-start gap-3">
               <Check className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
               <div
-                className="text-sm md:text-base text-[#192B28] font-[Inter]"
+                className="cms-body-normal text-[#192B28]"
                 dangerouslySetInnerHTML={{ __html: item }}
               />
             </div>
@@ -44,7 +44,7 @@ export default function IncludedExcluded({
             <div key={index} className="flex items-start gap-3">
               <X className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
               <div
-                className="text-sm md:text-base text-[#192B28] font-[Inter]"
+                className="cms-body-normal text-[#192B28]"
                 dangerouslySetInnerHTML={{ __html: item }}
               />
             </div>
@@ -63,7 +63,7 @@ export default function IncludedExcluded({
             <div key={index} className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
               <div
-                className="text-sm md:text-base text-[#192B28] font-[Inter]"
+                className="cms-body-normal text-[#192B28]"
                 dangerouslySetInnerHTML={{ __html: item }}
               />
             </div>

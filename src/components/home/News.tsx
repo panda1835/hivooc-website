@@ -67,7 +67,7 @@ export default function News({ articles = [] }: NewsProps) {
                   {article.category}
                 </p>
 
-                <h3 className="text-branding-green mb-3 line-clamp-2">
+                <h3 className="text-branding-green mb-3 line-clamp-2 leading-tight">
                   {article.title}
                 </h3>
 

@@ -57,7 +57,7 @@ export default function TripHighlight({ highlights }: TripHighlightProps) {
                 />
               </svg>
 
-              <p className="text-md md:text-lg leading-relaxed text-[#192B28]">
+              <p className="text-base leading-relaxed text-[#192B28]">
                 {highlight}
               </p>
             </div>

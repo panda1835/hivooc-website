@@ -9,12 +9,18 @@ interface TailorMyTripButtonProps {
   onClick?: () => void;
 }
 
-export default function TailorMyTripButton({ onClick }: TailorMyTripButtonProps) {
+export default function TailorMyTripButton({
+  onClick,
+}: TailorMyTripButtonProps) {
   const t = useTranslations("Header");
 
   return (
     <Link href="/tailor-my-trip-form" onClick={onClick}>
-      <Button variant="orange" size="lg" className="group font-sans cursor-pointer">
+      <Button
+        variant="orange"
+        size="lg"
+        className="group font-medium font-sans cursor-pointer px-5 py-3"
+      >
         {t("tailorMyTrip")}
         <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
       </Button>

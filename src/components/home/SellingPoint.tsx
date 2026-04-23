@@ -36,9 +36,7 @@ export default function SellingPoint() {
           {/* Left Column - Text Content */}
           <div className="space-y-6 text-[#00342B]">
             <h2 className=" leading-tight">{t("title")}</h2>
-            <p className=" leading-relaxed">
-              {t("description")}
-            </p>
+            <p className=" leading-relaxed">{t("description")}</p>
           </div>
 
           {/* Right Column - Video/Image Placeholder */}
@@ -65,7 +63,7 @@ export default function SellingPoint() {
                 <div className="w-12 h-12 rounded-lg bg-[#00342B] flex items-center justify-center mb-4">
                   <Icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-[#1A4D2E] mb-3">
+                <h3 className="text-[#1A4D2E] mb-3 leading-relaxed">
                   {t(`${feature.titleKey}.title`)}
                 </h3>
                 <p className="text-[#00342B]  leading-relaxed">

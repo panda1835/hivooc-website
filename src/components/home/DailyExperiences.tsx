@@ -60,7 +60,7 @@ export default function DailyExperiences({
           {experiences.map((experience) => (
             <div
               key={experience.id}
-              className="group flex flex-col bg-white rounded-[4px] overflow-hidden border hover:shadow-lg transition-shadow"
+              className="group flex flex-col bg-white rounded-lg overflow-hidden border hover:shadow-lg transition-shadow"
             >
               {/* Experience Image */}
               <div className="relative aspect-[4/3] bg-branding-green/10 overflow-hidden">
@@ -85,7 +85,7 @@ export default function DailyExperiences({
                 </p>
 
                 {/* Title */}
-                <h3 className="text-[#1A4D2E] mb-3 line-clamp-2">
+                <h3 className="text-[#1A4D2E] mb-3 line-clamp-2 leading-tight">
                   {experience.title}
                 </h3>
 
@@ -102,14 +102,8 @@ export default function DailyExperiences({
                 </p>
 
                 {/* Explore Button */}
-                <Button
-                  variant="outline"
-                  className="w-full mb-4"
-                  asChild
-                >
-                  <Link href={experience.link}>
-                    {t("explore")}
-                  </Link>
+                <Button variant="outline" className="w-full mb-4" asChild>
+                  <Link href={experience.link}>{t("explore")}</Link>
                 </Button>
 
                 {/* Time Slots */}
@@ -122,7 +116,7 @@ export default function DailyExperiences({
                 >
                   {experience.timeSlots.map((slot, index) => (
                     <div key={index} className="text-center">
-                      <p className="text-xs text-[#5A7363] uppercase tracking-wider mb-1">
+                      <p className="text-xs text-[#5A7363] uppercase font-medium tracking-wider mb-1">
                         {slot.label}
                       </p>
                       <p className=" font-medium text-branding-green">

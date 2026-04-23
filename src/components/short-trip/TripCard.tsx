@@ -31,7 +31,7 @@ export default function TripCard({
   const t = useTranslations("ShortTrips");
 
   return (
-    <div className="group border flex flex-col bg-white rounded-[4px] overflow-hidden border hover:shadow-lg transition-shadow">
+    <div className="group border flex flex-col bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
       {/* Trip Image */}
       <div className="relative aspect-[4/3] bg-branding-green/10 overflow-hidden">
         {/* Placeholder gradient - replace with actual image */}
@@ -55,7 +55,7 @@ export default function TripCard({
         </p>
 
         {/* Title */}
-        <h3 className="text-[#1A4D2E] mb-3">{title}</h3>
+        <h3 className="text-[#1A4D2E] mb-3 leading-tight">{title}</h3>
 
         {/* Description */}
         <p className="text-[#00342B] leading-relaxed mb-6 flex-grow line-clamp-3">

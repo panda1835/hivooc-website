@@ -32,7 +32,7 @@ export default function WhatToExpect() {
           <h2 className="text-3xl md:text-4xl uppercase font-medium mb-4 text-[#00342B]">
             {t("title")}
           </h2>
-          <p className="text-base md:text-lg text-[#012504] max-w-3xl">
+          <p className="text-base md:text-lg text-[#012504]">
             {t("description")}
           </p>
         </div>

@@ -37,7 +37,7 @@ export default function Unique() {
           <h2 className="text-3xl md:text-4xl uppercase font-medium mb-6 text-[#F8F8F8]">
             {t("title")}
           </h2>
-          <p className="text-base md:text-lg text-[#F8F8F8] max-w-3xl">
+          <p className="text-base md:text-lg text-[#F8F8F8]">
             {t("description")}
           </p>
         </div>
@@ -51,13 +51,13 @@ export default function Unique() {
                 key={index}
                 className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow"
               >
-                <div className="w-12 h-12 rounded-lg bg-[#192B28] flex items-center justify-center mb-6">
+                <div className="w-12 h-12 rounded-lg bg-[#1A4D2E] flex items-center justify-center mb-6">
                   <Icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-medium text-[#192B28] mb-3">
                   {t(feature.titleKey)}
                 </h3>
-                <p className="text-[#00342B] text-base leading-relaxed">
+                <p className="text-[#192B28] text-base leading-relaxed">
                   {t(feature.descriptionKey)}
                 </p>
               </div>
