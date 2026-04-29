@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 interface BookThisTripButtonProps {
   label: string;
@@ -424,13 +425,14 @@ export default function BookThisTripButton({
                   </label>
                   <p className="text-sm text-branding-green/85">
                     {t("pleaseVisit")}{" "}
-                    <a
-                      href="#"
+                    <Link
+                      href="/terms-of-service"
                       className="underline hover:text-branding-green"
-                      onClick={(event) => event.preventDefault()}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {t("termsLinkText")}
-                    </a>
+                    </Link>
                   </p>
                 </div>
 

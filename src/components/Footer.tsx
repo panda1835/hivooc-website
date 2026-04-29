@@ -41,15 +41,31 @@ export default function Footer() {
             <ul className="space-y-2 sm:space-y-3">
               <li>
                 <Link
-                  href="/experiences"
+                  href="/tailor-trip"
                   className=" sm:text-base text-white/80 hover:text-white transition-colors"
                 >
-                  {t("allExperiences")}
+                  {t("tailorTrip")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/conservation"
+                  href="/short-trip"
+                  className=" sm:text-base text-white/80 hover:text-white transition-colors"
+                >
+                  {t("shortTour")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/nature-education"
+                  className=" sm:text-base text-white/80 hover:text-white transition-colors"
+                >
+                  {t("natureEducation")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/conservation-programs"
                   className=" sm:text-base font-light text-white/80 hover:text-white transition-colors"
                 >
                   {t("conservation")}
@@ -57,18 +73,10 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/guides"
+                  href="/tour-guidelines"
                   className=" sm:text-base font-light text-white/80 hover:text-white transition-colors"
                 >
                   {t("ourGuides")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/travel-tips"
-                  className=" sm:text-base text-white/80 hover:text-white transition-colors"
-                >
-                  {t("travelTips")}
                 </Link>
               </li>
             </ul>

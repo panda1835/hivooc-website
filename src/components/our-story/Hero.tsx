@@ -68,7 +68,7 @@ export default function Hero({
 
       {/* Content */}
       <div className="relative z-20 h-full flex items-center justify-center pointer-events-none">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-medium leading-tight">
             {title}
           </h1>
