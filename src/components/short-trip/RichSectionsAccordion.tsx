@@ -47,7 +47,7 @@ export default function RichSectionsAccordion({
               onClick={() => toggleItem(index)}
               className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors text-left"
             >
-              <h3 className="text-base font-semibold text-[#192B28]">
+              <h3 className="text-[20px] font-semibold text-[#192B28]">
                 {section.title}
               </h3>
               <ChevronDown

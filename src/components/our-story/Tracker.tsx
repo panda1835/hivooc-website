@@ -42,7 +42,10 @@ const Tracker = ({ trackers = [] }: TrackerProps) => {
           )}
 
           {paginatedTrackers.map((tracker) => (
-            <div key={tracker.id} className=" overflow-hidden flex flex-col h-full">
+            <div
+              key={tracker.id}
+              className=" overflow-hidden flex flex-col h-full"
+            >
               <div className="w-full h-48 relative overflow-hidden rounded-[4px]">
                 <Image
                   unoptimized
@@ -54,7 +57,7 @@ const Tracker = ({ trackers = [] }: TrackerProps) => {
                 />
               </div>
               <div className="py-5 flex flex-col flex-1">
-                <h3 className="text-[26px] text-[#00342B] font-medium mb-1">
+                <h3 className="text-[24px] text-[#00342B] font-medium mb-1">
                   {tracker.name}
                 </h3>
                 <div className="text-[16px] text-[#5A7363] mb-2 font-semibold uppercase tracking-wide">

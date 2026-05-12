@@ -62,10 +62,13 @@ function extractSchemaImage(post: WPNatureEducation): string | null {
 }
 
 function toCard(post: WPNatureEducation): ProgramCardData {
-  const { location, duration } = parseGeneralLocationDuration(post.acf?.general, {
-    location: "Vietnam",
-    duration: "Flexible schedule",
-  });
+  const { location, duration } = parseGeneralLocationDuration(
+    post.acf?.general,
+    {
+      location: "Vietnam",
+      duration: "Flexible schedule",
+    },
+  );
   const featuredImage = extractFeaturedImage(post);
   const schemaImage = extractSchemaImage(post);
   const destinationName = getTermsByTaxonomy(post, "destination")[0];
@@ -124,13 +127,17 @@ type PageProps = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function NatureEducationListingPage({ params }: PageProps) {
+export default async function NatureEducationListingPage({
+  params,
+}: PageProps) {
   const { locale } = await params;
   const [programs, heroImages] = await Promise.all([
     getNatureEducationPrograms(),
     getNatureEducationHeroImages(),
   ]);
-  const fallbackHeroImages = programs.slice(0, 3).map((program) => program.image);
+  const fallbackHeroImages = programs
+    .slice(0, 3)
+    .map((program) => program.image);
   const carouselHeroImages =
     heroImages.length > 0
       ? heroImages
@@ -207,10 +214,10 @@ export default async function NatureEducationListingPage({ params }: PageProps) 
                 </div>
 
                 <div className="p-4 flex flex-col flex-1">
-                  <p className="text-xs uppercase tracking-wide text-branding-green/70 mb-2">
+                  <p className="text-xs font-medium uppercase tracking-wide text-branding-green/70 mb-2">
                     {program.type}
                   </p>
-                  <h3 className="text-branding-green font-condensed font-medium text-[34px]/[1.15] line-clamp-2">
+                  <h3 className="text-branding-green font-condensed font-medium text-[24px] leading-tight line-clamp-2">
                     {program.title}
                   </h3>
 
@@ -219,14 +226,12 @@ export default async function NatureEducationListingPage({ params }: PageProps) 
                       <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
                       <span className="truncate">{program.location}</span>
                     </div>
-                    <p className="text-xs uppercase tracking-wide text-branding-green/70 shrink-0">
-                      {program.duration}
-                    </p>
+                    <p className="shrink-0">{program.duration}</p>
                   </div>
 
                   <Link
                     href={`/nature-education/${program.slug}`}
-                    className="mt-6 h-10 border border-gray-400 rounded-sm inline-flex items-center justify-center text-sm text-branding-green hover:bg-branding-green hover:text-white transition-colors"
+                    className="mt-6 font-medium h-10 border border-gray-400 rounded-sm inline-flex items-center justify-center text-sm text-branding-green hover:bg-branding-green hover:text-white transition-colors"
                   >
                     {isVietnamese ? "Khám phá" : "Explore"}
                   </Link>

@@ -20,7 +20,9 @@ function SpecialistCard() {
         className="object-cover rounded-[4px]"
       />
       <div className="flex-1">
-        <div className="font-bold text-[22px] mb-2">{specialist.name}</div>
+        <div className="font-condensed text-[26px] font-semibold text-[#192B28] mb-2">
+          {specialist.name}
+        </div>
         <div className="flex gap-4 mb-4">
           {/* <div className="bg-[#F5F6F7] rounded px-4 py-2 text-[15px] flex items-center gap-2">
             <span className="font-semibold flex gap-2 items-center">

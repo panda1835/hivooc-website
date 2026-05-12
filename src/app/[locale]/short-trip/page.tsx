@@ -64,10 +64,13 @@ function extractSchemaImage(post: WPTour): string | null {
 
 function toCard(post: WPTour, locale: string): ShortTripCardData {
   const isVietnamese = locale === "vi";
-  const { location, duration } = parseGeneralLocationDuration(post.acf?.general, {
-    location: isVietnamese ? "Việt Nam" : "Vietnam",
-    duration: isVietnamese ? "Linh hoạt thời lượng" : "Flexible duration",
-  });
+  const { location, duration } = parseGeneralLocationDuration(
+    post.acf?.general,
+    {
+      location: isVietnamese ? "Việt Nam" : "Vietnam",
+      duration: isVietnamese ? "Linh hoạt thời lượng" : "Flexible duration",
+    },
+  );
   const featuredImage = extractFeaturedImage(post);
   const schemaImage = extractSchemaImage(post);
   const destinationName = getTermsByTaxonomy(post, "destination")[0];
@@ -170,7 +173,9 @@ export default async function ShortTripListingPage({ params }: PageProps) {
             : "Every short trip is designed to immerse you in nature, wildlife, and meaningful local conservation stories."
         }
         backgroundImages={carouselHeroImages}
-        backgroundAlt={isVietnamese ? "Ảnh bìa chuyến đi ngắn" : "Short trip hero"}
+        backgroundAlt={
+          isVietnamese ? "Ảnh bìa chuyến đi ngắn" : "Short trip hero"
+        }
       />
 
       <section className="bg-[#F5F0E9] py-14 md:py-16">
@@ -224,7 +229,9 @@ export default async function ShortTripListingPage({ params }: PageProps) {
                   </p>
                   {typeFilters.length === 0 && (
                     <p className="text-xs text-branding-green/70">
-                      {isVietnamese ? "Chưa có loại hình" : "No types available"}
+                      {isVietnamese
+                        ? "Chưa có loại hình"
+                        : "No types available"}
                     </p>
                   )}
                   {typeFilters.map((typeName) => (
@@ -287,7 +294,7 @@ export default async function ShortTripListingPage({ params }: PageProps) {
                   </div>
 
                   <div className="p-4 flex flex-col flex-1">
-                    <h3 className="text-branding-green font-condensed font-medium text-[34px]/[1.15] line-clamp-2">
+                    <h3 className="text-branding-green font-condensed font-medium text-[24px] leading-tight line-clamp-2">
                       {trip.title}
                     </h3>
 
@@ -296,14 +303,12 @@ export default async function ShortTripListingPage({ params }: PageProps) {
                         <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
                         <span className="truncate">{trip.location}</span>
                       </div>
-                      <p className="text-xs uppercase tracking-wide text-branding-green/70 shrink-0">
-                        {trip.duration}
-                      </p>
+                      <p className="shrink-0">{trip.duration}</p>
                     </div>
 
                     <Link
                       href={`/short-trip/${trip.slug}`}
-                      className="mt-6 h-10 border border-gray-400 rounded-sm inline-flex items-center justify-center text-sm text-branding-green hover:bg-branding-green hover:text-white transition-colors"
+                      className="mt-6 h-10 font-medium border border-gray-400 rounded-sm inline-flex items-center justify-center text-sm text-branding-green hover:bg-branding-green hover:text-white transition-colors"
                     >
                       {isVietnamese ? "Khám phá" : "Explore"}
                     </Link>

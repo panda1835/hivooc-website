@@ -5,6 +5,7 @@ import {
   Dancing_Script,
   Inter,
   Instrument_Serif,
+  Alegreya,
 } from "next/font/google";
 import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
@@ -42,6 +43,12 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
 });
 
+const alegreya = Alegreya({
+  weight: ["400", "500", "700"],
+  variable: "--font-alegreya",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "HiVOOC",
   description: "",
@@ -59,7 +66,7 @@ export default async function RootLayout({ children, params }: Props) {
   return (
     <html lang={locale}>
       <body
-        className={`${inter.variable} ${geistMono.variable} ${ibmPlexSansCondensed.variable} ${dancingScript.variable} ${instrumentSerif.variable}`}
+        className={`${inter.variable} ${geistMono.variable} ${ibmPlexSansCondensed.variable} ${dancingScript.variable} ${instrumentSerif.variable} ${alegreya.variable}`}
       >
         <NextIntlClientProvider messages={messages}>
           <ImageProtection />

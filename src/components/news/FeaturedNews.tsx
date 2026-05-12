@@ -33,7 +33,7 @@ export default function FeaturedNews({
             <h2 className="text-3xl lg:text-4xl font-medium text-[#192B28] leading-tight mb-6 hover:text-branding-orange">
               {title}
             </h2>
-            <p className="text-[#192B28] text-lg leading-relaxed mb-6">
+            <p className="text-[#192B28] text-[16px] leading-relaxed mb-6">
               {description}
             </p>
             <div className="flex items-center gap-2 text-sm">

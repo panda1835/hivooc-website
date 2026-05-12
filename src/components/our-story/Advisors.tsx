@@ -56,7 +56,7 @@ export default function Advisors() {
               </div>
 
               <div className="md:col-span-3 space-y-4 text-[#00342B] leading-relaxed">
-                <h3 className="text-[26px] font-semibold text-[#192B28]">
+                <h3 className="text-[26px] font-semibold text-[#192B28] ">
                   {advisor.name}
                 </h3>
                 {advisor.paragraphs.map((paragraph, index) => (

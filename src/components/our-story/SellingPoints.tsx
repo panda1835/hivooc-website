@@ -63,7 +63,7 @@ export default function SellingPoints() {
 
         <div className="bg-[#1F3C34] rounded-[4px] px-6 py-10 md:px-10 md:py-14 text-white text-center">
           <p
-            className="text-2xl md:text-[32px] leading-snug italic 
+            className="text-2xl md:text-[32px] leading-snug italic font-[Alegreya]
           "
           >
             &quot;{t("quote")}&quot;
