@@ -57,7 +57,7 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                     </clipPath>
                   </defs>
                 </svg>
-                OVERVIEW
+                {t("overview")}
               </div>
 
               {activeTab === "overview" && (
@@ -85,7 +85,7 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
                     fill={activeTab === "photos" ? "#1A4D2E" : "#666666"}
                   />
                 </svg>
-                PHOTOS
+                {t("photos")}
               </div>
 
               {activeTab === "photos" && (
@@ -187,7 +187,12 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
               />
 
               <div className="flex justify-center gap-2 mt-6 md:mt-10 mb-5">
-                <Button asChild variant="orange" size="lg" className="group font-sans">
+                <Button
+                  asChild
+                  variant="orange"
+                  size="lg"
+                  className="group font-sans"
+                >
                   <Link href="/tailor-my-trip-form">
                     {t("tailorMyTrip")}
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -200,7 +205,12 @@ export default function TripDetails({ tripData }: TripDetailsProps) {
               {/* Photos Section */}
               <TripPhotos images={tripData.photos} />
               <div className="flex justify-center gap-2 mt-6 md:mt-10 mb-5">
-                <Button asChild variant="orange" size="lg" className="group font-sans">
+                <Button
+                  asChild
+                  variant="orange"
+                  size="lg"
+                  className="group font-sans"
+                >
                   <Link href="/tailor-my-trip-form">
                     {t("tailorMyTrip")}
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

@@ -36,7 +36,7 @@ export default function TripOverview({ items }: TripOverviewProps) {
     <div className="space-y-6">
       {/* Info Grid */}
       <div
-        className={"grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6"}
+        className={"grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-[16px]"}
         style={columnsStyle}
       >
         {items.map((item, index) => (
@@ -44,7 +44,7 @@ export default function TripOverview({ items }: TripOverviewProps) {
             <p className="text-sm text-[#5A7363] font-semibold font-[Inter] uppercase tracking-wide mb-1">
               {item.title}
             </p>
-            <p className="text-base font-[Inter] font-semibold text-black">
+            <p className="text-base font-[Inter] font-medium text-black">
               {item.info}
             </p>
             <p className="text-sm font-[Inter] text-[#5A7363] mt-0.5">
