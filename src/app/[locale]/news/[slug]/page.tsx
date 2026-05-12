@@ -1,7 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { extractWpImageCaption, extractWpImageUrl } from "@/lib/wordpress-media";
+import { getTranslations } from "next-intl/server";
+import {
+  extractWpImageCaption,
+  extractWpImageUrl,
+} from "@/lib/wordpress-media";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
 
@@ -175,6 +179,7 @@ export default async function NewsDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
+  const t = await getTranslations("News");
   const { locale, slug } = await params;
   const [article, tailorTours] = await Promise.all([
     fetchNewsBySlug(slug, locale),
@@ -190,9 +195,9 @@ export default async function NewsDetailPage({
   return (
     <main className="w-full flex flex-col">
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 pt-8">
+      <section className="w-full pt-8">
         {/* Title and Metadata */}
-        <div className="w-full mb-6">
+        <div className="max-w-7xl mx-auto px-6 mb-6">
           <h1 className="text-3xl md:text-[41px] font-medium text-[#192B28] leading-tight mb-4">
             {article.title}
           </h1>
@@ -202,46 +207,46 @@ export default async function NewsDetailPage({
             <span>|</span>
             <span className="text-gray-900">{article.category}</span>
           </div>
-        </div>
 
-        {/* Hero Image */}
-        <div className="mb-2">
-          <div className="relative w-full aspect-[16/9] overflow-hidden rounded-[4px]">
-            <Image
-              src={article.image}
-              alt={article.title}
-              fill
-              className="object-cover"
-              priority
-              unoptimized
-            />
+          {/* Hero Image */}
+          <div className="w-full mt-8 mb-2">
+            <div className="relative w-full aspect-[16/9] overflow-hidden rounded-lg">
+              <Image
+                src={article.image}
+                alt={article.title}
+                fill
+                className="object-cover"
+                priority
+                unoptimized
+              />
+            </div>
           </div>
         </div>
 
         {/* Image Caption */}
         {article.imageCaption && (
-          <p className="text-center text-sm text-gray-600 italic mt-2">
-            {article.imageCaption}
-          </p>
+          <div className="max-w-7xl mx-auto px-6">
+            <p className="text-center text-sm text-gray-600 italic mt-2">
+              {article.imageCaption}
+            </p>
+          </div>
         )}
       </section>
 
       {/* Article Content */}
       <section className="w-full max-w-7xl mx-auto px-6 py-16">
-        <div className="prose prose-lg prose-gray max-w-none">
-          {/* Article Body */}
-          <div
-            className="prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-headings:font-semibold prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-6"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
-        </div>
+        {/* Article Body */}
+        <div
+          className="cms-body-normal max-w-none text-[#192B28] [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-[#192B28] [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-xl [&_h3]:font-medium [&_h3]:text-[#192B28]"
+          dangerouslySetInnerHTML={{ __html: article.content }}
+        />
       </section>
 
       {/* Related Articles Section */}
       <section className="w-full py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Related Articles
+          <h2 className="text-branding-green leading-tight mb-4">
+            {t("relatedArticles")}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -273,7 +278,7 @@ export default async function NewsDetailPage({
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 hover:text-green-600 transition-colors">
+                    <h3 className="text-[24px] leading-tight font-semibold text-gray-900 mb-3 line-clamp-2 hover:text-branding-orange transition-colors">
                       {relatedArticle.title}
                     </h3>
 

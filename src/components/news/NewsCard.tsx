@@ -38,7 +38,7 @@ export default function NewsCard({
         </div>
         <div className="">
           <h3
-            className="text-[24px] font-medium text-[#192B28] mb-3 overflow-hidden"
+            className="text-[24px] hover:text-branding-orange font-medium text-[#192B28] mb-3 overflow-hidden"
             style={{
               display: "-webkit-box",
               WebkitLineClamp: 2,

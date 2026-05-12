@@ -30,7 +30,7 @@ export default function FeaturedNews({
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           {/* Content */}
           <div className="flex-1">
-            <h2 className="text-3xl lg:text-4xl font-medium text-[#192B28] leading-tight mb-6">
+            <h2 className="text-3xl lg:text-4xl font-medium text-[#192B28] leading-tight mb-6 hover:text-branding-orange">
               {title}
             </h2>
             <p className="text-[#192B28] text-lg leading-relaxed mb-6">
