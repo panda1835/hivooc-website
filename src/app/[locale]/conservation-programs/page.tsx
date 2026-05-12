@@ -25,6 +25,19 @@ interface ConservationProgramResponse {
   title: { rendered: string };
   content: { rendered: string };
   acf: ConservationProgramACF;
+  _embedded?: {
+    "wp:featuredmedia"?: {
+      source_url?: string;
+      media_details?: {
+        sizes?: {
+          full?: { source_url?: string };
+          large?: { source_url?: string };
+          medium_large?: { source_url?: string };
+          thumbnail?: { source_url?: string };
+        };
+      };
+    }[];
+  };
 }
 
 interface ConservationProgram {
@@ -65,6 +78,19 @@ function formatProgramDate(dateValue?: string): string {
     .toUpperCase();
 }
 
+function getFeaturedImageUrl(program: ConservationProgramResponse): string | null {
+  const featuredMedia = program._embedded?.["wp:featuredmedia"]?.[0];
+
+  return (
+    featuredMedia?.media_details?.sizes?.full?.source_url ||
+    featuredMedia?.media_details?.sizes?.large?.source_url ||
+    featuredMedia?.media_details?.sizes?.medium_large?.source_url ||
+    featuredMedia?.source_url ||
+    featuredMedia?.media_details?.sizes?.thumbnail?.source_url ||
+    null
+  );
+}
+
 async function getConservationPrograms(): Promise<ConservationProgram[]> {
   const locale = await getLocale();
 
@@ -74,9 +100,12 @@ async function getConservationPrograms(): Promise<ConservationProgram[]> {
     }
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-    const res = await fetch(`${baseUrl}/wp-json/wp/v2/conservation-program`, {
-      // next: { revalidate: 3600 },
-    });
+    const res = await fetch(
+      `${baseUrl}/wp-json/wp/v2/conservation-program?_embed`,
+      {
+        // next: { revalidate: 3600 },
+      },
+    );
 
     if (!res.ok) {
       throw new Error("Failed to fetch conservation programs");
@@ -103,7 +132,11 @@ async function getConservationPrograms(): Promise<ConservationProgram[]> {
         description:
           description + (contentWithoutTags.length > 200 ? "..." : ""),
         date,
-        image: program.acf.thumbnail || program.acf.hero_image || DEFAULT_IMAGE,
+        image:
+          getFeaturedImageUrl(program) ||
+          program.acf.thumbnail ||
+          program.acf.hero_image ||
+          DEFAULT_IMAGE,
         slug: program.slug,
       };
     });

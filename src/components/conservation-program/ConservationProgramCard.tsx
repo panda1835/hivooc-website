@@ -41,7 +41,7 @@ export default function ConservationProgramCard({
             {date}
           </div>
           <h3
-            className="text-xl font-medium text-gray-900 mb-3 overflow-hidden"
+            className="text-xl hover:text-branding-orange font-medium text-gray-900 mb-3 overflow-hidden"
             style={{
               display: "-webkit-box",
               WebkitLineClamp: 2,

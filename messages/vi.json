@@ -138,7 +138,7 @@
   },
   "Header": {
     "wildlifeExperiences": "Trải Nghiệm Thiên Nhiên Hoang Dã",
-    "conservationPrograms": "Những Chương Trình Bảo Tồn",
+    "conservationPrograms": "Chương Trình Bảo Tồn",
     "products": "Sản Phẩm",
     "library": "Thư Viện",
     "aboutUs": "Về Chúng Tôi",
@@ -308,7 +308,7 @@
   },
   "ConservationProgram": {
     "Hero": {
-      "title": "Những Chương Trình Bảo Tồn",
+      "title": "Chương Trình Bảo Tồn",
       "description": "Khám phá các dự án thực địa, hoạt động cộng đồng và nỗ lực bảo vệ động vật hoang dã Việt Nam."
     },
     "Listing": {

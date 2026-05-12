@@ -22,6 +22,19 @@ interface ConservationProgramResponse {
   title: { rendered: string };
   content: { rendered: string };
   acf: ConservationProgramACF;
+  _embedded?: {
+    "wp:featuredmedia"?: {
+      source_url?: string;
+      media_details?: {
+        sizes?: {
+          full?: { source_url?: string };
+          large?: { source_url?: string };
+          medium_large?: { source_url?: string };
+          thumbnail?: { source_url?: string };
+        };
+      };
+    }[];
+  };
 }
 
 interface ConservationProgramDetail {
@@ -53,6 +66,19 @@ function formatProgramDate(dateValue?: string): string {
     .toUpperCase();
 }
 
+function getFeaturedImageUrl(program: ConservationProgramResponse): string | null {
+  const featuredMedia = program._embedded?.["wp:featuredmedia"]?.[0];
+
+  return (
+    featuredMedia?.media_details?.sizes?.full?.source_url ||
+    featuredMedia?.media_details?.sizes?.large?.source_url ||
+    featuredMedia?.media_details?.sizes?.medium_large?.source_url ||
+    featuredMedia?.source_url ||
+    featuredMedia?.media_details?.sizes?.thumbnail?.source_url ||
+    null
+  );
+}
+
 async function getConservationProgram(
   slug: string,
 ): Promise<ConservationProgramDetail | null> {
@@ -63,7 +89,7 @@ async function getConservationProgram(
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
     const res = await fetch(
-      `${baseUrl}/wp-json/wp/v2/conservation-program?slug=${encodeURIComponent(slug)}`,
+      `${baseUrl}/wp-json/wp/v2/conservation-program?slug=${encodeURIComponent(slug)}&_embed`,
       {
         // next: { revalidate: 3600 },
       },
@@ -85,7 +111,11 @@ async function getConservationProgram(
       date: formatProgramDate(
         program.acf.program_date || program.acf.trip_date,
       ),
-      heroImage: program.acf.hero_image || program.acf.thumbnail || DEFAULT_IMAGE,
+      heroImage:
+        getFeaturedImageUrl(program) ||
+        program.acf.hero_image ||
+        program.acf.thumbnail ||
+        DEFAULT_IMAGE,
       content: program.content.rendered,
     };
   } catch (error) {
@@ -120,7 +150,7 @@ export default async function ConservationProgramDetailPage({
       <div className="bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
           <article
-            className="prose prose-lg max-w-none trip-report-content font-sans text-[#192B28]"
+            className="cms-body-normal max-w-none trip-report-content text-[#192B28] [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-[#192B28] [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-xl [&_h3]:font-medium [&_h3]:text-[#192B28]"
             dangerouslySetInnerHTML={{ __html: program.content }}
           />
         </div>
