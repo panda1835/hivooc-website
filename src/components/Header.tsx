@@ -278,7 +278,7 @@ export default function Header() {
                   item.columns.length > 0 &&
                   expandedMenu === item.id && (
                     <div
-                      className="absolute left-1/2 top-full mt-4 -translate-x-1/2 bg-white shadow-lg z-50 py-6 px-6 min-w-[300px]"
+                      className="absolute left-1/2 top-full mt-4 -translate-x-1/2 bg-white shadow-lg z-50 py-6 px-6 min-w-[230px]"
                       onMouseEnter={() => handleMenuEnter(item.id)}
                       onMouseLeave={handleMenuLeave}
                     >
