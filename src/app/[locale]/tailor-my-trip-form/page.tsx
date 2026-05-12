@@ -1,20 +1,21 @@
-import TailorForm from '@/components/tailor/TailorForm';
-import TailorMadeTrips from '@/components/home/TailorMadeTrips';
-import ShortTrips from '@/components/home/ShortTrips';
-import { getShortTripCards } from '@/lib/short-trip-cards';
-import DailyExperiences from '@/components/home/DailyExperiences';
-import { Separator } from '@/components/ui/separator';
-import { getLocale } from 'next-intl/server';
-import type { WPMedia } from '@/lib/wordpress-media';
+import type { Metadata } from "next";
+import TailorForm from "@/components/tailor/TailorForm";
+import TailorMadeTrips from "@/components/home/TailorMadeTrips";
+import ShortTrips from "@/components/home/ShortTrips";
+import { getShortTripCards } from "@/lib/short-trip-cards";
+import DailyExperiences from "@/components/home/DailyExperiences";
+import { Separator } from "@/components/ui/separator";
+import { getLocale } from "next-intl/server";
+import type { WPMedia } from "@/lib/wordpress-media";
 import {
   extractFeaturedImage,
   getFirstTermByTaxonomy,
   parseGeneralRowValue,
   type WPTerm,
-} from '@/lib/wordpress-post-helpers';
-import { decodeHtmlEntities } from '@/lib/wordpress-text';
-import type { TailorTourCard } from '@/components/home/TailorMadeTrips';
-import type { DailyExperience } from '@/components/home/DailyExperiences';
+} from "@/lib/wordpress-post-helpers";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
+import type { TailorTourCard } from "@/components/home/TailorMadeTrips";
+import type { DailyExperience } from "@/components/home/DailyExperiences";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -76,7 +77,9 @@ async function getTailorTours(locale: string): Promise<TailorTourCard[]> {
     }));
 }
 
-async function getNatureEducationTours(locale: string): Promise<DailyExperience[]> {
+async function getNatureEducationTours(
+  locale: string,
+): Promise<DailyExperience[]> {
   if (!WORDPRESS_BASE_URL) {
     throw new Error("Missing WORDPRESS_BASE_URL environment variable");
   }
@@ -104,7 +107,8 @@ async function getNatureEducationTours(locale: string): Promise<DailyExperience[
     .slice(0, 3)
     .map((tour) => ({
       id: tour.id,
-      tourType: getFirstTermByTaxonomy(tour, "education-type") || "Nature Education",
+      tourType:
+        getFirstTermByTaxonomy(tour, "education-type") || "Nature Education",
       title: decodeHtmlEntities(tour.title?.rendered || "Nature education"),
       description:
         decodeHtmlEntities(
@@ -118,12 +122,18 @@ async function getNatureEducationTours(locale: string): Promise<DailyExperience[
         {
           label: "Location",
           time:
-            decodeHtmlEntities(parseGeneralRowValue(tour.acf?.general, "location")) ||
-            "Vietnam",
+            decodeHtmlEntities(
+              parseGeneralRowValue(tour.acf?.general, "location"),
+            ) || "Vietnam",
         },
       ],
     }));
 }
+
+export const metadata: Metadata = {
+  title: "Plan Your Trip",
+  robots: { index: false, follow: false },
+};
 
 export default async function TailorPage() {
   const locale = await getLocale();
@@ -134,7 +144,7 @@ export default async function TailorPage() {
   ]);
 
   return (
-    <div className='flex flex-col'>
+    <div className="flex flex-col">
       <div className="min-h-screen bg-branding-yellow py-12 px-4 md:px-8 flex justify-center items-start">
         <TailorForm />
       </div>

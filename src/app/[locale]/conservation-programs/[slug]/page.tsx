@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import DetailHero from "@/components/ui/DetailHero";
 import { notFound } from "next/navigation";
 import BookConservationTourButton from "@/components/conservation-program/BookConservationTourButton";
@@ -66,7 +68,9 @@ function formatProgramDate(dateValue?: string): string {
     .toUpperCase();
 }
 
-function getFeaturedImageUrl(program: ConservationProgramResponse): string | null {
+function getFeaturedImageUrl(
+  program: ConservationProgramResponse,
+): string | null {
   const featuredMedia = program._embedded?.["wp:featuredmedia"]?.[0];
 
   return (
@@ -122,6 +126,33 @@ async function getConservationProgram(
     console.error("Error fetching conservation program:", error);
     return null;
   }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; locale: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const program = await getConservationProgram(slug);
+  if (!program) return {};
+  const description =
+    program.content
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 160) || undefined;
+  return {
+    title: program.title,
+    description,
+    openGraph: {
+      type: "article",
+      images: program.heroImage ? [{ url: program.heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/conservation-programs/${slug}`,
+    },
+  };
 }
 
 export default async function ConservationProgramDetailPage({

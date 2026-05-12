@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import SpeciesContent from "@/components/species/SpeciesContent";
 import SpeciesHero from "@/components/species/SpeciesHero";
 import SpeciesIntro from "@/components/species/SpeciesIntro";
@@ -40,7 +42,9 @@ function toSlug(value: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-function getSpeciesTerm(article: WordPressSpeciesResponse): WordPressTerm | undefined {
+function getSpeciesTerm(
+  article: WordPressSpeciesResponse,
+): WordPressTerm | undefined {
   const terms = article._embedded?.["wp:term"]?.flat() ?? [];
   return terms.find((term) => term.taxonomy === "species") ?? terms[0];
 }
@@ -78,7 +82,8 @@ async function getSpeciesData(): Promise<{
 
     const speciesList: SpeciesCardData[] = filtered.map((article) => {
       const speciesTerm = getSpeciesTerm(article);
-      const categoryValue = speciesTerm?.slug || toSlug(speciesTerm?.name || "other");
+      const categoryValue =
+        speciesTerm?.slug || toSlug(speciesTerm?.name || "other");
       const categoryLabel = speciesTerm?.name || "Other";
 
       return {
@@ -95,7 +100,10 @@ async function getSpeciesData(): Promise<{
 
     const filterOptions = Array.from(
       new Map(
-        speciesList.map((item) => [item.category, { value: item.category, label: item.categoryLabel }]),
+        speciesList.map((item) => [
+          item.category,
+          { value: item.category, label: item.categoryLabel },
+        ]),
       ).values(),
     );
 
@@ -117,15 +125,45 @@ async function getSpeciesHeroImages(): Promise<string[]> {
   );
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [[heroImage], t, tHeader] = await Promise.all([
+    getSpeciesHeroImages(),
+    getTranslations({ locale, namespace: "SpeciesPage" }),
+    getTranslations({ locale, namespace: "Header" }),
+  ]);
+  return {
+    title: tHeader("species"),
+    description: t("heroSubtitle"),
+    openGraph: {
+      url: `${SITE_URL}/${locale}/species`,
+      images: heroImage ? [{ url: heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/species`,
+      languages: {
+        en: `${SITE_URL}/en/species`,
+        vi: `${SITE_URL}/vi/species`,
+        "x-default": `${SITE_URL}/en/species`,
+      },
+    },
+  };
+}
+
 export default async function SpeciesPage() {
   const locale = await getLocale();
   const t = await getTranslations("SpeciesPage");
   const shortTripT = await getTranslations("ShortTrips");
-  const [{ speciesList, filterOptions }, heroImages, shortTrips] = await Promise.all([
-    getSpeciesData(),
-    getSpeciesHeroImages(),
-    getShortTripCards(locale, { limit: 3 }),
-  ]);
+  const [{ speciesList, filterOptions }, heroImages, shortTrips] =
+    await Promise.all([
+      getSpeciesData(),
+      getSpeciesHeroImages(),
+      getShortTripCards(locale, { limit: 3 }),
+    ]);
 
   return (
     <main className="flex flex-col w-full bg-white">

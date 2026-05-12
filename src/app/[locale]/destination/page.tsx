@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import SpeciesContent from "@/components/species/SpeciesContent";
 import SpeciesHero from "@/components/species/SpeciesHero";
 import SpeciesIntro from "@/components/species/SpeciesIntro";
@@ -113,15 +115,45 @@ async function getDestinationHeroImages(): Promise<string[]> {
   );
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [[heroImage], t, tHeader] = await Promise.all([
+    getDestinationHeroImages(),
+    getTranslations({ locale, namespace: "DestinationPage" }),
+    getTranslations({ locale, namespace: "Header" }),
+  ]);
+  return {
+    title: tHeader("destination"),
+    description: t("heroSubtitle"),
+    openGraph: {
+      url: `${SITE_URL}/${locale}/destination`,
+      images: heroImage ? [{ url: heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/destination`,
+      languages: {
+        en: `${SITE_URL}/en/destination`,
+        vi: `${SITE_URL}/vi/destination`,
+        "x-default": `${SITE_URL}/en/destination`,
+      },
+    },
+  };
+}
+
 export default async function DestinationPage() {
   const locale = await getLocale();
   const t = await getTranslations("DestinationPage");
   const shortTripT = await getTranslations("ShortTrips");
-  const [{ destinationList, filterOptions }, heroImages, shortTrips] = await Promise.all([
-    getDestinationData(locale),
-    getDestinationHeroImages(),
-    getShortTripCards(locale, { limit: 3 }),
-  ]);
+  const [{ destinationList, filterOptions }, heroImages, shortTrips] =
+    await Promise.all([
+      getDestinationData(locale),
+      getDestinationHeroImages(),
+      getShortTripCards(locale, { limit: 3 }),
+    ]);
 
   return (
     <main className="flex flex-col w-full bg-white">

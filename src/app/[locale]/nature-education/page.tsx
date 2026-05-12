@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { MapPin } from "lucide-react";
 import Hero from "@/components/our-story/Hero";
+import { getTranslations } from "next-intl/server";
 import { fetchWpImagesFromApiRoute, type WPMedia } from "@/lib/wordpress-media";
 import {
   extractFeaturedImage,
@@ -126,6 +129,32 @@ async function getNatureEducationHeroImages(): Promise<string[]> {
 type PageProps = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const [[heroImage], t] = await Promise.all([
+    getNatureEducationHeroImages(),
+    getTranslations({ locale, namespace: "DailyExperiences" }),
+  ]);
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      url: `${SITE_URL}/${locale}/nature-education`,
+      images: heroImage ? [{ url: heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/nature-education`,
+      languages: {
+        en: `${SITE_URL}/en/nature-education`,
+        vi: `${SITE_URL}/vi/nature-education`,
+        "x-default": `${SITE_URL}/en/nature-education`,
+      },
+    },
+  };
+}
 
 export default async function NatureEducationListingPage({
   params,

@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import Hero from "@/components/our-story/Hero";
 import NewsListing from "@/components/news/NewsListing";
 import { getTranslations, getLocale } from "next-intl/server";
@@ -40,7 +42,10 @@ interface NewsArticle {
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
 function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 async function getNewsArticles(locale: string): Promise<NewsArticle[]> {
@@ -50,9 +55,12 @@ async function getNewsArticles(locale: string): Promise<NewsArticle[]> {
     }
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-    const res = await fetch(`${baseUrl}/wp-json/wp/v2/news?per_page=20&_embed`, {
-      // next: { revalidate: 3600 },
-    });
+    const res = await fetch(
+      `${baseUrl}/wp-json/wp/v2/news?per_page=20&_embed`,
+      {
+        // next: { revalidate: 3600 },
+      },
+    );
 
     if (!res.ok) {
       throw new Error("Failed to fetch news");
@@ -111,6 +119,35 @@ async function getNewsHeroImages(): Promise<string[]> {
   return fetchWpImagesFromApiRoute(
     `${baseUrl}/wp-json/wp/v2/hero-image?slug=news-2&_embed`,
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [[heroImage], t, tHeader] = await Promise.all([
+    getNewsHeroImages(),
+    getTranslations({ locale, namespace: "News.Hero" }),
+    getTranslations({ locale, namespace: "Header" }),
+  ]);
+  return {
+    title: tHeader("news"),
+    description: t("description"),
+    openGraph: {
+      url: `${SITE_URL}/${locale}/news`,
+      images: heroImage ? [{ url: heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/news`,
+      languages: {
+        en: `${SITE_URL}/en/news`,
+        vi: `${SITE_URL}/vi/news`,
+        "x-default": `${SITE_URL}/en/news`,
+      },
+    },
+  };
 }
 
 export default async function NewsPage() {

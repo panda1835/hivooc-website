@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import DetailHero from "@/components/ui/DetailHero";
 import { notFound } from "next/navigation";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
@@ -93,6 +95,31 @@ async function getDestinationDetail(
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const destination = await getDestinationDetail(slug, locale);
+  if (!destination) return {};
+  const description =
+    destination.content
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 160) || undefined;
+  return {
+    title: destination.name,
+    description,
+    openGraph: {
+      type: "article",
+      images: destination.heroImage ? [{ url: destination.heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/destination/${slug}`,
+    },
+  };
+}
 
 export default async function DestinationDetailPage({ params }: PageProps) {
   const { locale, slug } = await params;

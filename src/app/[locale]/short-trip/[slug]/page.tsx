@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
@@ -58,7 +60,12 @@ interface WPTour {
 }
 
 function stripHtmlTags(value: string): string {
-  return decodeHtmlEntities(value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+  return decodeHtmlEntities(
+    value
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
 }
 
 function splitByHr(value?: string): string[] {
@@ -70,7 +77,9 @@ function splitByHr(value?: string): string[] {
     .filter(Boolean);
 }
 
-function parseKeyValueRows(value?: string): Array<{ key: string; value: string }> {
+function parseKeyValueRows(
+  value?: string,
+): Array<{ key: string; value: string }> {
   if (!value) return [];
 
   return value
@@ -89,7 +98,10 @@ function parseKeyValueRows(value?: string): Array<{ key: string; value: string }
         return null;
       }
 
-      return { key: decodeHtmlEntities(key), value: decodeHtmlEntities(rowValue) };
+      return {
+        key: decodeHtmlEntities(key),
+        value: decodeHtmlEntities(rowValue),
+      };
     })
     .filter((row): row is { key: string; value: string } => Boolean(row));
 }
@@ -101,11 +113,18 @@ function extractListItems(value?: string): string[] {
   if (!matches) return [];
 
   return matches
-    .map((item) => item.replace(/^<li\b[^>]*>/i, "").replace(/<\/li>$/i, "").trim())
+    .map((item) =>
+      item
+        .replace(/^<li\b[^>]*>/i, "")
+        .replace(/<\/li>$/i, "")
+        .trim(),
+    )
     .filter(Boolean);
 }
 
-function parseHtmlSections(value?: string): Array<{ title: string; contentHtml: string }> {
+function parseHtmlSections(
+  value?: string,
+): Array<{ title: string; contentHtml: string }> {
   return splitByHr(value)
     .map((block, index) => {
       const h1Match = block.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
@@ -130,7 +149,9 @@ function parseHtmlSections(value?: string): Array<{ title: string; contentHtml: 
     );
 }
 
-function parseMapLocations(value?: string): Array<{ name: string; lat: number; lng: number }> {
+function parseMapLocations(
+  value?: string,
+): Array<{ name: string; lat: number; lng: number }> {
   if (!value) return [];
 
   return value
@@ -153,8 +174,9 @@ function parseMapLocations(value?: string): Array<{ name: string; lat: number; l
 
       return { name, lat, lng };
     })
-    .filter((location): location is { name: string; lat: number; lng: number } =>
-      Boolean(location),
+    .filter(
+      (location): location is { name: string; lat: number; lng: number } =>
+        Boolean(location),
     );
 }
 
@@ -181,7 +203,17 @@ function extractGalleryImages(post: WPTour): string[] {
   return Array.from(new Set(urls));
 }
 
-function parseTripDetails(post: WPTour): { pricing: { title: string; description: string; pricingTiers: { pax: string; price: string }[] }; details: TripDetailsData; heroTitle: string; heroSubtitle: string; heroSlides: string[] } {
+function parseTripDetails(post: WPTour): {
+  pricing: {
+    title: string;
+    description: string;
+    pricingTiers: { pax: string; price: string }[];
+  };
+  details: TripDetailsData;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroSlides: string[];
+} {
   const generalRows = parseKeyValueRows(post.acf?.general);
   const priceRows = parseKeyValueRows(post.acf?.price);
   const galleryImages = extractGalleryImages(post);
@@ -201,7 +233,8 @@ function parseTripDetails(post: WPTour): { pricing: { title: string; description
   return {
     heroTitle: decodeHtmlEntities(post.title?.rendered || "Short trip"),
     heroSubtitle: decodeHtmlEntities(post.acf?.overview?.description || ""),
-    heroSlides: galleryImages.length > 0 ? galleryImages.slice(0, 4) : [featuredImage],
+    heroSlides:
+      galleryImages.length > 0 ? galleryImages.slice(0, 4) : [featuredImage],
     pricing: {
       title: decodeHtmlEntities(post.acf?.overview?.header || "Trip overview"),
       description: decodeHtmlEntities(post.acf?.overview?.description || ""),
@@ -225,7 +258,9 @@ function parseTripDetails(post: WPTour): { pricing: { title: string; description
       excluded: extractListItems(post.acf?.whats_included?.not_included),
       notAllowed: extractListItems(post.acf?.whats_included?.not_allowed),
       itinerarySections: parseHtmlSections(post.acf?.itinerary),
-      additionalInfoSections: parseHtmlSections(post.acf?.additional_information),
+      additionalInfoSections: parseHtmlSections(
+        post.acf?.additional_information,
+      ),
       policySections: parseHtmlSections(post.acf?.policies),
       photos: galleryImages.length > 0 ? galleryImages : [featuredImage],
     },
@@ -235,7 +270,9 @@ function parseTripDetails(post: WPTour): { pricing: { title: string; description
 function parseShortTripCard(post: WPTour): ShortTrip {
   const generalRows = parseKeyValueRows(post.acf?.general);
   const featuredImage = extractFeaturedImage(post) || "/short-trip/image1.jpg";
-  const duration = generalRows.find((row) => row.key.toLowerCase() === "duration")?.value || "Flexible";
+  const duration =
+    generalRows.find((row) => row.key.toLowerCase() === "duration")?.value ||
+    "Flexible";
   const typeName =
     post._embedded?.["wp:term"]
       ?.flat()
@@ -246,8 +283,10 @@ function parseShortTripCard(post: WPTour): ShortTrip {
     category: typeName,
     title: decodeHtmlEntities(post.title?.rendered || "Short trip"),
     description:
-      decodeHtmlEntities(post.acf?.overview?.description || "Every journey is crafted to match your interests.") ||
-      "Every journey is crafted to match your interests.",
+      decodeHtmlEntities(
+        post.acf?.overview?.description ||
+          "Every journey is crafted to match your interests.",
+      ) || "Every journey is crafted to match your interests.",
     image: featuredImage,
     link: `/short-trip/${post.slug}`,
     bestTimeToTravel: "Custom",
@@ -288,10 +327,13 @@ async function getRelatedShortTrips(currentId: number): Promise<ShortTrip[]> {
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-  const res = await fetch(`${baseUrl}/wp-json/wp/v2/short-tour?per_page=100&_embed`, {
-    // TEMP: Content initiation phase - enable fetch cache when content is stable.
-    // next: { revalidate: 300 },
-  });
+  const res = await fetch(
+    `${baseUrl}/wp-json/wp/v2/short-tour?per_page=100&_embed`,
+    {
+      // TEMP: Content initiation phase - enable fetch cache when content is stable.
+      // next: { revalidate: 300 },
+    },
+  );
 
   if (!res.ok) {
     return [];
@@ -308,6 +350,33 @@ type PageProps = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  try {
+    const post = await getTourBySlug(slug);
+    const title = decodeHtmlEntities(post.title?.rendered ?? "Short Trip");
+    const description = post.acf?.overview?.description
+      ? decodeHtmlEntities(post.acf.overview.description).slice(0, 160)
+      : undefined;
+    const image = extractFeaturedImage(post);
+    return {
+      title,
+      description,
+      openGraph: {
+        type: "article",
+        images: image ? [{ url: image }] : [],
+      },
+      alternates: {
+        canonical: `${SITE_URL}/${locale}/short-trip/${slug}`,
+      },
+    };
+  } catch {
+    return {};
+  }
+}
+
 export default async function ShortTripPage({ params }: PageProps) {
   const { slug } = await params;
   const t = await getTranslations();
@@ -317,34 +386,58 @@ export default async function ShortTripPage({ params }: PageProps) {
     parseTripDetails(post);
   const relatedTrips = await getRelatedShortTrips(post.id);
 
+  const touristTripJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    name: heroTitle,
+    description: heroSubtitle || undefined,
+    image: heroSlides[0] || undefined,
+    touristType: "Wildlife enthusiasts",
+    provider: {
+      "@type": "Organization",
+      name: "HiVOOC",
+      url: SITE_URL,
+    },
+  };
+
   return (
-    <main className="flex flex-col w-full non-selectable-content">
-      <Hero title={heroTitle} subtitle={heroSubtitle} slideImages={heroSlides} />
-
-      <Pricing
-        title={pricing.title}
-        description={pricing.description}
-        pricingTiers={pricing.pricingTiers}
-        inquiryType="Short Tour"
-        inquiryName={heroTitle}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(touristTripJsonLd) }}
       />
-
-      <TripDetails
-        tripData={details}
-        inquiryType="Short Tour"
-        inquiryName={heroTitle}
-      />
-      <ContributeToConservation />
-
-      {relatedTrips.length > 0 && (
-        <ShortTrips
-          title={t("ShortTrips.relatedShortTrip")}
-          description={t("ShortTrips.description")}
-          trips={relatedTrips}
+      <main className="flex flex-col w-full non-selectable-content">
+        <Hero
+          title={heroTitle}
+          subtitle={heroSubtitle}
+          slideImages={heroSlides}
         />
-      )}
 
-      <Support />
-    </main>
+        <Pricing
+          title={pricing.title}
+          description={pricing.description}
+          pricingTiers={pricing.pricingTiers}
+          inquiryType="Short Tour"
+          inquiryName={heroTitle}
+        />
+
+        <TripDetails
+          tripData={details}
+          inquiryType="Short Tour"
+          inquiryName={heroTitle}
+        />
+        <ContributeToConservation />
+
+        {relatedTrips.length > 0 && (
+          <ShortTrips
+            title={t("ShortTrips.relatedShortTrip")}
+            description={t("ShortTrips.description")}
+            trips={relatedTrips}
+          />
+        )}
+
+        <Support />
+      </main>
+    </>
   );
 }

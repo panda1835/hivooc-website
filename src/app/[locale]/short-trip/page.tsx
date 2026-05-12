@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { MapPin, Search } from "lucide-react";
 import Hero from "@/components/our-story/Hero";
+import { getTranslations } from "next-intl/server";
 import { fetchWpImagesFromApiRoute, type WPMedia } from "@/lib/wordpress-media";
 import {
   extractFeaturedImage,
@@ -137,6 +140,33 @@ async function getShortTripHeroImages(): Promise<string[]> {
 type PageProps = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const [[heroImage], t, tHeader] = await Promise.all([
+    getShortTripHeroImages(),
+    getTranslations({ locale, namespace: "ShortTrips" }),
+    getTranslations({ locale, namespace: "Header" }),
+  ]);
+  return {
+    title: tHeader("shortTour"),
+    description: t("description"),
+    openGraph: {
+      url: `${SITE_URL}/${locale}/short-trip`,
+      images: heroImage ? [{ url: heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/short-trip`,
+      languages: {
+        en: `${SITE_URL}/en/short-trip`,
+        vi: `${SITE_URL}/vi/short-trip`,
+        "x-default": `${SITE_URL}/en/short-trip`,
+      },
+    },
+  };
+}
 
 export default async function ShortTripListingPage({ params }: PageProps) {
   const { locale } = await params;

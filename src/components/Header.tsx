@@ -138,16 +138,24 @@ export default function Header() {
           <div className="flex items-center justify-between gap-4">
             {/* Logo and Tagline */}
             <div className="flex items-center gap-3">
-              <Link href="/" className="flex items-center gap-3">
+              <Link href="/" className="flex items-center gap-2 md:gap-3">
                 <Image
                   unoptimized
                   src="/logo.png"
                   alt="HIVOOC Logo"
                   width={250}
                   height={250}
-                  className="w-40 h-20 object-contain"
+                  className="hidden h-20 w-40 object-contain md:block"
                 />
-                <p className="hidden md:block text-lg italic font-dancing-script text-white/90">
+                <Image
+                  unoptimized
+                  src="/logo/Logo-01.png"
+                  alt="HIVOOC Logo"
+                  width={250}
+                  height={250}
+                  className="h-16 w-16 object-contain md:hidden"
+                />
+                <p className="max-w-24 italic leading-tight font-dancing-script text-white/90 sm:max-w-none md:text-lg">
                   Primate Tourism For Conservation
                 </p>
               </Link>

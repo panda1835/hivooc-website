@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -174,6 +176,27 @@ async function fetchRelatedNews(
   }
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const article = await fetchNewsBySlug(slug, locale);
+  if (!article) return {};
+  return {
+    title: article.title,
+    description: article.description.slice(0, 160),
+    openGraph: {
+      type: "article",
+      images: article.image ? [{ url: article.image }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/news/${slug}`,
+    },
+  };
+}
+
 export default async function NewsDetailPage({
   params,
 }: {
@@ -192,108 +215,129 @@ export default async function NewsDetailPage({
 
   const relatedArticles = await fetchRelatedNews(slug, locale);
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: article.title,
+    description: article.description,
+    image: article.image || undefined,
+    datePublished: article.date,
+    publisher: {
+      "@type": "Organization",
+      name: "HiVOOC",
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
+    },
+  };
+
   return (
-    <main className="w-full flex flex-col">
-      {/* Hero Section */}
-      <section className="w-full pt-8">
-        {/* Title and Metadata */}
-        <div className="max-w-7xl mx-auto px-6 mb-6">
-          <h1 className="text-3xl md:text-[41px] font-medium text-[#192B28] leading-tight mb-4">
-            {article.title}
-          </h1>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <main className="w-full flex flex-col">
+        {/* Hero Section */}
+        <section className="w-full pt-8">
+          {/* Title and Metadata */}
+          <div className="max-w-7xl mx-auto px-6 mb-6">
+            <h1 className="text-3xl md:text-[41px] font-medium text-[#192B28] leading-tight mb-4">
+              {article.title}
+            </h1>
 
-          <div className="flex items-center gap-2 text-sm text-[#5A7363]">
-            <span>{article.date}</span>
-            <span>|</span>
-            <span className="text-gray-900">{article.category}</span>
-          </div>
+            <div className="flex items-center gap-2 text-sm text-[#5A7363]">
+              <span>{article.date}</span>
+              <span>|</span>
+              <span className="text-gray-900">{article.category}</span>
+            </div>
 
-          {/* Hero Image */}
-          <div className="w-full mt-8 mb-2">
-            <div className="relative w-full aspect-[16/9] overflow-hidden rounded-lg">
-              <Image
-                src={article.image}
-                alt={article.title}
-                fill
-                className="object-cover"
-                priority
-                unoptimized
-              />
+            {/* Hero Image */}
+            <div className="w-full mt-8 mb-2">
+              <div className="relative w-full aspect-[16/9] overflow-hidden rounded-lg">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  className="object-cover"
+                  priority
+                  unoptimized
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Image Caption */}
-        {article.imageCaption && (
+          {/* Image Caption */}
+          {article.imageCaption && (
+            <div className="max-w-7xl mx-auto px-6">
+              <p className="text-center text-sm text-gray-600 italic mt-2">
+                {article.imageCaption}
+              </p>
+            </div>
+          )}
+        </section>
+
+        {/* Article Content */}
+        <section className="w-full max-w-7xl mx-auto px-6 py-16">
+          {/* Article Body */}
+          <div
+            className="cms-body-normal max-w-none text-[#192B28] [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-[#192B28] [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-xl [&_h3]:font-medium [&_h3]:text-[#192B28]"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
+        </section>
+
+        {/* Related Articles Section */}
+        <section className="w-full py-16">
           <div className="max-w-7xl mx-auto px-6">
-            <p className="text-center text-sm text-gray-600 italic mt-2">
-              {article.imageCaption}
-            </p>
-          </div>
-        )}
-      </section>
+            <h2 className="text-branding-green leading-tight mb-4">
+              {t("relatedArticles")}
+            </h2>
 
-      {/* Article Content */}
-      <section className="w-full max-w-7xl mx-auto px-6 py-16">
-        {/* Article Body */}
-        <div
-          className="cms-body-normal max-w-none text-[#192B28] [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-[#192B28] [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-xl [&_h3]:font-medium [&_h3]:text-[#192B28]"
-          dangerouslySetInnerHTML={{ __html: article.content }}
-        />
-      </section>
-
-      {/* Related Articles Section */}
-      <section className="w-full py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-branding-green leading-tight mb-4">
-            {t("relatedArticles")}
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedArticles.map((relatedArticle) => (
-              <Link
-                key={relatedArticle.id}
-                href={`/news/${relatedArticle.slug}`}
-                className="h-full"
-              >
-                <article className="h-full bg-white rounded-[4px] overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col">
-                  <div className="relative h-48">
-                    <Image
-                      src={relatedArticle.image}
-                      alt={relatedArticle.title}
-                      fill
-                      className="object-cover"
-                      unoptimized
-                    />
-                  </div>
-
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="flex items-center gap-2 mb-3 text-sm">
-                      <span className="text-[#5A7363] font-medium">
-                        {relatedArticle.category}
-                      </span>
-                      <span className="text-gray-300">|</span>
-                      <span className="text-gray-500">
-                        {relatedArticle.date}
-                      </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedArticles.map((relatedArticle) => (
+                <Link
+                  key={relatedArticle.id}
+                  href={`/news/${relatedArticle.slug}`}
+                  className="h-full"
+                >
+                  <article className="h-full bg-white rounded-[4px] overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col">
+                    <div className="relative h-48">
+                      <Image
+                        src={relatedArticle.image}
+                        alt={relatedArticle.title}
+                        fill
+                        className="object-cover"
+                        unoptimized
+                      />
                     </div>
 
-                    <h3 className="text-[24px] leading-tight font-semibold text-gray-900 mb-3 line-clamp-2 hover:text-branding-orange transition-colors">
-                      {relatedArticle.title}
-                    </h3>
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex items-center gap-2 mb-3 text-sm">
+                        <span className="text-[#5A7363] font-medium">
+                          {relatedArticle.category}
+                        </span>
+                        <span className="text-gray-300">|</span>
+                        <span className="text-gray-500">
+                          {relatedArticle.date}
+                        </span>
+                      </div>
 
-                    <p className="text-gray-600 line-clamp-3">
-                      {relatedArticle.description}
-                    </p>
-                  </div>
-                </article>
-              </Link>
-            ))}
+                      <h3 className="text-[24px] leading-tight font-semibold text-gray-900 mb-3 line-clamp-2 hover:text-branding-orange transition-colors">
+                        {relatedArticle.title}
+                      </h3>
+
+                      <p className="text-gray-600 line-clamp-3">
+                        {relatedArticle.description}
+                      </p>
+                    </div>
+                  </article>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <TailorMadeTrips tours={tailorTours} />
-    </main>
+        <TailorMadeTrips tours={tailorTours} />
+      </main>
+    </>
   );
 }

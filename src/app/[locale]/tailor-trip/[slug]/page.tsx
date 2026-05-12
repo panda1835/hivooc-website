@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import { notFound } from "next/navigation";
 
 import Hero from "@/components/tailor-trip/Hero";
@@ -61,7 +63,10 @@ interface WPTailorTour {
 
 function stripHtmlTags(value: string): string {
   return decodeHtmlEntities(
-    value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(),
+    value
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
   );
 }
 
@@ -74,7 +79,9 @@ function splitByHr(value?: string): string[] {
     .filter(Boolean);
 }
 
-function parseKeyValueRows(value?: string): Array<{ key: string; value: string }> {
+function parseKeyValueRows(
+  value?: string,
+): Array<{ key: string; value: string }> {
   if (!value) return [];
 
   return value
@@ -93,7 +100,10 @@ function parseKeyValueRows(value?: string): Array<{ key: string; value: string }
         return null;
       }
 
-      return { key: decodeHtmlEntities(key), value: decodeHtmlEntities(rowValue) };
+      return {
+        key: decodeHtmlEntities(key),
+        value: decodeHtmlEntities(rowValue),
+      };
     })
     .filter((row): row is { key: string; value: string } => Boolean(row));
 }
@@ -106,17 +116,26 @@ function extractListItems(value?: string): string[] {
 
   return matches
     .map((item) =>
-      item.replace(/^<li\b[^>]*>/i, "").replace(/<\/li>$/i, "").trim(),
+      item
+        .replace(/^<li\b[^>]*>/i, "")
+        .replace(/<\/li>$/i, "")
+        .trim(),
     )
     .filter(Boolean);
 }
 
-function parseHtmlSections(value?: string): Array<{ title: string; contentHtml: string }> {
+function parseHtmlSections(
+  value?: string,
+): Array<{ title: string; contentHtml: string }> {
   return splitByHr(value)
     .map((block, index) => {
       const h1Match = block.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
-      const title = h1Match ? stripHtmlTags(h1Match[1]) : `Section ${index + 1}`;
-      const contentHtml = h1Match ? block.replace(h1Match[0], "").trim() : block;
+      const title = h1Match
+        ? stripHtmlTags(h1Match[1])
+        : `Section ${index + 1}`;
+      const contentHtml = h1Match
+        ? block.replace(h1Match[0], "").trim()
+        : block;
 
       if (!contentHtml) {
         return null;
@@ -127,13 +146,14 @@ function parseHtmlSections(value?: string): Array<{ title: string; contentHtml: 
         contentHtml,
       };
     })
-    .filter(
-      (section): section is { title: string; contentHtml: string } =>
-        Boolean(section),
+    .filter((section): section is { title: string; contentHtml: string } =>
+      Boolean(section),
     );
 }
 
-function parseMapLocations(value?: string): Array<{ name: string; lat: number; lng: number }> {
+function parseMapLocations(
+  value?: string,
+): Array<{ name: string; lat: number; lng: number }> {
   if (!value) return [];
 
   return value
@@ -156,8 +176,9 @@ function parseMapLocations(value?: string): Array<{ name: string; lat: number; l
 
       return { name, lat, lng };
     })
-    .filter((location): location is { name: string; lat: number; lng: number } =>
-      Boolean(location),
+    .filter(
+      (location): location is { name: string; lat: number; lng: number } =>
+        Boolean(location),
     );
 }
 
@@ -194,7 +215,8 @@ function parseTourData(post: WPTailorTour): {
 } {
   const generalRows = parseKeyValueRows(post.acf?.general);
   const galleryImages = extractGalleryImages(post);
-  const featuredImage = extractFeaturedImage(post) || "/tailor-made-trip/image1.jpg";
+  const featuredImage =
+    extractFeaturedImage(post) || "/tailor-made-trip/image1.jpg";
 
   const overviewItems = generalRows.map((row) => ({
     title: row.key,
@@ -210,7 +232,9 @@ function parseTourData(post: WPTailorTour): {
     heroSubtitleTop: decodeHtmlEntities(heroSubtitleTop),
     heroSlides:
       galleryImages.length > 0 ? galleryImages.slice(0, 4) : [featuredImage],
-    introTitle: decodeHtmlEntities(post.acf?.overview?.header || "Program introduction"),
+    introTitle: decodeHtmlEntities(
+      post.acf?.overview?.header || "Program introduction",
+    ),
     introDescription: decodeHtmlEntities(post.acf?.overview?.description || ""),
     details: {
       overview: {
@@ -221,14 +245,18 @@ function parseTourData(post: WPTailorTour): {
         description: "",
         items: extractListItems(post.acf?.highlight).map(stripHtmlTags),
         highlightImages:
-          galleryImages.length > 0 ? galleryImages.slice(0, 4) : [featuredImage],
+          galleryImages.length > 0
+            ? galleryImages.slice(0, 4)
+            : [featuredImage],
       },
       mapLocations: parseMapLocations(post.acf?.map),
       included: extractListItems(post.acf?.whats_included?.included),
       excluded: extractListItems(post.acf?.whats_included?.not_included),
       notAllowed: extractListItems(post.acf?.whats_included?.not_allowed),
       itinerarySections: parseHtmlSections(post.acf?.itinerary),
-      additionalInfoSections: parseHtmlSections(post.acf?.additional_information),
+      additionalInfoSections: parseHtmlSections(
+        post.acf?.additional_information,
+      ),
       policySections: parseHtmlSections(post.acf?.policies),
       photos: galleryImages.length > 0 ? galleryImages : [featuredImage],
     },
@@ -309,6 +337,35 @@ async function getTailorTours(locale: string): Promise<TailorTourCard[]> {
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  try {
+    const post = await getTourBySlug(slug);
+    const title = decodeHtmlEntities(
+      post.title?.rendered ?? "Tailor-made Tour",
+    );
+    const description = post.acf?.overview?.description
+      ? decodeHtmlEntities(post.acf.overview.description).slice(0, 160)
+      : undefined;
+    const image = extractFeaturedImage(post);
+    return {
+      title,
+      description,
+      openGraph: {
+        type: "article",
+        images: image ? [{ url: image }] : [],
+      },
+      alternates: {
+        canonical: `${SITE_URL}/${locale}/tailor-trip/${slug}`,
+      },
+    };
+  } catch {
+    return {};
+  }
+}
 
 export default async function TailorTripDetailPage({ params }: PageProps) {
   const { locale, slug } = await params;

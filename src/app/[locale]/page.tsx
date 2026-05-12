@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import Hero from "@/components/home/Hero";
 import SellingPoint from "@/components/home/SellingPoint";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
@@ -131,7 +133,10 @@ async function getTailorTours(locale: string): Promise<TailorTourCard[]> {
 }
 
 function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function toNatureEducationCard(post: WPSimpleTour): DailyExperience {
@@ -141,7 +146,8 @@ function toNatureEducationCard(post: WPSimpleTour): DailyExperience {
 
   return {
     id: post.id,
-    tourType: getFirstTermByTaxonomy(post, "education-type") || "Nature Education",
+    tourType:
+      getFirstTermByTaxonomy(post, "education-type") || "Nature Education",
     title: decodeHtmlEntities(post.title?.rendered || "Nature education"),
     description:
       decodeHtmlEntities(
@@ -155,7 +161,9 @@ function toNatureEducationCard(post: WPSimpleTour): DailyExperience {
   };
 }
 
-async function getNatureEducationTours(locale: string): Promise<DailyExperience[]> {
+async function getNatureEducationTours(
+  locale: string,
+): Promise<DailyExperience[]> {
   if (!WORDPRESS_BASE_URL) {
     throw new Error("Missing WORDPRESS_BASE_URL environment variable");
   }
@@ -227,36 +235,88 @@ async function getNewsArticles(locale: string): Promise<HomeNewsArticle[]> {
   });
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: {
+      absolute: "HiVOOC – Primate Tourism For Conservation",
+    },
+    description:
+      "Discover Vietnam's extraordinary wildlife with HiVOOC. Expert-guided tours for primate watching, birding, and conservation.",
+    openGraph: { url: `${SITE_URL}/${locale}/` },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/`,
+      languages: {
+        en: `${SITE_URL}/en/`,
+        vi: `${SITE_URL}/vi/`,
+        "x-default": `${SITE_URL}/en/`,
+      },
+    },
+  };
+}
+
 export default async function Home() {
   const t = await getTranslations();
   const locale = await getLocale();
-  const [homeHeroImages, tailorTours, shortTours, natureEducationTours, newsArticles] = await Promise.all([
+  const [
+    homeHeroImages,
+    tailorTours,
+    shortTours,
+    natureEducationTours,
+    newsArticles,
+  ] = await Promise.all([
     getHomeHeroImages(),
     getTailorTours(locale),
     getShortTripCards(locale, { limit: 3 }),
     getNatureEducationTours(locale),
     getNewsArticles(locale),
   ]);
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "HiVOOC",
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    description:
+      "HiVOOC specializes in tailor-made wildlife experiences in Vietnam, offering expert-guided tours for primate watching, birding, and conservation.",
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+84813949222",
+      contactType: "customer service",
+    },
+    sameAs: ["https://www.facebook.com/hivooc"],
+  };
+
   return (
-    <main className="flex flex-col w-full">
-      <Hero slideImages={homeHeroImages} />
-      <SellingPoint />
-      <TailorMadeTrips tours={tailorTours} />
-      <ShortTrips
-        title={t("ShortTrips.title")}
-        description={t("ShortTrips.description")}
-        trips={shortTours}
-        viewMoreHref="/short-trip"
-        leftInfoLabel={locale === "vi" ? "ĐIỂM ĐẾN" : "DESTINATION"}
-        rightInfoLabel={t("ShortTrips.tripLength")}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
-      <DailyExperiences experiences={natureEducationTours} />
-      <GetStarted />
-      <Reviews />
-      <News articles={newsArticles} />
-      <Partners />
-      <Support />
-      <Gallery />
-    </main>
+      <main className="flex flex-col w-full">
+        <Hero slideImages={homeHeroImages} />
+        <SellingPoint />
+        <TailorMadeTrips tours={tailorTours} />
+        <ShortTrips
+          title={t("ShortTrips.title")}
+          description={t("ShortTrips.description")}
+          trips={shortTours}
+          viewMoreHref="/short-trip"
+          leftInfoLabel={locale === "vi" ? "ĐIỂM ĐẾN" : "DESTINATION"}
+          rightInfoLabel={t("ShortTrips.tripLength")}
+        />
+        <DailyExperiences experiences={natureEducationTours} />
+        <GetStarted />
+        <Reviews />
+        <News articles={newsArticles} />
+        <Partners />
+        <Support />
+        <Gallery />
+      </main>
+    </>
   );
 }

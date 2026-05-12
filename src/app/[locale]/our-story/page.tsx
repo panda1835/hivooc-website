@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import Hero from "@/components/our-story/Hero";
 import HiVOOCStory from "@/components/our-story/HiVOOCStory";
 import Founder from "@/components/our-story/Founder";
@@ -10,10 +12,7 @@ import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
 import { getTranslations } from "next-intl/server";
 import { extractWpImageUrl, type WPMedia } from "@/lib/wordpress-media";
-import {
-  getTermsByTaxonomy,
-  type WPTerm,
-} from "@/lib/wordpress-post-helpers";
+import { getTermsByTaxonomy, type WPTerm } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
@@ -30,7 +29,10 @@ interface WPLangurTrackerPost {
 }
 
 function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function toLangurTracker(post: WPLangurTrackerPost): LangurTracker {
@@ -49,7 +51,10 @@ function toLangurTracker(post: WPLangurTrackerPost): LangurTracker {
 }
 
 async function getLangurTrackers(locale: string): Promise<LangurTracker[]> {
-  const baseUrl = (WORDPRESS_BASE_URL || "https://hivooc.com").replace(/\/$/, "");
+  const baseUrl = (WORDPRESS_BASE_URL || "https://hivooc.com").replace(
+    /\/$/,
+    "",
+  );
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/langur-tracker?per_page=100&_embed`,
     {
@@ -75,6 +80,29 @@ async function getLangurTrackers(locale: string): Promise<LangurTracker[]> {
 type PageProps = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const [t, tHeader] = await Promise.all([
+    getTranslations({ locale, namespace: "OurStory.Hero" }),
+    getTranslations({ locale, namespace: "Header" }),
+  ]);
+  return {
+    title: tHeader("aboutUs"),
+    description: t("description"),
+    openGraph: { url: `${SITE_URL}/${locale}/our-story` },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/our-story`,
+      languages: {
+        en: `${SITE_URL}/en/our-story`,
+        vi: `${SITE_URL}/vi/our-story`,
+        "x-default": `${SITE_URL}/en/our-story`,
+      },
+    },
+  };
+}
 
 export default async function TailorTripPage({ params }: PageProps) {
   const { locale } = await params;

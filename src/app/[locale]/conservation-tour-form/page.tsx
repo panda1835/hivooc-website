@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import BookConservationTourButton from "@/components/conservation-program/BookConservationTourButton";
+
+export const metadata: Metadata = {
+  title: "Book a Conservation Tour",
+  robots: { index: false, follow: false },
+};
 
 export default async function ConservationTourFormPage({
   searchParams,

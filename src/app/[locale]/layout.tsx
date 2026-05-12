@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import {
   Geist_Mono,
   IBM_Plex_Sans_Condensed,
@@ -50,8 +51,30 @@ const alegreya = Alegreya({
 });
 
 export const metadata: Metadata = {
-  title: "HiVOOC",
-  description: "",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "HiVOOC",
+    template: "%s | HiVOOC",
+  },
+  description:
+    "Tailor-made primate tourism for conservation in Vietnam. Join expert-guided tours to encounter rare primates, birds, and biodiversity while supporting conservation.",
+  openGraph: {
+    siteName: "HiVOOC",
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "HiVOOC – Primate Tourism for Conservation",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og-image.png"],
+  },
 };
 
 type Props = {

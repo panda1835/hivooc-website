@@ -7,10 +7,10 @@ export default function PageLoading() {
         <div className="h-full w-full rounded-full border-4 border-branding-green/20 border-t-branding-green animate-spin" />
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <Image
-            src="/logo.png"
+            src="/logo/Logo-01.png"
             alt="HiVOOC logo"
-            width={60}
-            height={60}
+            width={100}
+            height={100}
             priority
           />
         </div>

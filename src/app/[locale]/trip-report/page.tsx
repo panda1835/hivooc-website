@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import Hero from "@/components/our-story/Hero";
 import TripReportListing from "@/components/trip-report/TripReportListing";
 import { getTranslations, getLocale } from "next-intl/server";
@@ -101,6 +103,34 @@ async function getTripReportsHeroImages(): Promise<string[]> {
   return fetchWpImagesFromApiRoute(
     `${baseUrl}/wp-json/wp/v2/hero-image?slug=trip-reports&_embed`,
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [[heroImage], t] = await Promise.all([
+    getTripReportsHeroImages(),
+    getTranslations({ locale, namespace: "TripReport.Hero" }),
+  ]);
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      url: `${SITE_URL}/${locale}/trip-report`,
+      images: heroImage ? [{ url: heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/trip-report`,
+      languages: {
+        en: `${SITE_URL}/en/trip-report`,
+        vi: `${SITE_URL}/vi/trip-report`,
+        "x-default": `${SITE_URL}/en/trip-report`,
+      },
+    },
+  };
 }
 
 export default async function TripReportPage() {

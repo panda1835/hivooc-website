@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import Hero from "@/components/tailor/Hero";
 import Introduction from "@/components/tailor/Introduction";
 import Unique from "@/components/tailor/Unique";
@@ -10,7 +12,7 @@ import TailorMadeTrips, {
 import { fetchWpImagesFromApiRoute, type WPMedia } from "@/lib/wordpress-media";
 import { extractFeaturedImage } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -82,6 +84,35 @@ async function getTailorTripHeroImages(): Promise<string[]> {
   return fetchWpImagesFromApiRoute(
     `${baseUrl}/wp-json/wp/v2/hero-image?slug=tailor-trips&_embed`,
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [[heroImage], t, tHeader] = await Promise.all([
+    getTailorTripHeroImages(),
+    getTranslations({ locale, namespace: "Tailor.Hero" }),
+    getTranslations({ locale, namespace: "Header" }),
+  ]);
+  return {
+    title: tHeader("tailorTour"),
+    description: t("description"),
+    openGraph: {
+      url: `${SITE_URL}/${locale}/tailor-trip`,
+      images: heroImage ? [{ url: heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/tailor-trip`,
+      languages: {
+        en: `${SITE_URL}/en/tailor-trip`,
+        vi: `${SITE_URL}/vi/tailor-trip`,
+        "x-default": `${SITE_URL}/en/tailor-trip`,
+      },
+    },
+  };
 }
 
 export default async function TailorTripPage() {

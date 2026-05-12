@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import Hero from "@/components/our-story/Hero";
 import BookConservationTourButton from "@/components/conservation-program/BookConservationTourButton";
 import ConservationProgramListing from "@/components/conservation-program/ConservationProgramListing";
@@ -78,7 +80,9 @@ function formatProgramDate(dateValue?: string): string {
     .toUpperCase();
 }
 
-function getFeaturedImageUrl(program: ConservationProgramResponse): string | null {
+function getFeaturedImageUrl(
+  program: ConservationProgramResponse,
+): string | null {
   const featuredMedia = program._embedded?.["wp:featuredmedia"]?.[0];
 
   return (
@@ -155,6 +159,34 @@ async function getConservationProgramHeroImages(): Promise<string[]> {
   return fetchWpImagesFromApiRoute(
     `${baseUrl}/wp-json/wp/v2/hero-image?slug=conservation-program&_embed`,
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [[heroImage], t] = await Promise.all([
+    getConservationProgramHeroImages(),
+    getTranslations({ locale, namespace: "ConservationProgram.Hero" }),
+  ]);
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      url: `${SITE_URL}/${locale}/conservation-programs`,
+      images: heroImage ? [{ url: heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/conservation-programs`,
+      languages: {
+        en: `${SITE_URL}/en/conservation-programs`,
+        vi: `${SITE_URL}/vi/conservation-programs`,
+        "x-default": `${SITE_URL}/en/conservation-programs`,
+      },
+    },
+  };
 }
 
 export default async function ConservationProgramsPage() {

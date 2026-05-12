@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import DetailHero from "@/components/ui/DetailHero";
 import { notFound } from "next/navigation";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
@@ -38,7 +40,8 @@ const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
 function getSpeciesClass(article: WordPressSpeciesResponse): string {
   const terms = article._embedded?.["wp:term"]?.flat() ?? [];
-  const speciesTerm = terms.find((term) => term.taxonomy === "species") ?? terms[0];
+  const speciesTerm =
+    terms.find((term) => term.taxonomy === "species") ?? terms[0];
   return (speciesTerm?.name || "Species").toUpperCase();
 }
 
@@ -92,6 +95,31 @@ async function getSpeciesDetail(
 type PageProps = {
   params: Promise<{ locale: string; slug: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const species = await getSpeciesDetail(slug, locale);
+  if (!species) return {};
+  const description =
+    species.content
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 160) || undefined;
+  return {
+    title: species.name,
+    description,
+    openGraph: {
+      type: "article",
+      images: species.heroImage ? [{ url: species.heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/species/${slug}`,
+    },
+  };
+}
 
 export default async function SpeciesDetailPage({ params }: PageProps) {
   const { locale, slug } = await params;

@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import DetailHero from "@/components/ui/DetailHero";
 import { notFound } from "next/navigation";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
@@ -76,6 +78,33 @@ async function getTripReport(slug: string): Promise<TripReportDetail | null> {
     console.error("Error fetching trip report:", error);
     return null;
   }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; locale: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const report = await getTripReport(slug);
+  if (!report) return {};
+  const description =
+    report.content
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 160) || undefined;
+  return {
+    title: report.title,
+    description,
+    openGraph: {
+      type: "article",
+      images: report.heroImage ? [{ url: report.heroImage }] : [],
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/trip-report/${slug}`,
+    },
+  };
 }
 
 export default async function TripReportDetailPage({
