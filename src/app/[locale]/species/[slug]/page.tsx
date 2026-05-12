@@ -131,29 +131,55 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  return (
-    <main className="flex flex-col w-full bg-white">
-      <DetailHero
-        category={species.category}
-        title={species.name}
-        image={species.heroImage}
-      />
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: species.name,
+    description:
+      species.content
+        .replace(/<[^>]+>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 160) || undefined,
+    image: species.heroImage || undefined,
+    url: `${SITE_URL}/${locale}/species/${slug}`,
+    about: { "@type": "Thing", name: species.category || "Wildlife" },
+    publisher: {
+      "@type": "Organization",
+      name: "HiVOOC",
+      url: SITE_URL,
+    },
+  };
 
-      <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-          <article
-            className="cms-body-normal max-w-none text-[#192B28] [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-[#192B28] [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-xl [&_h3]:font-medium [&_h3]:text-[#192B28]"
-            dangerouslySetInnerHTML={{ __html: species.content }}
-          />
-        </div>
-        <ContributeToConservation />
-        <ShortTrips
-          title={t("relatedShortTrip")}
-          description={t("description")}
-          trips={shortTrips}
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main className="flex flex-col w-full bg-white">
+        <DetailHero
+          category={species.category}
+          title={species.name}
+          image={species.heroImage}
         />
-        <Support />
-      </div>
-    </main>
+
+        <div className="bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+            <article
+              className="cms-body-normal max-w-none text-[#192B28] [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-[#192B28] [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-xl [&_h3]:font-medium [&_h3]:text-[#192B28]"
+              dangerouslySetInnerHTML={{ __html: species.content }}
+            />
+          </div>
+          <ContributeToConservation />
+          <ShortTrips
+            title={t("relatedShortTrip")}
+            description={t("description")}
+            trips={shortTrips}
+          />
+          <Support />
+        </div>
+      </main>
+    </>
   );
 }

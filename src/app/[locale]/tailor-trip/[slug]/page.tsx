@@ -381,25 +381,46 @@ export default async function TailorTripDetailPage({ params }: PageProps) {
     details,
   } = parseTourData(post);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    name: heroTitle,
+    description: introDescription || heroSubtitleTop || undefined,
+    image: heroSlides[0] || undefined,
+    url: `${SITE_URL}/${locale}/tailor-trip/${slug}`,
+    touristType: "Wildlife enthusiasts",
+    provider: {
+      "@type": "Organization",
+      name: "HiVOOC",
+      url: SITE_URL,
+    },
+  };
+
   return (
-    <main className="flex flex-col w-full non-selectable-content">
-      <Hero
-        subtitleTop={heroSubtitleTop}
-        title={heroTitle}
-        slideImages={heroSlides}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <main className="flex flex-col w-full non-selectable-content">
+        <Hero
+          subtitleTop={heroSubtitleTop}
+          title={heroTitle}
+          slideImages={heroSlides}
+        />
 
-      <div className="mt-10">
-        <Introduction title={introTitle} description={introDescription} />
-      </div>
+        <div className="mt-10">
+          <Introduction title={introTitle} description={introDescription} />
+        </div>
 
-      <TripDetails tripData={details} />
-      <div className="px-8 mb-10 rounded-lg">
-        <Testimonials />
-      </div>
-      <ContributeToConservation />
-      <TailorMadeTrips tours={tours} />
-      <Support />
-    </main>
+        <TripDetails tripData={details} />
+        <div className="px-8 mb-10 rounded-lg">
+          <Testimonials />
+        </div>
+        <ContributeToConservation />
+        <TailorMadeTrips tours={tours} />
+        <Support />
+      </main>
+    </>
   );
 }

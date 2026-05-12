@@ -131,29 +131,50 @@ export default async function DestinationDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  return (
-    <main className="flex flex-col w-full bg-white">
-      <DetailHero
-        category={destination.category}
-        title={destination.name}
-        image={destination.heroImage}
-      />
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristDestination",
+    name: destination.name,
+    description:
+      destination.content
+        .replace(/<[^>]+>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 160) || undefined,
+    image: destination.heroImage || undefined,
+    url: `${SITE_URL}/${locale}/destination/${slug}`,
+    touristType: "Wildlife enthusiasts",
+  };
 
-      <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-          <article
-            className="cms-body-normal max-w-none text-[#192B28] [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-[#192B28] [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-xl [&_h3]:font-medium [&_h3]:text-[#192B28]"
-            dangerouslySetInnerHTML={{ __html: destination.content }}
-          />
-        </div>
-        <ContributeToConservation />
-        <ShortTrips
-          title={t("relatedShortTrip")}
-          description={t("description")}
-          trips={shortTrips}
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main className="flex flex-col w-full bg-white">
+        <DetailHero
+          category={destination.category}
+          title={destination.name}
+          image={destination.heroImage}
         />
-        <Support />
-      </div>
-    </main>
+
+        <div className="bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+            <article
+              className="cms-body-normal max-w-none text-[#192B28] [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_li]:leading-relaxed [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-[#192B28] [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-xl [&_h3]:font-medium [&_h3]:text-[#192B28]"
+              dangerouslySetInnerHTML={{ __html: destination.content }}
+            />
+          </div>
+          <ContributeToConservation />
+          <ShortTrips
+            title={t("relatedShortTrip")}
+            description={t("description")}
+            trips={shortTrips}
+          />
+          <Support />
+        </div>
+      </main>
+    </>
   );
 }
