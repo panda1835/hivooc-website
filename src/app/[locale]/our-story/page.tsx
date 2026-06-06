@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
 import Hero from "@/components/our-story/Hero";
 import HiVOOCStory from "@/components/our-story/HiVOOCStory";
-import Founder from "@/components/our-story/Founder";
+import Founder, {
+  type CoreMemberProfile,
+} from "@/components/our-story/Founder";
 import SellingPoint from "@/components/our-story/SellingPoints";
 import Advisors from "@/components/our-story/Advisors";
 import Tracker, { type LangurTracker } from "@/components/our-story/Tracker";
@@ -12,7 +14,11 @@ import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
 import { getTranslations } from "next-intl/server";
 import { extractWpImageUrl, type WPMedia } from "@/lib/wordpress-media";
-import { getTermsByTaxonomy, type WPTerm } from "@/lib/wordpress-post-helpers";
+import {
+  extractFeaturedImage,
+  getTermsByTaxonomy,
+  type WPTerm,
+} from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
@@ -25,6 +31,19 @@ interface WPLangurTrackerPost {
   _embedded?: {
     "wp:featuredmedia"?: WPMedia[];
     "wp:term"?: WPTerm[][];
+  };
+}
+
+interface WPCoreMemberPost {
+  id: number;
+  link?: string;
+  title?: { rendered?: string };
+  content?: { rendered?: string };
+  acf?: {
+    "job-title"?: string;
+  };
+  _embedded?: {
+    "wp:featuredmedia"?: WPMedia[];
   };
 }
 
@@ -77,6 +96,42 @@ async function getLangurTrackers(locale: string): Promise<LangurTracker[]> {
   return filtered.map(toLangurTracker);
 }
 
+async function getCoreMembers(locale: string): Promise<CoreMemberProfile[]> {
+  const baseUrl = (WORDPRESS_BASE_URL || "https://hivooc.com").replace(
+    /\/$/,
+    "",
+  );
+  const res = await fetch(
+    `${baseUrl}/wp-json/wp/v2/core-member?per_page=100&orderby=date&order=asc&_embed`,
+    {
+      // TEMP: Content initiation phase - enable fetch cache when content is stable.
+      // next: { revalidate: 300 },
+    },
+  );
+
+  if (!res.ok) {
+    return [];
+  }
+
+  const data: WPCoreMemberPost[] = await res.json();
+
+  return data
+    .filter((member) =>
+      locale === "vi"
+        ? (member.link || "").includes("/vi/")
+        : !(member.link || "").includes("/vi/"),
+    )
+    .map((member) => ({
+      id: member.id,
+      name: decodeHtmlEntities(member.title?.rendered || ""),
+      title: decodeHtmlEntities(member.acf?.["job-title"] || ""),
+      description: decodeHtmlEntities(
+        stripHtml(member.content?.rendered || ""),
+      ),
+      image: extractFeaturedImage(member) || "/our-story/team.jpg",
+    }));
+}
+
 type PageProps = {
   params: Promise<{ locale: string }>;
 };
@@ -107,7 +162,8 @@ export async function generateMetadata({
 export default async function TailorTripPage({ params }: PageProps) {
   const { locale } = await params;
   const t = await getTranslations("OurStory.Hero");
-  const [trackers, tailorTours] = await Promise.all([
+  const [coreMembers, trackers, tailorTours] = await Promise.all([
+    getCoreMembers(locale),
     getLangurTrackers(locale),
     getTailorTourCards(locale, { limit: 4 }),
   ]);
@@ -116,7 +172,7 @@ export default async function TailorTripPage({ params }: PageProps) {
     <main className="w-full">
       <Hero title={t("title")} subtitle={t("description")} />
       <HiVOOCStory />
-      <Founder />
+      <Founder members={coreMembers} />
       <SellingPoint />
       <Advisors />
       <Tracker trackers={trackers} />

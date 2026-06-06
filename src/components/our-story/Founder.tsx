@@ -1,28 +1,21 @@
-"use client";
-
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 
-export default function Founder() {
-  const t = useTranslations("OurStory.Founder");
+export type CoreMemberProfile = {
+  id: number;
+  name: string;
+  title: string;
+  description: string;
+  image: string;
+};
 
-  type FounderProfile = {
-    name: string;
-    title: string;
-    description: string;
-    image: string;
-  };
-
-  const members = (t.raw("members") as FounderProfile[] | undefined) ?? [
-    {
-      name: t("founderName"),
-      title: t("founderTitle"),
-      description: [t("paragraph1"), t("paragraph2"), `"${t("quote")}"`].join(
-        " ",
-      ),
-      image: "/our-story/founder.jpg",
-    },
-  ];
+export default function Founder({
+  members,
+}: {
+  members: CoreMemberProfile[];
+}) {
+  if (members.length === 0) {
+    return null;
+  }
 
   return (
     <section className="w-full mb-12 bg-[#FFFFFF]">
@@ -31,7 +24,7 @@ export default function Founder() {
           <div className="space-y-12">
             {members.map((member) => (
               <div
-                key={member.name}
+                key={member.id}
                 className="grid grid-cols-1 md:grid-cols-12 items-start gap-6 md:gap-10"
               >
                 <div className="relative md:col-span-4 h-[220px] md:h-[260px] rounded-[6px] overflow-hidden shadow-sm">
