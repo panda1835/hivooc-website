@@ -19,6 +19,8 @@ import type { DailyExperience } from "@/components/home/DailyExperiences";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
+export const dynamic = "force-static";
+
 interface WPTour {
   id: number;
   slug: string;

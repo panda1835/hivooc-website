@@ -54,6 +54,8 @@ interface ConservationProgram {
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 const DEFAULT_IMAGE = "/hero/image1.jpg";
 
+export const dynamic = "force-static";
+
 function stripHtml(html: string): string {
   return html
     .replace(/<[^>]*>/g, " ")

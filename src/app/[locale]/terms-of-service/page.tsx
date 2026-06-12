@@ -1,4 +1,9 @@
 import Hero from "@/components/our-story/Hero";
+import { routing } from "@/i18n/routing";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 type PageProps = {
   params: Promise<{ locale: string }>;

@@ -14,13 +14,8 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageProtection from "@/components/ImageProtection";
-import { routing } from "@/i18n/routing";
 
 export const revalidate = 3600;
-
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
 
 const inter = Inter({
   variable: "--font-inter",
