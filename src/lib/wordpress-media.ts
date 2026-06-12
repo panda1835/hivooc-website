@@ -1,5 +1,3 @@
-import { fetchWordPress } from "@/lib/wordpress-fetch";
-
 interface WordPressSchemaNode {
   "@type"?: string | string[];
   url?: string;
@@ -169,12 +167,12 @@ export async function fetchWpImageFromApiRoute(apiUrl: string): Promise<string> 
 export async function fetchWpImagesFromApiRoute(
   apiUrl: string,
 ): Promise<string[]> {
-  const res = await fetchWordPress(apiUrl, {
+  const res = await fetch(apiUrl, {
     next: { revalidate: 3600, tags: ["wordpress"] },
   });
 
-  if (!res?.ok) {
-    return [];
+  if (!res.ok) {
+    throw new Error(`Failed to fetch images from API route: ${apiUrl}`);
   }
 
   const data: WordPressMediaLike[] = await res.json();
@@ -185,5 +183,5 @@ export async function fetchWpImagesFromApiRoute(
     }
   }
 
-  return [];
+  throw new Error(`No images found in API response: ${apiUrl}`);
 }

@@ -13,7 +13,6 @@ import {
   type WPTerm,
 } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
-import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -92,19 +91,19 @@ function toCard(post: WPNatureEducation): ProgramCardData {
 
 async function getNatureEducationPrograms(): Promise<ProgramCardData[]> {
   if (!WORDPRESS_BASE_URL) {
-    return [];
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-  const response = await fetchWordPress(
+  const response = await fetch(
     `${baseUrl}/wp-json/wp/v2/nature-education?per_page=100&_embed`,
     {
       next: { revalidate: 3600, tags: ["wordpress", "nature-education"] },
     },
   );
 
-  if (!response?.ok) {
-    return [];
+  if (!response.ok) {
+    throw new Error("Failed to fetch nature education programs from WordPress");
   }
 
   const data: WPNatureEducation[] = await response.json();
@@ -113,7 +112,7 @@ async function getNatureEducationPrograms(): Promise<ProgramCardData[]> {
 
 async function getNatureEducationHeroImages(): Promise<string[]> {
   if (!WORDPRESS_BASE_URL) {
-    return [];
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");

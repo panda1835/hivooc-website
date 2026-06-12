@@ -8,7 +8,6 @@ import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
-import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 interface TripReportACF {
   title: string;
@@ -45,11 +44,11 @@ async function getTripReports(locale: string): Promise<TripReport[]> {
     }
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-    const res = await fetchWordPress(`${baseUrl}/wp-json/wp/v2/trip-report`, {
+    const res = await fetch(`${baseUrl}/wp-json/wp/v2/trip-report`, {
       next: { revalidate: 3600, tags: ["wordpress", "trip-reports"] },
     });
 
-    if (!res?.ok) {
+    if (!res.ok) {
       throw new Error("Failed to fetch trip reports");
     }
 
@@ -97,7 +96,7 @@ async function getTripReports(locale: string): Promise<TripReport[]> {
 
 async function getTripReportsHeroImages(): Promise<string[]> {
   if (!WORDPRESS_BASE_URL) {
-    return [];
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");

@@ -9,7 +9,6 @@ import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
-import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 interface ConservationProgramACF {
   title?: string;
@@ -105,7 +104,7 @@ async function getConservationPrograms(
     }
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-    const res = await fetchWordPress(
+    const res = await fetch(
       `${baseUrl}/wp-json/wp/v2/conservation-program?_embed`,
       {
         next: {
@@ -115,7 +114,7 @@ async function getConservationPrograms(
       },
     );
 
-    if (!res?.ok) {
+    if (!res.ok) {
       throw new Error("Failed to fetch conservation programs");
     }
 
@@ -156,7 +155,7 @@ async function getConservationPrograms(
 
 async function getConservationProgramHeroImages(): Promise<string[]> {
   if (!WORDPRESS_BASE_URL) {
-    return [];
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");

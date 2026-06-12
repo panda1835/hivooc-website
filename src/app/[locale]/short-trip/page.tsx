@@ -13,7 +13,6 @@ import {
   type WPTerm,
 } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
-import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -97,19 +96,19 @@ function toCard(post: WPTour, locale: string): ShortTripCardData {
 
 async function getShortTrips(locale: string): Promise<ShortTripCardData[]> {
   if (!WORDPRESS_BASE_URL) {
-    return [];
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-  const response = await fetchWordPress(
+  const response = await fetch(
     `${baseUrl}/wp-json/wp/v2/short-tour?per_page=100&_embed`,
     {
       next: { revalidate: 3600, tags: ["wordpress", "short-tours"] },
     },
   );
 
-  if (!response?.ok) {
-    return [];
+  if (!response.ok) {
+    throw new Error("Failed to fetch short trips from WordPress");
   }
 
   const data: WPTour[] = await response.json();
@@ -124,7 +123,7 @@ async function getShortTrips(locale: string): Promise<ShortTripCardData[]> {
 
 async function getShortTripHeroImages(): Promise<string[]> {
   if (!WORDPRESS_BASE_URL) {
-    return [];
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");

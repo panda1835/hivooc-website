@@ -2,7 +2,6 @@ import type { TailorTourCard } from "@/components/home/TailorMadeTrips";
 import type { WPMedia } from "@/lib/wordpress-media";
 import { extractFeaturedImage } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
-import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -42,18 +41,18 @@ export async function getTailorTourCards(
   options: { limit?: number } = {},
 ): Promise<TailorTourCard[]> {
   if (!WORDPRESS_BASE_URL) {
-    return [];
+    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-  const res = await fetchWordPress(
+  const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/tailor-made-tour?per_page=100&_embed`,
     {
       next: { revalidate: 3600, tags: ["wordpress", "tailor-tours"] },
     },
   );
 
-  if (!res?.ok) {
+  if (!res.ok) {
     return [];
   }
 
