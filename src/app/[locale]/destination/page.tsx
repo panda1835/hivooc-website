@@ -11,6 +11,7 @@ import ShortTrips from "@/components/home/ShortTrips";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 import { getShortTripCards } from "@/lib/short-trip-cards";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
+import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 interface WordPressTerm {
   name: string;
@@ -52,14 +53,14 @@ async function getDestinationData(locale: string): Promise<{
     }
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-    const res = await fetch(
+    const res = await fetchWordPress(
       `${baseUrl}/wp-json/wp/v2/destinations?per_page=100&_embed`,
       {
         next: { revalidate: 3600, tags: ["wordpress", "destinations"] },
       },
     );
 
-    if (!res.ok) {
+    if (!res?.ok) {
       throw new Error("Failed to fetch destinations");
     }
 
@@ -106,7 +107,7 @@ async function getDestinationData(locale: string): Promise<{
 
 async function getDestinationHeroImages(): Promise<string[]> {
   if (!WORDPRESS_BASE_URL) {
-    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+    return [];
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");

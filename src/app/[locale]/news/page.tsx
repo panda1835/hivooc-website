@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
+import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 interface WordPressTerm {
   name: string;
@@ -55,14 +56,14 @@ async function getNewsArticles(locale: string): Promise<NewsArticle[]> {
     }
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-    const res = await fetch(
+    const res = await fetchWordPress(
       `${baseUrl}/wp-json/wp/v2/news?per_page=20&_embed`,
       {
         next: { revalidate: 3600, tags: ["wordpress", "news"] },
       },
     );
 
-    if (!res.ok) {
+    if (!res?.ok) {
       throw new Error("Failed to fetch news");
     }
 
@@ -112,7 +113,7 @@ async function getNewsArticles(locale: string): Promise<NewsArticle[]> {
 
 async function getNewsHeroImages(): Promise<string[]> {
   if (!WORDPRESS_BASE_URL) {
-    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+    return [];
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");

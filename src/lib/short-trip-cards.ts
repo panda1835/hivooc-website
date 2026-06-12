@@ -6,6 +6,7 @@ import {
   parseGeneralRowValue,
   type WPTerm,
 } from "@/lib/wordpress-post-helpers";
+import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -67,19 +68,19 @@ export async function getShortTripCards(
   options?: { limit?: number },
 ): Promise<ShortTripCardItem[]> {
   if (!WORDPRESS_BASE_URL) {
-    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+    return [];
   }
 
   const limit = options?.limit ?? 3;
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-  const res = await fetch(
+  const res = await fetchWordPress(
     `${baseUrl}/wp-json/wp/v2/short-tour?per_page=100&_embed`,
     {
       next: { revalidate: 3600, tags: ["wordpress", "short-tours"] },
     },
   );
 
-  if (!res.ok) {
+  if (!res?.ok) {
     return [];
   }
 

@@ -20,6 +20,7 @@ import {
   type WPTerm,
 } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
+import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -74,14 +75,14 @@ async function getLangurTrackers(locale: string): Promise<LangurTracker[]> {
     /\/$/,
     "",
   );
-  const res = await fetch(
+  const res = await fetchWordPress(
     `${baseUrl}/wp-json/wp/v2/langur-tracker?per_page=100&_embed`,
     {
       next: { revalidate: 3600, tags: ["wordpress", "langur-trackers"] },
     },
   );
 
-  if (!res.ok) {
+  if (!res?.ok) {
     return [];
   }
 
@@ -100,14 +101,14 @@ async function getCoreMembers(locale: string): Promise<CoreMemberProfile[]> {
     /\/$/,
     "",
   );
-  const res = await fetch(
+  const res = await fetchWordPress(
     `${baseUrl}/wp-json/wp/v2/core-member?per_page=100&orderby=date&order=asc&_embed`,
     {
       next: { revalidate: 3600, tags: ["wordpress", "core-members"] },
     },
   );
 
-  if (!res.ok) {
+  if (!res?.ok) {
     return [];
   }
 

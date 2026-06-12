@@ -27,6 +27,7 @@ import {
 } from "@/lib/wordpress-post-helpers";
 import { getShortTripCards } from "@/lib/short-trip-cards";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
+import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -79,7 +80,7 @@ interface WPSimpleTour {
 
 async function getHomeHeroImages(): Promise<string[]> {
   if (!WORDPRESS_BASE_URL) {
-    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+    return [];
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
@@ -106,18 +107,18 @@ function toTailorTourCard(post: WPTailorTour): TailorTourCard {
 
 async function getTailorTours(locale: string): Promise<TailorTourCard[]> {
   if (!WORDPRESS_BASE_URL) {
-    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+    return [];
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-  const res = await fetch(
+  const res = await fetchWordPress(
     `${baseUrl}/wp-json/wp/v2/tailor-made-tour?per_page=100&_embed`,
     {
       next: { revalidate: 3600, tags: ["wordpress", "tailor-tours"] },
     },
   );
 
-  if (!res.ok) {
+  if (!res?.ok) {
     return [];
   }
 
@@ -164,18 +165,18 @@ async function getNatureEducationTours(
   locale: string,
 ): Promise<DailyExperience[]> {
   if (!WORDPRESS_BASE_URL) {
-    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+    return [];
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-  const res = await fetch(
+  const res = await fetchWordPress(
     `${baseUrl}/wp-json/wp/v2/nature-education?per_page=100&_embed`,
     {
       next: { revalidate: 3600, tags: ["wordpress", "nature-education"] },
     },
   );
 
-  if (!res.ok) {
+  if (!res?.ok) {
     return [];
   }
 
@@ -191,15 +192,18 @@ async function getNatureEducationTours(
 
 async function getNewsArticles(locale: string): Promise<HomeNewsArticle[]> {
   if (!WORDPRESS_BASE_URL) {
-    throw new Error("Missing WORDPRESS_BASE_URL environment variable");
+    return [];
   }
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-  const res = await fetch(`${baseUrl}/wp-json/wp/v2/news?per_page=20&_embed`, {
-    next: { revalidate: 3600, tags: ["wordpress", "news"] },
-  });
+  const res = await fetchWordPress(
+    `${baseUrl}/wp-json/wp/v2/news?per_page=20&_embed`,
+    {
+      next: { revalidate: 3600, tags: ["wordpress", "news"] },
+    },
+  );
 
-  if (!res.ok) {
+  if (!res?.ok) {
     return [];
   }
 
