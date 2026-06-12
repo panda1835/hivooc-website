@@ -38,8 +38,6 @@ interface TripReport {
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
-export const dynamic = "force-static";
-
 async function getTripReports(locale: string): Promise<TripReport[]> {
   try {
     if (!WORDPRESS_BASE_URL) {

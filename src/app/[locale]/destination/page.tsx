@@ -36,8 +36,6 @@ interface WordPressDestinationResponse {
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
-export const dynamic = "force-static";
-
 function getRegionTerm(
   article: WordPressDestinationResponse,
 ): WordPressTerm | undefined {
