@@ -12,7 +12,7 @@ import TailorMadeTrips, {
 import { fetchWpImagesFromApiRoute, type WPMedia } from "@/lib/wordpress-media";
 import { extractFeaturedImage } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -56,8 +56,7 @@ async function getTailorTours(locale: string): Promise<TailorTourCard[]> {
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/tailor-made-tour?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "tailor-tours"] },
     },
   );
 
@@ -115,8 +114,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function TailorTripPage() {
-  const locale = await getLocale();
+export default async function TailorTripPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const [heroImages, tours] = await Promise.all([
     getTailorTripHeroImages(),
     getTailorTours(locale),

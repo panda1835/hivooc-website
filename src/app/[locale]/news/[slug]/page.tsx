@@ -3,13 +3,15 @@ import { SITE_URL } from "@/lib/site";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   extractWpImageCaption,
   extractWpImageUrl,
 } from "@/lib/wordpress-media";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
+
+export const dynamic = "force-static";
 
 interface WordPressTerm {
   name: string;
@@ -114,7 +116,7 @@ async function fetchNewsBySlug(
     const res = await fetch(
       `${baseUrl}/wp-json/wp/v2/news?slug=${encodeURIComponent(slug)}&_embed`,
       {
-        // next: { revalidate: 3600 },
+        next: { revalidate: 3600, tags: ["wordpress", "news"] },
       },
     );
 
@@ -152,7 +154,7 @@ async function fetchRelatedNews(
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
     const res = await fetch(`${baseUrl}/wp-json/wp/v2/news?per_page=9&_embed`, {
-      // next: { revalidate: 3600 },
+      next: { revalidate: 3600, tags: ["wordpress", "news"] },
     });
 
     if (!res.ok) {
@@ -202,8 +204,9 @@ export default async function NewsDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const t = await getTranslations("News");
   const { locale, slug } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("News");
   const [article, tailorTours] = await Promise.all([
     fetchNewsBySlug(slug, locale),
     getTailorTourCards(locale, { limit: 4 }),

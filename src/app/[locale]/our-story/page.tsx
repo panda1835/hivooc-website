@@ -77,8 +77,7 @@ async function getLangurTrackers(locale: string): Promise<LangurTracker[]> {
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/langur-tracker?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "langur-trackers"] },
     },
   );
 
@@ -104,8 +103,7 @@ async function getCoreMembers(locale: string): Promise<CoreMemberProfile[]> {
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/core-member?per_page=100&orderby=date&order=asc&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "core-members"] },
     },
   );
 

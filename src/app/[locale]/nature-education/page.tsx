@@ -98,8 +98,7 @@ async function getNatureEducationPrograms(): Promise<ProgramCardData[]> {
   const response = await fetch(
     `${baseUrl}/wp-json/wp/v2/nature-education?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "nature-education"] },
     },
   );
 

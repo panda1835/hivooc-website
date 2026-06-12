@@ -48,8 +48,7 @@ export async function getTailorTourCards(
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/tailor-made-tour?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "tailor-tours"] },
     },
   );
 

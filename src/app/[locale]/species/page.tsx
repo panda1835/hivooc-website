@@ -4,7 +4,7 @@ import SpeciesContent from "@/components/species/SpeciesContent";
 import SpeciesHero from "@/components/species/SpeciesHero";
 import SpeciesIntro from "@/components/species/SpeciesIntro";
 import { type SpeciesCardData } from "@/components/species/SpeciesCard";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getShortTripCards } from "@/lib/short-trip-cards";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
 import Support from "@/components/home/Support";
@@ -49,12 +49,10 @@ function getSpeciesTerm(
   return terms.find((term) => term.taxonomy === "species") ?? terms[0];
 }
 
-async function getSpeciesData(): Promise<{
+async function getSpeciesData(locale: string): Promise<{
   speciesList: SpeciesCardData[];
   filterOptions: { value: string; label: string }[];
 }> {
-  const locale = await getLocale();
-
   try {
     if (!WORDPRESS_BASE_URL) {
       throw new Error("Missing WORDPRESS_BASE_URL environment variable");
@@ -64,7 +62,7 @@ async function getSpeciesData(): Promise<{
     const res = await fetch(
       `${baseUrl}/wp-json/wp/v2/key-species?per_page=100&_embed`,
       {
-        // next: { revalidate: 3600 },
+        next: { revalidate: 3600, tags: ["wordpress", "species"] },
       },
     );
 
@@ -154,13 +152,18 @@ export async function generateMetadata({
   };
 }
 
-export default async function SpeciesPage() {
-  const locale = await getLocale();
+export default async function SpeciesPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("SpeciesPage");
   const shortTripT = await getTranslations("ShortTrips");
   const [{ speciesList, filterOptions }, heroImages, shortTrips] =
     await Promise.all([
-      getSpeciesData(),
+      getSpeciesData(locale),
       getSpeciesHeroImages(),
       getShortTripCards(locale, { limit: 3 }),
     ]);

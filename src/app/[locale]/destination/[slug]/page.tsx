@@ -5,9 +5,11 @@ import { notFound } from "next/navigation";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
 import Support from "@/components/home/Support";
 import ShortTrips from "@/components/home/ShortTrips";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getShortTripCards } from "@/lib/short-trip-cards";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
+
+export const dynamic = "force-static";
 
 interface WordPressTerm {
   name: string;
@@ -58,7 +60,7 @@ async function getDestinationDetail(
     const res = await fetch(
       `${baseUrl}/wp-json/wp/v2/destinations?slug=${encodeURIComponent(slug)}&_embed`,
       {
-        // next: { revalidate: 3600 },
+        next: { revalidate: 3600, tags: ["wordpress", "destinations"] },
       },
     );
 
@@ -123,6 +125,7 @@ export async function generateMetadata({
 
 export default async function DestinationDetailPage({ params }: PageProps) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const destination = await getDestinationDetail(slug, locale);
   const t = await getTranslations("ShortTrips");
   const shortTrips = await getShortTripCards(locale, { limit: 3 });

@@ -167,7 +167,9 @@ export async function fetchWpImageFromApiRoute(apiUrl: string): Promise<string> 
 export async function fetchWpImagesFromApiRoute(
   apiUrl: string,
 ): Promise<string[]> {
-  const res = await fetch(apiUrl);
+  const res = await fetch(apiUrl, {
+    next: { revalidate: 3600, tags: ["wordpress"] },
+  });
 
   if (!res.ok) {
     throw new Error(`Failed to fetch images from API route: ${apiUrl}`);

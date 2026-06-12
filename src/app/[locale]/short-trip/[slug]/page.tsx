@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import Hero from "@/components/short-trip/Hero";
 import Pricing from "@/components/short-trip/Pricing";
@@ -17,6 +17,8 @@ import {
   type WPTerm,
 } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
+
+export const dynamic = "force-static";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -303,8 +305,7 @@ async function getTourBySlug(slug: string): Promise<WPTour> {
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/short-tour?slug=${encodeURIComponent(slug)}&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "short-tours"] },
     },
   );
 
@@ -330,8 +331,7 @@ async function getRelatedShortTrips(currentId: number): Promise<ShortTrip[]> {
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/short-tour?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "short-tours"] },
     },
   );
 
@@ -378,7 +378,8 @@ export async function generateMetadata({
 }
 
 export default async function ShortTripPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations();
 
   const post = await getTourBySlug(slug);

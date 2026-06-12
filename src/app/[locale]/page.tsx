@@ -17,7 +17,7 @@ import type { TailorTourCard } from "@/components/home/TailorMadeTrips";
 import type { DailyExperience } from "@/components/home/DailyExperiences";
 import type { HomeNewsArticle } from "@/components/home/News";
 
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { fetchWpImagesFromApiRoute, type WPMedia } from "@/lib/wordpress-media";
 import {
   extractFeaturedImage,
@@ -113,8 +113,7 @@ async function getTailorTours(locale: string): Promise<TailorTourCard[]> {
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/tailor-made-tour?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "tailor-tours"] },
     },
   );
 
@@ -172,8 +171,7 @@ async function getNatureEducationTours(
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/nature-education?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "nature-education"] },
     },
   );
 
@@ -198,8 +196,7 @@ async function getNewsArticles(locale: string): Promise<HomeNewsArticle[]> {
 
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
   const res = await fetch(`${baseUrl}/wp-json/wp/v2/news?per_page=20&_embed`, {
-    // TEMP: Content initiation phase - enable fetch cache when content is stable.
-    // next: { revalidate: 300 },
+    next: { revalidate: 3600, tags: ["wordpress", "news"] },
   });
 
   if (!res.ok) {
@@ -259,9 +256,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations();
-  const locale = await getLocale();
   const [
     homeHeroImages,
     tailorTours,

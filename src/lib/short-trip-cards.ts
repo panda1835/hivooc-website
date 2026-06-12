@@ -72,10 +72,12 @@ export async function getShortTripCards(
 
   const limit = options?.limit ?? 3;
   const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
-  const res = await fetch(`${baseUrl}/wp-json/wp/v2/short-tour?per_page=100&_embed`, {
-    // TEMP: Content initiation phase - enable fetch cache when content is stable.
-    // next: { revalidate: 300 },
-  });
+  const res = await fetch(
+    `${baseUrl}/wp-json/wp/v2/short-tour?per_page=100&_embed`,
+    {
+      next: { revalidate: 3600, tags: ["wordpress", "short-tours"] },
+    },
+  );
 
   if (!res.ok) {
     return [];

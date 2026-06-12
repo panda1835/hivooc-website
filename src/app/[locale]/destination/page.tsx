@@ -4,7 +4,7 @@ import SpeciesContent from "@/components/species/SpeciesContent";
 import SpeciesHero from "@/components/species/SpeciesHero";
 import SpeciesIntro from "@/components/species/SpeciesIntro";
 import { type SpeciesCardData } from "@/components/species/SpeciesCard";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
 import Support from "@/components/home/Support";
 import ShortTrips from "@/components/home/ShortTrips";
@@ -55,7 +55,7 @@ async function getDestinationData(locale: string): Promise<{
     const res = await fetch(
       `${baseUrl}/wp-json/wp/v2/destinations?per_page=100&_embed`,
       {
-        // next: { revalidate: 3600 },
+        next: { revalidate: 3600, tags: ["wordpress", "destinations"] },
       },
     );
 
@@ -144,8 +144,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function DestinationPage() {
-  const locale = await getLocale();
+export default async function DestinationPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("DestinationPage");
   const shortTripT = await getTranslations("ShortTrips");
   const [{ destinationList, filterOptions }, heroImages, shortTrips] =

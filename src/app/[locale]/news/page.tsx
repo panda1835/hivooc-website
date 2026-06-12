@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
 import Hero from "@/components/our-story/Hero";
 import NewsListing from "@/components/news/NewsListing";
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
@@ -58,7 +58,7 @@ async function getNewsArticles(locale: string): Promise<NewsArticle[]> {
     const res = await fetch(
       `${baseUrl}/wp-json/wp/v2/news?per_page=20&_embed`,
       {
-        // next: { revalidate: 3600 },
+        next: { revalidate: 3600, tags: ["wordpress", "news"] },
       },
     );
 
@@ -150,8 +150,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function NewsPage() {
-  const locale = await getLocale();
+export default async function NewsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("News.Hero");
   const [newsArticles, heroImages, tailorTours] = await Promise.all([
     getNewsArticles(locale),

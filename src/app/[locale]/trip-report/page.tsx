@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
 import Hero from "@/components/our-story/Hero";
 import TripReportListing from "@/components/trip-report/TripReportListing";
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
 import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
@@ -45,7 +45,7 @@ async function getTripReports(locale: string): Promise<TripReport[]> {
 
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
     const res = await fetch(`${baseUrl}/wp-json/wp/v2/trip-report`, {
-      // next: { revalidate: 3600 }, // Revalidate every hour
+      next: { revalidate: 3600, tags: ["wordpress", "trip-reports"] },
     });
 
     if (!res.ok) {
@@ -133,8 +133,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function TripReportPage() {
-  const locale = await getLocale();
+export default async function TripReportPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("TripReport.Hero");
   const [tripReports, heroImages, tailorTours] = await Promise.all([
     getTripReports(locale),

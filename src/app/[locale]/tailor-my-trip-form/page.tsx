@@ -5,7 +5,7 @@ import ShortTrips from "@/components/home/ShortTrips";
 import { getShortTripCards } from "@/lib/short-trip-cards";
 import DailyExperiences from "@/components/home/DailyExperiences";
 import { Separator } from "@/components/ui/separator";
-import { getLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import type { WPMedia } from "@/lib/wordpress-media";
 import {
   extractFeaturedImage,
@@ -45,8 +45,7 @@ async function getTailorTours(locale: string): Promise<TailorTourCard[]> {
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/tailor-made-tour?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "tailor-tours"] },
     },
   );
 
@@ -88,8 +87,7 @@ async function getNatureEducationTours(
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/nature-education?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "nature-education"] },
     },
   );
 
@@ -135,8 +133,13 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function TailorPage() {
-  const locale = await getLocale();
+export default async function TailorPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const [shortTrips, tailorTours, natureEducationTours] = await Promise.all([
     getShortTripCards(locale, { limit: 3 }),
     getTailorTours(locale),

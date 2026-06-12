@@ -6,6 +6,9 @@ import ContributeToConservation from "@/components/short-trip/ContributeToConser
 import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
+import { setRequestLocale } from "next-intl/server";
+
+export const dynamic = "force-static";
 
 interface TripReportACF {
   title: string;
@@ -42,7 +45,7 @@ async function getTripReport(slug: string): Promise<TripReportDetail | null> {
     const res = await fetch(
       `${baseUrl}/wp-json/wp/v2/trip-report?slug=${slug}`,
       {
-        // next: { revalidate: 3600 },
+        next: { revalidate: 3600, tags: ["wordpress", "trip-reports"] },
       },
     );
 
@@ -113,6 +116,7 @@ export default async function TripReportDetailPage({
   params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug, locale } = await params;
+  setRequestLocale(locale);
   const [report, tailorTours] = await Promise.all([
     getTripReport(slug),
     getTailorTourCards(locale, { limit: 4 }),

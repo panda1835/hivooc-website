@@ -11,7 +11,7 @@ async function fetchSlugs(postType: string): Promise<string[]> {
     const baseUrl = WORDPRESS_BASE_URL.replace(/\/$/, "");
     const res = await fetch(
       `${baseUrl}/wp-json/wp/v2/${postType}?per_page=100&_fields=slug`,
-      { next: { revalidate: 3600 } },
+      { next: { revalidate: 3600, tags: ["wordpress", "sitemap"] } },
     );
     if (!res.ok) return [];
     const data: { slug: string }[] = await res.json();

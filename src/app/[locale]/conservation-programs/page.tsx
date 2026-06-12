@@ -3,7 +3,7 @@ import { SITE_URL } from "@/lib/site";
 import Hero from "@/components/our-story/Hero";
 import BookConservationTourButton from "@/components/conservation-program/BookConservationTourButton";
 import ConservationProgramListing from "@/components/conservation-program/ConservationProgramListing";
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import ContributeToConservation from "@/components/short-trip/ContributeToConservation";
 import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
@@ -95,9 +95,9 @@ function getFeaturedImageUrl(
   );
 }
 
-async function getConservationPrograms(): Promise<ConservationProgram[]> {
-  const locale = await getLocale();
-
+async function getConservationPrograms(
+  locale: string,
+): Promise<ConservationProgram[]> {
   try {
     if (!WORDPRESS_BASE_URL) {
       throw new Error("Missing WORDPRESS_BASE_URL environment variable");
@@ -107,7 +107,10 @@ async function getConservationPrograms(): Promise<ConservationProgram[]> {
     const res = await fetch(
       `${baseUrl}/wp-json/wp/v2/conservation-program?_embed`,
       {
-        // next: { revalidate: 3600 },
+        next: {
+          revalidate: 3600,
+          tags: ["wordpress", "conservation-programs"],
+        },
       },
     );
 
@@ -189,11 +192,16 @@ export async function generateMetadata({
   };
 }
 
-export default async function ConservationProgramsPage() {
-  const locale = await getLocale();
+export default async function ConservationProgramsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations("ConservationProgram.Hero");
   const [programs, heroImages, tailorTours] = await Promise.all([
-    getConservationPrograms(),
+    getConservationPrograms(locale),
     getConservationProgramHeroImages(),
     getTailorTourCards(locale, { limit: 4 }),
   ]);

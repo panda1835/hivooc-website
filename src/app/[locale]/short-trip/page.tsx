@@ -103,8 +103,7 @@ async function getShortTrips(locale: string): Promise<ShortTripCardData[]> {
   const response = await fetch(
     `${baseUrl}/wp-json/wp/v2/short-tour?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "short-tours"] },
     },
   );
 

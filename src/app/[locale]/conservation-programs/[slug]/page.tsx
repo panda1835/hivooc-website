@@ -7,6 +7,9 @@ import ContributeToConservation from "@/components/short-trip/ContributeToConser
 import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
+import { setRequestLocale } from "next-intl/server";
+
+export const dynamic = "force-static";
 
 interface ConservationProgramACF {
   title?: string;
@@ -95,7 +98,10 @@ async function getConservationProgram(
     const res = await fetch(
       `${baseUrl}/wp-json/wp/v2/conservation-program?slug=${encodeURIComponent(slug)}&_embed`,
       {
-        // next: { revalidate: 3600 },
+        next: {
+          revalidate: 3600,
+          tags: ["wordpress", "conservation-programs"],
+        },
       },
     );
 
@@ -161,6 +167,7 @@ export default async function ConservationProgramDetailPage({
   params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug, locale } = await params;
+  setRequestLocale(locale);
   const [program, tailorTours] = await Promise.all([
     getConservationProgram(slug),
     getTailorTourCards(locale, { limit: 4 }),

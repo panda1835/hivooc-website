@@ -16,6 +16,9 @@ import {
   type WPTerm,
 } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
+import { setRequestLocale } from "next-intl/server";
+
+export const dynamic = "force-static";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -306,8 +309,7 @@ async function getProgramBySlug(slug: string): Promise<WPNatureEducation> {
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/nature-education?slug=${encodeURIComponent(slug)}&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "nature-education"] },
     },
   );
 
@@ -333,8 +335,7 @@ async function getRelatedPrograms(currentId: number): Promise<ShortTrip[]> {
   const res = await fetch(
     `${baseUrl}/wp-json/wp/v2/nature-education?per_page=100&_embed`,
     {
-      // TEMP: Content initiation phase - enable fetch cache when content is stable.
-      // next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["wordpress", "nature-education"] },
     },
   );
 
@@ -384,6 +385,7 @@ export async function generateMetadata({
 
 export default async function NatureEducationPage({ params }: PageProps) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
 
   const post = await getProgramBySlug(slug);
   const { heroTitle, heroSubtitle, heroSlides, pricing, details } =
