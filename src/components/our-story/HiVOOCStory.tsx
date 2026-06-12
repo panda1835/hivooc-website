@@ -16,28 +16,10 @@ export default function HiVOOCStory() {
               {t("title")}
             </h2>
             <div className="space-y-4 text-[#00342B] leading-relaxed">
-              <p>
-                Founded in 2023 by wildlife conservation experts with 10–15
-                years of experience, HiVOOC bridges conservation and ecotourism.
-                Our nature tours, developed with local communities, promote
-                sustainability and inspire environmental stewardship.
-                <br />
-                <br />
-                Specializing in premium conservation and primate photography
-                tours, HiVOOC funds conservation by allocating revenue to
-                community groups, langur- protecting patrols, and free education
-                programs.
-                <br />
-                <br />
-                With HiVOOC, experience is the perfect mix of adventure and
-                conservation—where every journey creates unforgettable memories
-                and helps preserve the planet’s natural beauty. Red-shanked Douc
-                Langur – QUEEN of PRIMATES
-              </p>
-              <p className="text-[#00342B] font-bold">
-                “Travel with us to create magical memories and support wildlife
-                conservation projects together”
-              </p>
+              <p>{t("paragraph1")}</p>
+              <p>{t("paragraph2")}</p>
+              <p>{t("paragraph3")}</p>
+              <p className="text-[#00342B] font-bold">{t("quote")}</p>
             </div>
           </div>
           {/* Image */}
@@ -45,7 +27,7 @@ export default function HiVOOCStory() {
             <Image
               unoptimized
               src="/our-story/team.jpg"
-              alt="HiVOOC Story"
+              alt={t("imageAlt")}
               fill
               className="object-cover"
               quality={90}

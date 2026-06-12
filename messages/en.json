@@ -324,7 +324,11 @@
     },
     "Story": {
       "title": "HiVOOC Story",
-      "description": "HiVOOC specializes in designing trips that integrate biodiversity and cultural diversity. Each destination offers travelers a unique natural beauty, featuring distinctive flora and fauna, as well as rich cultural elements—from cuisine, architecture, and historical sites to the local names of various species."
+      "paragraph1": "Founded in 2023 by wildlife conservation experts with 10–15 years of experience, HiVOOC bridges conservation and ecotourism. Our nature tours, developed with local communities, promote sustainability and inspire environmental stewardship.",
+      "paragraph2": "Specializing in premium conservation and primate photography tours, HiVOOC funds conservation by allocating revenue to community groups, langur-protection patrols, and free education programs.",
+      "paragraph3": "With HiVOOC, every experience is the perfect mix of adventure and conservation—where each journey creates unforgettable memories and helps preserve the planet’s natural beauty. The red-shanked douc langur is the queen of primates.",
+      "quote": "“Travel with us to create magical memories and support wildlife conservation projects together.”",
+      "imageAlt": "The HiVOOC conservation team"
     },
     "Founder": {
       "title": "Meet Our Founder",
