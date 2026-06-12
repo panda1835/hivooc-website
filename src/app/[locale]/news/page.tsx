@@ -42,6 +42,8 @@ interface NewsArticle {
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
+export const dynamic = "force-static";
+
 function stripHtml(html: string): string {
   return html
     .replace(/<[^>]*>/g, " ")

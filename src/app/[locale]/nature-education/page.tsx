@@ -17,6 +17,8 @@ import { fetchWordPress } from "@/lib/wordpress-fetch";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
+export const dynamic = "force-static";
+
 interface WPNatureEducation {
   id: number;
   slug: string;

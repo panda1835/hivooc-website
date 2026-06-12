@@ -35,6 +35,8 @@ interface WordPressSpeciesResponse {
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
+export const dynamic = "force-static";
+
 function toSlug(value: string): string {
   return value
     .toLowerCase()
