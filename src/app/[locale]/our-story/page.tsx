@@ -176,7 +176,7 @@ export default async function TailorTripPage({ params }: PageProps) {
       <SellingPoint />
       <Advisors />
       <Tracker trackers={trackers} />
-      <Specialist />
+      {/* <Specialist /> */}
       <GetStarted />
       <TailorMadeTrips tours={tailorTours} />
     </main>

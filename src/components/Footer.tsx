@@ -22,14 +22,12 @@ export default function Footer() {
                 className="w-40 h-20 object-contain"
               />
               <div>
-                <p className="text-2xl italic font-dancing-script text-white/90">
+                <p className="text-xl text-white/90">
                   Primate Tourism For Conservation
                 </p>
               </div>
             </div>
-            <p className=" sm:text-base mb-3 text-white/90">
-              {t("description")}
-            </p>
+
             <p className=" text-white/80">{t("mission")}</p>
           </div>
 

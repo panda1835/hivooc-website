@@ -317,7 +317,7 @@ export default async function Home({
         <GetStarted />
         <Reviews />
         <News articles={newsArticles} />
-        <Partners />
+        {/* <Partners /> */}
         <Support />
         <Gallery />
       </main>

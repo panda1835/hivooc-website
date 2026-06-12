@@ -155,7 +155,7 @@ export default function Header() {
                   height={250}
                   className="h-16 w-16 object-contain md:hidden"
                 />
-                <p className="max-w-24 italic leading-tight font-dancing-script text-white/90 sm:max-w-none md:text-lg">
+                <p className="max-w-24 italic leading-tight text-white/90 sm:max-w-none md:text-lg">
                   Primate Tourism For Conservation
                 </p>
               </Link>
