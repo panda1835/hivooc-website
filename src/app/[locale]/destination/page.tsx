@@ -80,7 +80,7 @@ async function getDestinationData(locale: string): Promise<{
         id: article.id,
         name: decodeHtmlEntities(article.title.rendered),
         category: regionTerm?.slug || `unassigned-${article.id}`,
-        categoryLabel: regionTerm?.name || "Other",
+        categoryLabel: decodeHtmlEntities(regionTerm?.name || "Other"),
         link: `/destination/${article.slug}`,
         image:
           article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||

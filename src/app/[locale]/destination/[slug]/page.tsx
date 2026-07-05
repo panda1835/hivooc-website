@@ -44,7 +44,7 @@ const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 function getRegionClass(article: WordPressDestinationResponse): string {
   const terms = article._embedded?.["wp:term"]?.flat() ?? [];
   const regionTerm = terms.find((term) => term.taxonomy === "region");
-  return (regionTerm?.name || "Destination").toUpperCase();
+  return decodeHtmlEntities(regionTerm?.name || "Destination").toUpperCase();
 }
 
 async function getDestinationDetail(
@@ -112,7 +112,7 @@ export async function generateMetadata({
       .slice(0, 160) || undefined;
   return {
     title: destination.name,
-    description,
+    description: description ? decodeHtmlEntities(description) : undefined,
     openGraph: {
       type: "article",
       images: destination.heroImage ? [{ url: destination.heroImage }] : [],
@@ -138,12 +138,13 @@ export default async function DestinationDetailPage({ params }: PageProps) {
     "@context": "https://schema.org",
     "@type": "TouristDestination",
     name: destination.name,
-    description:
+    description: decodeHtmlEntities(
       destination.content
         .replace(/<[^>]+>/g, " ")
         .replace(/\s+/g, " ")
         .trim()
-        .slice(0, 160) || undefined,
+        .slice(0, 160),
+    ) || undefined,
     image: destination.heroImage || undefined,
     url: `${SITE_URL}/${locale}/destination/${slug}`,
     touristType: "Wildlife enthusiasts",

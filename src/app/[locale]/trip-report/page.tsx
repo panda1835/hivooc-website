@@ -8,6 +8,7 @@ import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 interface TripReportACF {
   title: string;
@@ -69,7 +70,9 @@ async function getTripReports(locale: string): Promise<TripReport[]> {
         .replace(/<[^>]*>/g, " ")
         .replace(/\s+/g, " ")
         .trim();
-      const description = contentWithoutTags.substring(0, 200);
+      const description = decodeHtmlEntities(
+        contentWithoutTags.substring(0, 200),
+      );
 
       // Format date
       const date = new Date(report.acf.trip_date);
@@ -82,7 +85,7 @@ async function getTripReports(locale: string): Promise<TripReport[]> {
 
       return {
         id: report.id.toString(),
-        title: report.title.rendered,
+        title: decodeHtmlEntities(report.title.rendered),
         description:
           description + (contentWithoutTags.length > 200 ? "..." : ""),
         date: formattedDate,

@@ -134,10 +134,12 @@ async function getTailorTours(locale: string): Promise<TailorTourCard[]> {
 }
 
 function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  return decodeHtmlEntities(
+    html
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
 }
 
 function toNatureEducationCard(post: WPSimpleTour): DailyExperience {
@@ -225,7 +227,9 @@ async function getNewsArticles(locale: string): Promise<HomeNewsArticle[]> {
       id: article.id,
       title: decodeHtmlEntities(article.title.rendered),
       description,
-      category: article._embedded?.["wp:term"]?.[0]?.[0]?.name || "News",
+      category: decodeHtmlEntities(
+        article._embedded?.["wp:term"]?.[0]?.[0]?.name || "News",
+      ),
       image:
         article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
         "/news/image1.jpg",

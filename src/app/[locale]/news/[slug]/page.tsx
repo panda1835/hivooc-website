@@ -10,6 +10,7 @@ import {
 } from "@/lib/wordpress-media";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 export const dynamic = "force-static";
 
@@ -60,10 +61,12 @@ interface NewsArticle {
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
 function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  return decodeHtmlEntities(
+    html
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
 }
 
 function mapNewsArticle(
@@ -92,11 +95,11 @@ function mapNewsArticle(
 
   return {
     id: article.id.toString(),
-    title: article.title.rendered,
+    title: decodeHtmlEntities(article.title.rendered),
     description,
     content: article.content.rendered,
     date: formattedDate,
-    category,
+    category: decodeHtmlEntities(category),
     image,
     imageCaption: extractWpImageCaption(article),
     slug: article.slug,

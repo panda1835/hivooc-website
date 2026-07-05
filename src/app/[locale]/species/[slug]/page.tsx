@@ -113,7 +113,7 @@ export async function generateMetadata({
       .slice(0, 160) || undefined;
   return {
     title: species.name,
-    description,
+    description: description ? decodeHtmlEntities(description) : undefined,
     openGraph: {
       type: "article",
       images: species.heroImage ? [{ url: species.heroImage }] : [],
@@ -139,12 +139,13 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: species.name,
-    description:
+    description: decodeHtmlEntities(
       species.content
         .replace(/<[^>]+>/g, " ")
         .replace(/\s+/g, " ")
         .trim()
-        .slice(0, 160) || undefined,
+        .slice(0, 160),
+    ) || undefined,
     image: species.heroImage || undefined,
     url: `${SITE_URL}/${locale}/species/${slug}`,
     about: { "@type": "Thing", name: species.category || "Wildlife" },

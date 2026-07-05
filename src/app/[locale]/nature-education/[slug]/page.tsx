@@ -278,10 +278,12 @@ function parseRelatedProgramCard(post: WPNatureEducation): ShortTrip {
     generalRows.find((row) => row.key.toLowerCase() === "duration")?.value ||
     "Flexible";
   const typeName =
-    post._embedded?.["wp:term"]
-      ?.flat()
-      .find((term) => term.taxonomy === "education-type")?.name ||
-    "Nature Education";
+    decodeHtmlEntities(
+      post._embedded?.["wp:term"]
+        ?.flat()
+        .find((term) => term.taxonomy === "education-type")?.name ||
+        "Nature Education",
+    );
 
   return {
     id: post.id,

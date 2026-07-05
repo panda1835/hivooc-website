@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 interface WordPressTerm {
   name: string;
@@ -44,10 +45,12 @@ const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 export const dynamic = "force-static";
 
 function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  return decodeHtmlEntities(
+    html
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
 }
 
 async function getNewsArticles(locale: string): Promise<NewsArticle[]> {
@@ -96,10 +99,12 @@ async function getNewsArticles(locale: string): Promise<NewsArticle[]> {
 
       return {
         id: article.id.toString(),
-        title: article.title.rendered,
+        title: decodeHtmlEntities(article.title.rendered),
         description,
         date,
-        category: article._embedded?.["wp:term"]?.[0]?.[0]?.name || "News",
+        category: decodeHtmlEntities(
+          article._embedded?.["wp:term"]?.[0]?.[0]?.name || "News",
+        ),
         image:
           article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
           "/news/image1.jpg",

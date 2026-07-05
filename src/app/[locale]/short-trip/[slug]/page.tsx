@@ -276,9 +276,11 @@ function parseShortTripCard(post: WPTour): ShortTrip {
     generalRows.find((row) => row.key.toLowerCase() === "duration")?.value ||
     "Flexible";
   const typeName =
-    post._embedded?.["wp:term"]
-      ?.flat()
-      .find((term) => term.taxonomy === "tour-type")?.name || "Short Tour";
+    decodeHtmlEntities(
+      post._embedded?.["wp:term"]
+        ?.flat()
+        .find((term) => term.taxonomy === "tour-type")?.name || "Short Tour",
+    );
 
   return {
     id: post.id,

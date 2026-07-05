@@ -7,6 +7,7 @@ import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
 import { setRequestLocale } from "next-intl/server";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 export const dynamic = "force-static";
 
@@ -72,7 +73,7 @@ async function getTripReport(slug: string): Promise<TripReportDetail | null> {
       .toUpperCase();
 
     return {
-      title: report.title.rendered,
+      title: decodeHtmlEntities(report.title.rendered),
       date: formattedDate,
       heroImage: report.acf.thumbnail,
       content: report.content.rendered,
@@ -99,7 +100,7 @@ export async function generateMetadata({
       .slice(0, 160) || undefined;
   return {
     title: report.title,
-    description,
+    description: description ? decodeHtmlEntities(description) : undefined,
     openGraph: {
       type: "article",
       images: report.heroImage ? [{ url: report.heroImage }] : [],
@@ -130,12 +131,13 @@ export default async function TripReportDetailPage({
     "@context": "https://schema.org",
     "@type": "Article",
     headline: report.title,
-    description:
+    description: decodeHtmlEntities(
       report.content
         .replace(/<[^>]+>/g, " ")
         .replace(/\s+/g, " ")
         .trim()
-        .slice(0, 160) || undefined,
+        .slice(0, 160),
+    ) || undefined,
     image: report.heroImage || undefined,
     datePublished: report.date || undefined,
     url: `${SITE_URL}/${locale}/trip-report/${slug}`,

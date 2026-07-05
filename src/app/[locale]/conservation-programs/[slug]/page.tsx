@@ -8,6 +8,7 @@ import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
 import { setRequestLocale } from "next-intl/server";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 export const dynamic = "force-static";
 
@@ -117,7 +118,7 @@ async function getConservationProgram(
     }
 
     return {
-      title: program.title.rendered,
+      title: decodeHtmlEntities(program.title.rendered),
       date: formatProgramDate(
         program.acf.program_date || program.acf.trip_date,
       ),
@@ -150,7 +151,7 @@ export async function generateMetadata({
       .slice(0, 160) || undefined;
   return {
     title: program.title,
-    description,
+    description: description ? decodeHtmlEntities(description) : undefined,
     openGraph: {
       type: "article",
       images: program.heroImage ? [{ url: program.heroImage }] : [],
@@ -181,12 +182,13 @@ export default async function ConservationProgramDetailPage({
     "@context": "https://schema.org",
     "@type": "Event",
     name: program.title,
-    description:
+    description: decodeHtmlEntities(
       program.content
         .replace(/<[^>]+>/g, " ")
         .replace(/\s+/g, " ")
         .trim()
-        .slice(0, 160) || undefined,
+        .slice(0, 160),
+    ) || undefined,
     image: program.heroImage || undefined,
     url: `${SITE_URL}/${locale}/conservation-programs/${slug}`,
     organizer: {

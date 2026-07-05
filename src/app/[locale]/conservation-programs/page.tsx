@@ -9,6 +9,7 @@ import Support from "@/components/home/Support";
 import TailorMadeTrips from "@/components/home/TailorMadeTrips";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
 import { getTailorTourCards } from "@/lib/tailor-tour-cards";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 interface ConservationProgramACF {
   title?: string;
@@ -57,10 +58,12 @@ const DEFAULT_IMAGE = "/hero/image1.jpg";
 export const dynamic = "force-static";
 
 function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  return decodeHtmlEntities(
+    html
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
 }
 
 function formatProgramDate(dateValue?: string): string {
@@ -137,7 +140,7 @@ async function getConservationPrograms(
 
       return {
         id: program.id.toString(),
-        title: program.title.rendered,
+        title: decodeHtmlEntities(program.title.rendered),
         description:
           description + (contentWithoutTags.length > 200 ? "..." : ""),
         date,

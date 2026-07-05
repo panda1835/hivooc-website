@@ -1,4 +1,5 @@
 import type { WPMedia } from "@/lib/wordpress-media";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 export interface WPTerm {
   name?: string;
@@ -17,7 +18,9 @@ type WPPostWithTerms = {
   };
 };
 
-export function extractFeaturedImage(post: WPPostWithFeaturedMedia): string | null {
+export function extractFeaturedImage(
+  post: WPPostWithFeaturedMedia,
+): string | null {
   const media = post._embedded?.["wp:featuredmedia"]?.[0];
   if (!media) {
     return null;
@@ -35,19 +38,28 @@ export function extractFeaturedImage(post: WPPostWithFeaturedMedia): string | nu
   );
 }
 
-export function getTermsByTaxonomy(post: WPPostWithTerms, taxonomy: string): string[] {
+export function getTermsByTaxonomy(
+  post: WPPostWithTerms,
+  taxonomy: string,
+): string[] {
   const groups = post._embedded?.["wp:term"] || [];
   return groups
     .flat()
     .filter((term) => term.taxonomy === taxonomy && Boolean(term.name))
-    .map((term) => term.name as string);
+    .map((term) => decodeHtmlEntities(term.name as string));
 }
 
-export function getFirstTermByTaxonomy(post: WPPostWithTerms, taxonomy: string): string {
+export function getFirstTermByTaxonomy(
+  post: WPPostWithTerms,
+  taxonomy: string,
+): string {
   return getTermsByTaxonomy(post, taxonomy)[0] || "";
 }
 
-export function parseGeneralRowValue(general: string | undefined, keyPrefix: string): string {
+export function parseGeneralRowValue(
+  general: string | undefined,
+  keyPrefix: string,
+): string {
   if (!general) {
     return "";
   }
@@ -55,9 +67,13 @@ export function parseGeneralRowValue(general: string | undefined, keyPrefix: str
   const line = general
     .split(/\r?\n/)
     .map((item) => item.trim())
-    .find((item) => item.toLowerCase().startsWith(`${keyPrefix.toLowerCase()}:`));
+    .find((item) =>
+      item.toLowerCase().startsWith(`${keyPrefix.toLowerCase()}:`),
+    );
 
-  return line ? line.split(":").slice(1).join(":").trim() : "";
+  return line
+    ? decodeHtmlEntities(line.split(":").slice(1).join(":").trim())
+    : "";
 }
 
 export function parseGeneralLocationDuration(
