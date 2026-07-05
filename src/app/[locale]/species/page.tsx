@@ -10,6 +10,7 @@ import ContributeToConservation from "@/components/short-trip/ContributeToConser
 import Support from "@/components/home/Support";
 import ShortTrips from "@/components/home/ShortTrips";
 import { fetchWpImagesFromApiRoute } from "@/lib/wordpress-media";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 interface WordPressTerm {
   name: string;
@@ -88,9 +89,9 @@ async function getSpeciesData(locale: string): Promise<{
 
       return {
         id: article.id,
-        name: article.title.rendered,
+        name: decodeHtmlEntities(article.title.rendered),
         category: categoryValue,
-        categoryLabel,
+        categoryLabel: decodeHtmlEntities(categoryLabel),
         link: `/species/${article.slug}`,
         image:
           article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||

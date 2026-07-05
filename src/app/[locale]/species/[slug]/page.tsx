@@ -7,6 +7,7 @@ import Support from "@/components/home/Support";
 import ShortTrips from "@/components/home/ShortTrips";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getShortTripCards } from "@/lib/short-trip-cards";
+import { decodeHtmlEntities } from "@/lib/wordpress-text";
 
 export const dynamic = "force-static";
 
@@ -44,7 +45,7 @@ function getSpeciesClass(article: WordPressSpeciesResponse): string {
   const terms = article._embedded?.["wp:term"]?.flat() ?? [];
   const speciesTerm =
     terms.find((term) => term.taxonomy === "species") ?? terms[0];
-  return (speciesTerm?.name || "Species").toUpperCase();
+  return decodeHtmlEntities(speciesTerm?.name || "Species").toUpperCase();
 }
 
 async function getSpeciesDetail(
@@ -81,7 +82,7 @@ async function getSpeciesDetail(
     }
 
     return {
-      name: article.title.rendered,
+      name: decodeHtmlEntities(article.title.rendered),
       category: getSpeciesClass(article),
       heroImage:
         article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
