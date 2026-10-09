@@ -84,7 +84,7 @@ const content = {
         intro:
           "If you have any questions regarding this Privacy Policy or how your data is handled, please contact us at:",
         items: [
-          "HiVOOC Conservation Travel, K39/21 Thanh Vinh 1, Son Tra, Da Nang.",
+          "HiVOOC Conservation Travel, 71 Lê Đức Thọ, Sơn Trà, Đà Nẵng.",
           "Email: tourbooking@hivooc.com or dailytour@hivooc.com.",
           "Phone: (+84) 835 949 222 or (+84) 813 949 222.",
         ],
@@ -159,7 +159,7 @@ const content = {
         intro:
           "Nếu bạn có câu hỏi về Chính sách bảo mật này hoặc cách dữ liệu của bạn được xử lý, vui lòng liên hệ:",
         items: [
-          "HiVOOC Conservation Travel, K39/21 Thanh Vinh 1, Sơn Trà, Đà Nẵng.",
+          "HiVOOC Conservation Travel, 71 Lê Đức Thọ, Sơn Trà, Đà Nẵng.",
           "Email: tourbooking@hivooc.com hoặc dailytour@hivooc.com.",
           "Điện thoại: (+84) 835 949 222 hoặc (+84) 813 949 222.",
         ],

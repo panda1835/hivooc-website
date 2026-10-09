@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import TailorMyTripButton from "@/components/TailorMyTripButton";
+import { Link } from "@/i18n/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -69,11 +70,14 @@ export default function Hero({ slideImages }: HeroProps) {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-400">
                   <Button
+                    asChild
                     variant="outline"
                     size="lg"
                     className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-branding-green"
                   >
-                    {t("slides.0.viewExamples")}
+                    <Link href="/tailor-trip">
+                      {t("slides.0.viewExamples")}
+                    </Link>
                   </Button>
                   <TailorMyTripButton />
                 </div>

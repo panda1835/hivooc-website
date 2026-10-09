@@ -14,6 +14,8 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageProtection from "@/components/ImageProtection";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
 
 export const revalidate = 3600;
 
@@ -98,6 +100,8 @@ export default async function RootLayout({ children, params }: Props) {
           <ImageProtection />
           <Header />
           {children}
+          <ScrollToTopButton />
+          <WhatsAppButton />
           <Footer />
         </NextIntlClientProvider>
       </body>

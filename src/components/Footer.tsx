@@ -1,7 +1,14 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { Facebook, Instagram, MapPin, Mail, Phone } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  MapPin,
+  Mail,
+  Phone,
+  Youtube,
+} from "lucide-react";
 
 export default function Footer() {
   const t = useTranslations("Footer");
@@ -29,6 +36,37 @@ export default function Footer() {
             </div>
 
             <p className=" text-white/80">{t("mission")}</p>
+
+            {/* Social Media */}
+            <div className="flex gap-4 mt-6">
+              <a
+                href="https://facebook.com/hivooc"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-5 h-5 sm:w-6 sm:h-6" />
+              </a>
+              <a
+                href="https://instagram.com/hivooc"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
+              </a>
+              <a
+                href="https://www.youtube.com/@HIVOOCvideos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                aria-label="YouTube"
+              >
+                <Youtube className="w-5 h-5 sm:w-6 sm:h-6" />
+              </a>
+            </div>
           </div>
 
           {/* Explore Links */}
@@ -88,9 +126,14 @@ export default function Footer() {
             <ul className="space-y-3 sm:space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 mt-0.5" />
-                <span className=" sm:text-base text-white/80">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=71+L%C3%AA+%C4%90%E1%BB%A9c+Th%E1%BB%8D%2C+S%C6%A1n+Tr%C3%A0%2C+%C4%90%C3%A0+N%E1%BA%B5ng"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="sm:text-base text-white/80 hover:text-white transition-colors"
+                >
                   {t("address")}
-                </span>
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
@@ -104,7 +147,7 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
                 <a
-                  href="tel:0813949222"
+                  href="tel:+84813949222"
                   className=" sm:text-base text-white/80 hover:text-white transition-colors"
                 >
                   {t("phone")}
@@ -112,26 +155,15 @@ export default function Footer() {
               </li>
             </ul>
 
-            {/* Social Media */}
-            <div className="flex gap-4 mt-6">
-              <a
-                href="https://facebook.com/hivooc"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-5 h-5 sm:w-6 sm:h-6" />
-              </a>
-              <a
-                href="https://instagram.com/hivooc"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
-              </a>
+            <div className="mt-8 overflow-hidden rounded-sm border border-white/20">
+              <iframe
+                title="HiVOOC location on Google Maps"
+                src="https://www.google.com/maps?q=71+L%C3%AA+%C4%90%E1%BB%A9c+Th%E1%BB%8D%2C+S%C6%A1n+Tr%C3%A0%2C+%C4%90%C3%A0+N%E1%BA%B5ng&output=embed"
+                className="block h-64 w-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>

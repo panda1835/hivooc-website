@@ -33,7 +33,10 @@ export default function TailorMadeTrips({
   const displayDescription = description || t("description");
 
   return (
-    <section className="w-full py-16 bg-white">
+    <section
+      id="sample-tailor-made-itineraries"
+      className="w-full scroll-mt-8 py-16 bg-white"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-8 md:mb-12">
           <div className="mb-6 md:mb-0 max-w-6xl">

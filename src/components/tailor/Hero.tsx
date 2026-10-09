@@ -71,11 +71,12 @@ export default function Hero({ backgroundImages }: HeroProps) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
+              asChild
               variant="outline"
               size="lg"
               className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-branding-green font-sans"
             >
-              {t("viewExamples")}
+              <a href="#sample-tailor-made-itineraries">{t("viewExamples")}</a>
             </Button>
             <TailorMyTripButton />
           </div>
