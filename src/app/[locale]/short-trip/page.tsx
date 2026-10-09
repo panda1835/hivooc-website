@@ -13,6 +13,7 @@ import {
   type WPTerm,
 } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
+import { getShortTripHref } from "@/lib/short-trip-links";
 
 const WORDPRESS_BASE_URL = process.env.WORDPRESS_BASE_URL;
 
@@ -338,7 +339,7 @@ export default async function ShortTripListingPage({ params }: PageProps) {
                     </div>
 
                     <Link
-                      href={`/short-trip/${trip.slug}`}
+                      href={getShortTripHref(trip.slug)}
                       className="mt-6 h-10 font-medium border border-gray-400 rounded-sm inline-flex items-center justify-center text-sm text-branding-green hover:bg-branding-green hover:text-white transition-colors"
                     >
                       {isVietnamese ? "Khám phá" : "Explore"}

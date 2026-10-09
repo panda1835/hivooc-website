@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import Hero from "@/components/short-trip/Hero";
@@ -17,6 +17,7 @@ import {
   type WPTerm,
 } from "@/lib/wordpress-post-helpers";
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
+import { getShortTripExternalUrl, getShortTripHref } from "@/lib/short-trip-links";
 
 export const dynamic = "force-static";
 
@@ -292,7 +293,7 @@ function parseShortTripCard(post: WPTour): ShortTrip {
           "Every journey is crafted to match your interests.",
       ) || "Every journey is crafted to match your interests.",
     image: featuredImage,
-    link: `/short-trip/${post.slug}`,
+    link: getShortTripHref(post.slug),
     bestTimeToTravel: "Custom",
     tripLength: duration,
   };
@@ -356,6 +357,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
+  if (getShortTripExternalUrl(slug)) return {};
   try {
     const post = await getTourBySlug(slug);
     const title = decodeHtmlEntities(post.title?.rendered ?? "Short Trip");
@@ -381,6 +383,9 @@ export async function generateMetadata({
 
 export default async function ShortTripPage({ params }: PageProps) {
   const { locale, slug } = await params;
+  const externalUrl = getShortTripExternalUrl(slug);
+  if (externalUrl) redirect(externalUrl);
+
   setRequestLocale(locale);
   const t = await getTranslations();
 

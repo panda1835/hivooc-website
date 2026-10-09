@@ -1,4 +1,5 @@
 import { decodeHtmlEntities } from "@/lib/wordpress-text";
+import { getShortTripHref } from "@/lib/short-trip-links";
 import type { WPMedia } from "@/lib/wordpress-media";
 import {
   extractFeaturedImage,
@@ -56,7 +57,7 @@ function toShortTripCard(post: WPShortTour): ShortTripCardItem {
       ) ||
       "Every journey is crafted to match your interests, pace, and wildlife dreams.",
     image: extractFeaturedImage(post) || "/short-trip/image1.jpg",
-    link: `/short-trip/${post.slug}`,
+    link: getShortTripHref(post.slug),
     bestTimeToTravel: destination,
     tripLength: duration,
   };
