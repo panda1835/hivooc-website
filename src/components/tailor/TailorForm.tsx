@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { useLocale } from "next-intl";
-import { FormEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const inputClass =
   "w-full rounded-[4px] border border-[#D8D5CF] bg-white px-4 py-3 text-branding-green placeholder:text-branding-green/45 focus:outline-none focus:ring-2 focus:ring-branding-orange/25";
@@ -50,6 +50,74 @@ function toReadableLabel(key: string): string {
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+}
+
+const fieldLabels: Record<string, [string, string]> = {
+  destinations_north: ["Northern destinations", "Điểm đến miền Bắc"],
+  destinations_central: ["Central destinations", "Điểm đến miền Trung"],
+  destinations_south: ["Southern destinations", "Điểm đến miền Nam"],
+  multi_park_recommendation: [
+    "Multi-park recommendation",
+    "Đề xuất hành trình nhiều vườn quốc gia",
+  ],
+  species_langurs: ["Langur species", "Các loài voọc"],
+  species_gibbons: ["Gibbon species", "Các loài vượn"],
+  species_macaques: ["Macaque species", "Các loài khỉ"],
+  species_loris: ["Loris species", "Các loài cu li"],
+  additional_interests: ["Additional interests", "Mối quan tâm bổ sung"],
+  sightseeing_north: ["Northern sightseeing", "Tham quan miền Bắc"],
+  sightseeing_central: ["Central sightseeing", "Tham quan miền Trung"],
+  sightseeing_south: ["Southern sightseeing", "Tham quan miền Nam"],
+  primary_intention: ["Primary intention", "Mục tiêu chính"],
+  media_objective: ["Media objective", "Mục tiêu truyền thông"],
+  media_objective_notes: [
+    "Media objective notes",
+    "Ghi chú mục tiêu truyền thông",
+  ],
+  pace: ["Expedition pace", "Nhịp độ hành trình"],
+  travel_month: ["Travel window", "Khung thời gian đi"],
+  need_recommendation_for_time: [
+    "Travel timing recommendation",
+    "Tư vấn thời gian đi",
+  ],
+  duration: ["Preferred duration", "Thời lượng mong muốn"],
+  group_structure: ["Group structure", "Cơ cấu đoàn"],
+  participants_total: ["Total participants", "Tổng số người tham gia"],
+  participants_not_fixed: [
+    "Participant count not fixed",
+    "Số người tham gia chưa chốt",
+  ],
+  children_in_group: ["Children in group", "Trẻ em trong đoàn"],
+  children_count: ["Number of children", "Số lượng trẻ em"],
+  children_ages: ["Children's ages", "Độ tuổi trẻ em"],
+  adult_age_range: ["Adult age range", "Độ tuổi người lớn"],
+  accommodation_level: [
+    "Accommodation level",
+    "Mức độ tiện nghi lưu trú",
+  ],
+  transportation_services: ["Transportation services", "Dịch vụ di chuyển"],
+  booking_preference: ["Booking preference", "Phương án đặt dịch vụ"],
+  full_name: ["Full name", "Họ và tên"],
+  email: ["Email address", "Địa chỉ email"],
+  phone_whatsapp: ["Phone number (WhatsApp)", "Số điện thoại (WhatsApp)"],
+  country: ["Country", "Quốc gia"],
+  contact_method: [
+    "Preferred contact method",
+    "Phương thức liên hệ ưu tiên",
+  ],
+  ethical_commitment: [
+    "Ethical commitment",
+    "Cam kết đạo đức và bảo tồn",
+  ],
+  journey_success_definition: [
+    "What would make this journey unforgettable?",
+    "Điều gì sẽ khiến hành trình này trở nên đáng nhớ?",
+  ],
+};
+
+function getLocalizedFieldLabel(key: string, isVi: boolean): string {
+  const label = fieldLabels[key];
+  return label ? label[isVi ? 1 : 0] : toReadableLabel(key);
 }
 
 function collectFormFields(form: HTMLFormElement): InquiryFields {
@@ -101,10 +169,23 @@ export default function TailorForm() {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [pendingFields, setPendingFields] = useState<InquiryFields>({});
   const formRef = useRef<HTMLFormElement>(null);
+  const formSectionRef = useRef<HTMLElement>(null);
 
-  const nextStep = () =>
+  const scrollToFormTop = () => {
+    formSectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const nextStep = () => {
     setCurrentStep((value) => Math.min(value + 1, stepLabels.length - 1));
-  const prevStep = () => setCurrentStep((value) => Math.max(value - 1, 0));
+    scrollToFormTop();
+  };
+  const prevStep = () => {
+    setCurrentStep((value) => Math.max(value - 1, 0));
+    scrollToFormTop();
+  };
 
   const closeConfirmModal = () => {
     setIsConfirmOpen(false);
@@ -115,6 +196,10 @@ export default function TailorForm() {
   const openConfirmModal = () => {
     const form = formRef.current;
     if (!form) {
+      return;
+    }
+
+    if (!form.reportValidity()) {
       return;
     }
 
@@ -259,7 +344,10 @@ export default function TailorForm() {
       </section>
 
       {started && (
-        <section className="rounded-lg bg-white p-8 shadow-sm md:p-12">
+        <section
+          ref={formSectionRef}
+          className="scroll-mt-6 rounded-lg bg-white p-8 shadow-sm md:p-12"
+        >
           <div className="mb-8 space-y-4">
             <div className="flex flex-wrap gap-2">
               {stepLabels.map((label, index) => {
@@ -1108,22 +1196,26 @@ export default function TailorForm() {
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <label className="space-y-2">
                   <span className={labelClass}>
-                    {tx("Full name", "Họ và tên")}
+                    {tx("Full name", "Họ và tên")} {" "}
+                    <span className="text-red-500">*</span>
                   </span>
                   <input
                     type="text"
                     name="full_name"
+                    required
                     className={inputClass}
                     placeholder={tx("Your full name", "Nhập họ và tên")}
                   />
                 </label>
                 <label className="space-y-2">
                   <span className={labelClass}>
-                    {tx("Email address", "Địa chỉ email")}
+                    {tx("Email address", "Địa chỉ email")} {" "}
+                    <span className="text-red-500">*</span>
                   </span>
                   <input
                     type="email"
                     name="email"
+                    required
                     className={inputClass}
                     placeholder="you@example.com"
                   />
@@ -1209,7 +1301,7 @@ export default function TailorForm() {
                 />
               </label>
 
-              <div className="rounded-[4px]  bg-branding-yellow/35 text-[15px] leading-relaxed mt-8">
+              <div className="mt-8 rounded-[4px] bg-branding-yellow/35 p-4 text-[15px] leading-relaxed">
                 <p className="text-lg font-medium">
                   {tx("What happens next?", "Điều gì sẽ diễn ra tiếp theo?")}
                 </p>
@@ -1357,7 +1449,7 @@ export default function TailorForm() {
                           className="border-b border-[#EEE9E0] last:border-b-0"
                         >
                           <td className="w-1/3 bg-[#F7F3EA] px-4 py-3 font-medium">
-                            {toReadableLabel(key)}
+                            {getLocalizedFieldLabel(key, isVi)}
                           </td>
                           <td className="px-4 py-3">
                             {Array.isArray(value) ? value.join(", ") : value}

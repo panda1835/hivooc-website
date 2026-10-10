@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 
 const RESEND_API_URL = "https://api.resend.com/emails";
-const TO_EMAIL = "lehoangphuc1820@gmail.com";
+const DAILY_TOUR_EMAIL = "dailytour@hivooc.com";
+const TAILOR_TOUR_EMAIL = "tourbooking@hivooc.com";
 export const runtime = "nodejs";
 
 type InquiryValue = string | string[];
@@ -58,13 +59,37 @@ function toTextBody(fields: InquiryPayload): string {
     .join("\n");
 }
 
+function getRecipientEmail(
+  formType: string,
+  defaultEmail: string | undefined,
+): string | undefined {
+  if (formType === "Tour Booking") {
+    return DAILY_TOUR_EMAIL;
+  }
+
+  if (formType === "Tailor Tour") {
+    return TAILOR_TOUR_EMAIL;
+  }
+
+  return defaultEmail;
+}
+
 export async function POST(request: Request) {
   try {
     const resendApiKey = process.env.RESEND_API_KEY;
+    const fromEmail = process.env.RESEND_FROM_EMAIL?.trim();
+    const toEmail = process.env.RESEND_TO_EMAIL?.trim();
 
     if (!resendApiKey) {
       return NextResponse.json(
         { error: "RESEND_API_KEY is not configured." },
+        { status: 500 },
+      );
+    }
+
+    if (!fromEmail) {
+      return NextResponse.json(
+        { error: "RESEND_FROM_EMAIL must be configured." },
         { status: 500 },
       );
     }
@@ -84,7 +109,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+    const recipientEmail = getRecipientEmail(body.formType, toEmail);
+
+    if (!recipientEmail) {
+      return NextResponse.json(
+        { error: "No recipient email is configured for this inquiry type." },
+        { status: 500 },
+      );
+    }
+
     const resolvedTitle = toSingleLine(
       body.inquiryTitle?.trim() || `${body.formType} inquiry`,
     );
@@ -118,7 +151,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         from: fromEmail,
-        to: [TO_EMAIL],
+        to: [recipientEmail],
         reply_to: replyTo,
         subject,
         html,

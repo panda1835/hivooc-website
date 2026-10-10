@@ -39,6 +39,7 @@ export default function BookThisTripButton({
     "idle",
   );
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [minimumTourDate, setMinimumTourDate] = useState("");
 
   const closeModal = () => {
     setIsOpen(false);
@@ -47,6 +48,15 @@ export default function BookThisTripButton({
     setIsSubmitting(false);
     setNeedsHotelAddress("not-yet");
   };
+
+  useEffect(() => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    setMinimumTourDate(`${year}-${month}-${day}`);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -106,14 +116,13 @@ export default function BookThisTripButton({
             </button>
 
             <h2 className="text-3xl md:text-4xl font-medium mb-6 text-branding-green">
-              {t("title")}
+              {submitState === "success"
+                ? "Request submitted successfully"
+                : t("title")}
             </h2>
 
             {submitState === "success" ? (
-              <div className="space-y-4 rounded border  p-5">
-                <h3 className="text-xl font-semibold ">
-                  Request submitted successfully
-                </h3>
+              <div className="space-y-4">
                 <p className="">
                   Thank you. We received your booking request and our team will
                   contact you soon.
@@ -227,9 +236,12 @@ export default function BookThisTripButton({
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="block font-medium">{t("email")}</label>
+                    <label className="block font-medium">
+                      {t("email")} <span className="text-red-500">*</span>
+                    </label>
                     <input
                       type="email"
+                      required
                       name="email"
                       placeholder={t("enterEmail")}
                       className={inputClassName}
@@ -266,15 +278,18 @@ export default function BookThisTripButton({
                     <input
                       type="date"
                       name="tour_date"
+                      min={minimumTourDate}
                       className={inputClassName}
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="block font-medium">
-                      {t("participants")}
+                      {t("participants")} {" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="number"
+                      required
                       min={1}
                       name="participants"
                       placeholder={t("enterParticipants")}
