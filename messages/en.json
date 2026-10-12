@@ -1,5 +1,9 @@
 {
   "HomePage": "Home Page",
+  "Metadata": {
+    "homeTitle": "Primate & Wildlife Tours in Vietnam | HiVOOC",
+    "homeDescription": "Explore Vietnam's rare primates and biodiversity on expert-led wildlife tours that directly support conservation and local communities."
+  },
   "GetStarted": {
     "title": "Let's get started!",
     "description": "We take our environmental and social responsibilities seriously",
@@ -162,7 +166,7 @@
     "tailorMyTrip": "Tailor my trip"
   },
   "Footer": {
-    "tagline": "Primate Tourism For Conservation",
+    "tagline": "Wildlife Tourism For Conservation",
     "mission": "Travel with us to create magical memories and support wildlife conservation projects together",
     "explore": "Explore",
     "allExperiences": "All Experiences",

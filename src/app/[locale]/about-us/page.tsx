@@ -147,13 +147,13 @@ export async function generateMetadata({
   return {
     title: tHeader("aboutUs"),
     description: t("description"),
-    openGraph: { url: `${SITE_URL}/${locale}/our-story` },
+    openGraph: { url: `${SITE_URL}/${locale}/about-us` },
     alternates: {
-      canonical: `${SITE_URL}/${locale}/our-story`,
+      canonical: `${SITE_URL}/${locale}/about-us`,
       languages: {
-        en: `${SITE_URL}/en/our-story`,
-        vi: `${SITE_URL}/vi/our-story`,
-        "x-default": `${SITE_URL}/en/our-story`,
+        en: `${SITE_URL}/en/about-us`,
+        vi: `${SITE_URL}/vi/about-us`,
+        "x-default": `${SITE_URL}/en/about-us`,
       },
     },
   };

@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     template: "%s | HiVOOC",
   },
   description:
-    "Tailor-made primate tourism for conservation in Vietnam. Join expert-guided tours to encounter rare primates, birds, and biodiversity while supporting conservation.",
+    "Tailor-made wildlife tourism for conservation in Vietnam. Join expert-guided tours to encounter rare primates, birds, and biodiversity while supporting conservation.",
   openGraph: {
     siteName: "HiVOOC",
     type: "website",
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "HiVOOC – Primate Tourism for Conservation",
+        alt: "HiVOOC – Wildlife Tourism for Conservation",
       },
     ],
   },

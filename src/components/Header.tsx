@@ -20,7 +20,7 @@ export default function Header() {
 
   const withLocaleSlugSuffix = (path: string, newLocale: string) => {
     const slugPagePattern =
-      /^\/(trip-report|news|destination|species|short-trip|tailor-trip|nature-education|conservation-programs)\/([^/]+)$/;
+      /^\/(trip-report|news|destinations|species|short-trip|tailor-trip|nature-education|conservation-programs)\/([^/]+)$/;
     const match = path.match(slugPagePattern);
 
     if (!match) {
@@ -97,7 +97,7 @@ export default function Header() {
           title: "",
           items: [
             { label: t("species"), href: "/species", featured: false },
-            { label: t("destination"), href: "/destination", featured: false },
+            { label: t("destination"), href: "/destinations", featured: false },
           ],
         },
       ],
@@ -105,7 +105,7 @@ export default function Header() {
     {
       id: "about-us",
       label: t("aboutUs"),
-      href: "/our-story",
+      href: "/about-us",
       items: [],
       columns: [],
     },
@@ -156,7 +156,7 @@ export default function Header() {
                   className="h-16 w-16 object-contain md:hidden"
                 />
                 <p className="max-w-24 italic leading-tight text-white/90 sm:max-w-none md:text-lg">
-                  Primate Tourism For Conservation
+                  Wildlife Tourism For Conservation
                 </p>
               </Link>
             </div>

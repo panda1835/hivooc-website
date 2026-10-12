@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { SITE_URL } from "@/lib/site";
 
 const RESEND_API_URL = "https://api.resend.com/emails";
 const DAILY_TOUR_EMAIL = "dailytour@hivooc.com";
@@ -39,6 +40,20 @@ function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function getTourPageUrl(sourcePath?: string): string | undefined {
+  if (!sourcePath) {
+    return undefined;
+  }
+
+  const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL?.trim() || SITE_URL);
+  const normalizedPath = `/${sourcePath.replace(/^\/+/, "")}`;
+  const tourPageUrl = new URL(normalizedPath, siteUrl.origin);
+
+  return tourPageUrl.origin === siteUrl.origin
+    ? tourPageUrl.toString()
+    : undefined;
 }
 
 function toHtmlTableRows(fields: InquiryPayload): string {
@@ -127,12 +142,13 @@ export async function POST(request: Request) {
       typeof submittedEmail === "string" && submittedEmail
         ? submittedEmail
         : undefined;
+    const tourPageUrl = getTourPageUrl(body.sourcePath);
 
     const html = `
       <div style="font-family:Arial,sans-serif;line-height:1.5;color:#0f172a;">
         <h2 style="margin:0 0 12px;">${escapeHtml(resolvedTitle)}</h2>
         ${body.locale ? `<p style="margin:0 0 8px;"><strong>Locale:</strong> ${escapeHtml(body.locale)}</p>` : ""}
-        ${body.sourcePath ? `<p style="margin:0 0 12px;"><strong>Source Path:</strong> ${escapeHtml(body.sourcePath)}</p>` : ""}
+        ${tourPageUrl ? `<p style="margin:0 0 12px;"><strong>Tour page:</strong> ${escapeHtml(tourPageUrl)}</p>` : ""}
         <table style="border-collapse:collapse;width:100%;">
           <tbody>
             ${toHtmlTableRows(body.fields)}
@@ -141,7 +157,7 @@ export async function POST(request: Request) {
       </div>
     `;
 
-    const text = `${resolvedTitle}${body.locale ? `\nLocale: ${body.locale}` : ""}${body.sourcePath ? `\nSource Path: ${body.sourcePath}` : ""}\n\n${toTextBody(body.fields)}`;
+    const text = `${resolvedTitle}${body.locale ? `\nLocale: ${body.locale}` : ""}${tourPageUrl ? `\nTour page: ${tourPageUrl}` : ""}\n\n${toTextBody(body.fields)}`;
 
     const resendResponse = await fetch(RESEND_API_URL, {
       method: "POST",

@@ -118,7 +118,7 @@ export async function generateMetadata({
       images: destination.heroImage ? [{ url: destination.heroImage }] : [],
     },
     alternates: {
-      canonical: `${SITE_URL}/${locale}/destination/${slug}`,
+      canonical: `${SITE_URL}/${locale}/destinations/${slug}`,
     },
   };
 }
@@ -146,7 +146,7 @@ export default async function DestinationDetailPage({ params }: PageProps) {
         .slice(0, 160),
     ) || undefined,
     image: destination.heroImage || undefined,
-    url: `${SITE_URL}/${locale}/destination/${slug}`,
+    url: `${SITE_URL}/${locale}/destinations/${slug}`,
     touristType: "Wildlife enthusiasts",
   };
 

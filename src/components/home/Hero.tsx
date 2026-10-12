@@ -55,36 +55,35 @@ export default function Hero({ slideImages }: HeroProps) {
               priority={index === 0}
               quality={90}
             />
-
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black/60" />
-
-            {/* Content - Centered - Same text for all slides */}
-            <div className="relative h-full flex items-center justify-center">
-              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 className="text-white mb-6 animate-fade-in-up">
-                  {t("slides.0.title")}
-                </h1>
-                <p className="text-white/90 text-lg md:text-xl mb-8 md:mb-10 leading-relaxed max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
-                  {t("slides.0.description")}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-400">
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-branding-green"
-                  >
-                    <Link href="/tailor-trip">
-                      {t("slides.0.viewExamples")}
-                    </Link>
-                  </Button>
-                  <TailorMyTripButton />
-                </div>
-              </div>
-            </div>
           </div>
         ))}
+
+        <div className="absolute inset-0 bg-black/60" />
+
+        {/* Shared content stays outside the slides so the page has one H1. */}
+        <div className="relative h-full flex items-center justify-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-white mb-6 animate-fade-in-up">
+              {t("slides.0.title")}
+            </h1>
+            <p className="text-white/90 text-lg md:text-xl mb-8 md:mb-10 leading-relaxed max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
+              {t("slides.0.description")}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-400">
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-branding-green"
+              >
+                <Link href="/tailor-trip">
+                  {t("slides.0.viewExamples")}
+                </Link>
+              </Button>
+              <TailorMyTripButton />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Dot Indicators */}

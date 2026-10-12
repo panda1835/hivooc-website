@@ -81,7 +81,7 @@ async function getDestinationData(locale: string): Promise<{
         name: decodeHtmlEntities(article.title.rendered),
         category: regionTerm?.slug || `unassigned-${article.id}`,
         categoryLabel: decodeHtmlEntities(regionTerm?.name || "Other"),
-        link: `/destination/${article.slug}`,
+        link: `/destinations/${article.slug}`,
         image:
           article._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
           "/short-trip/image1.jpg",
@@ -132,15 +132,15 @@ export async function generateMetadata({
     title: tHeader("destination"),
     description: t("heroSubtitle"),
     openGraph: {
-      url: `${SITE_URL}/${locale}/destination`,
+      url: `${SITE_URL}/${locale}/destinations`,
       images: heroImage ? [{ url: heroImage }] : [],
     },
     alternates: {
-      canonical: `${SITE_URL}/${locale}/destination`,
+      canonical: `${SITE_URL}/${locale}/destinations`,
       languages: {
-        en: `${SITE_URL}/en/destination`,
-        vi: `${SITE_URL}/vi/destination`,
-        "x-default": `${SITE_URL}/en/destination`,
+        en: `${SITE_URL}/en/destinations`,
+        vi: `${SITE_URL}/vi/destinations`,
+        "x-default": `${SITE_URL}/en/destinations`,
       },
     },
   };

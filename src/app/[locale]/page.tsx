@@ -8,11 +8,9 @@ import DailyExperiences from "@/components/home/DailyExperiences";
 import GetStarted from "@/components/home/GetStarted";
 import Reviews from "@/components/home/Reviews";
 import News from "@/components/home/News";
-import Partners from "@/components/home/Partners";
 import Support from "@/components/home/Support";
 import Gallery from "@/components/home/Gallery";
 
-import type { ShortTrip } from "@/components/home/ShortTrips";
 import type { TailorTourCard } from "@/components/home/TailorMadeTrips";
 import type { DailyExperience } from "@/components/home/DailyExperiences";
 import type { HomeNewsArticle } from "@/components/home/News";
@@ -244,13 +242,36 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const metadata = await getTranslations({ locale, namespace: "Metadata" });
+  const title = metadata("homeTitle");
+  const description = metadata("homeDescription");
   return {
     title: {
-      absolute: "HiVOOC – Primate Tourism For Conservation",
+      absolute: title,
     },
-    description:
-      "Discover Vietnam's extraordinary wildlife with HiVOOC. Expert-guided tours for primate watching, birding, and conservation.",
-    openGraph: { url: `${SITE_URL}/${locale}/` },
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/${locale}/`,
+      siteName: "HiVOOC",
+      type: "website",
+      locale: locale === "vi" ? "vi_VN" : "en_US",
+      images: [
+        {
+          url: `${SITE_URL}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${SITE_URL}/og-image.png`],
+    },
     alternates: {
       canonical: `${SITE_URL}/${locale}/`,
       languages: {

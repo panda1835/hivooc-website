@@ -1,5 +1,9 @@
 {
   "HomePage": "Trang Chủ",
+  "Metadata": {
+    "homeTitle": "Tour Linh Trưởng & Động Vật Hoang Dã Việt Nam | HiVOOC",
+    "homeDescription": "Khám phá các loài linh trưởng quý hiếm và đa dạng sinh học Việt Nam qua những chuyến đi cùng chuyên gia, góp phần hỗ trợ bảo tồn và cộng đồng địa phương."
+  },
   "GetStarted": {
     "title": "Hãy bắt đầu!",
     "description": "Chúng tôi coi trọng trách nhiệm môi trường và xã hội",

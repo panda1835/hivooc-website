@@ -6,4 +6,8 @@ export const routing = defineRouting({
 
   // Used when no locale matches
   defaultLocale: "en",
+
+  // Page metadata and the sitemap provide only verified translation pairs.
+  // Automatic links would incorrectly pair CMS slugs that exist in one locale.
+  alternateLinks: false,
 });

@@ -30,7 +30,7 @@ export default function Footer() {
               />
               <div>
                 <p className="text-xl text-white/90">
-                  Primate Tourism For Conservation
+                  Wildlife Tourism For Conservation
                 </p>
               </div>
             </div>

@@ -39,15 +39,16 @@ export default function SellingPoint() {
             <p className=" leading-relaxed">{t("description")}</p>
           </div>
 
-          {/* Right Column - Video/Image Placeholder */}
-          <div className="relative aspect-4/3 bg-branding-green/10 rounded-lg overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
-                <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-branding-green border-b-8 border-b-transparent ml-1"></div>
-              </div>
-            </div>
-            {/* Placeholder for image/video */}
-            <div className="w-full h-full bg-linear-to-br from-branding-green/20 to-branding-green/5"></div>
+          {/* Right Column - Video */}
+          <div className="relative aspect-4/3 rounded-lg overflow-hidden">
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src="https://www.youtube.com/embed/XunwbOrbJqk"
+              title="HiVOOC wildlife experiences"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
           </div>
         </div>
 
